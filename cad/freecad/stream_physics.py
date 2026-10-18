@@ -98,6 +98,7 @@ class Vault:
     base_mark: float = 0.0
     hinge: float = 0.0
     hinge_sole: float = 0.0
+    grip_hand: float = 0.0
 
 
 def stack_thickness(v: Vault) -> float:
@@ -452,6 +453,10 @@ def masses(v: Vault) -> dict[str, float]:
     box_d = v.box_d
     box = _mm3_to_kg((180.0 * 140.0 * 2.0 + 180.0 * box_d * 2.0 + 140.0 * box_d) * 0.8, DENS["ss"])
     grips = _mm3_to_kg(2.0 * 140.0 * 36.0 * 28.0 * 0.72, DENS["jarrah"])
+    if v.grip_hand > 0.0:
+        # Quarter-round finger hollow in the middle 100 mm. Ends stay full.
+        hollow = 2.0 * 0.25 * math.pi * v.grip_hand ** 2 * 120.0
+        grips -= _mm3_to_kg(hollow, DENS["jarrah"])
     ferrules = _mm3_to_kg(4.0 * math.pi * (16.0 ** 2 - 14.0 ** 2) * 8.0, DENS["gidgee"])
     posts = _mm3_to_kg(4.0 * math.pi * 3.0 ** 2 * v.standoff, DENS["ss"])
     washers = _mm3_to_kg(4.0 * math.pi * 8.0 ** 2 * 3.0, DENS["ptfe"])

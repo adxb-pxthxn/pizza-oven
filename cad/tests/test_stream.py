@@ -283,5 +283,23 @@ class VermithorPhysicsTest(unittest.TestCase):
         self.assertGreaterEqual(gate["shut_sill_mm"], 1.0)
 
 
+class CaraxesPhysicsTest(unittest.TestCase):
+    def test_the_grip_hollow_leaves_closed_shells(self):
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["caraxes"]
+        self.assertEqual(saved["design"]["grip_hand"], 11.0)
+        live = evaluate(Vault(**saved["design"]))
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        self.assertLess(live["parts"]["grips"], 0.16)
+        gate = json.loads((ROOT / "design" / "stream-1" / "caraxes" / "gate.json").read_text(encoding="utf-8"))
+        self.assertEqual(gate["interference"], [])
+        self.assertEqual(gate["console_errors"], [])
+        self.assertEqual(gate["measured"]["open_shells"], [])
+        self.assertEqual(gate["steel_mm"], [480.0, 500.0, 6.0])
+        self.assertEqual(len(gate["press_fits"]), 4)
+        self.assertTrue(all(hit["mm3"] > 190.0 for hit in gate["press_fits"]))
+        self.assertGreater(gate["measured"]["volume_mm3"], 1.0e7)
+
+
 if __name__ == "__main__":
     unittest.main()

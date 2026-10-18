@@ -1,14 +1,14 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T22:23:00Z
+**Timestamp:** 2026-10-18T22:40:00Z
 **Current Branch / Commit:** design/stream-1-original
-**Overall Status:** READY_FOR_NEXT_AGENT
+**Overall Status:** IN_PROGRESS
 
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-Overnight stream closed on Vermithor. 38.7 kg, pizza floor 305°C, bay underside 56°C, cool-down 42 min, 0.67× the Tread. Hinged door, flat skin, post lapped onto the floor. Do not merge to main.
+Best oven is Caraxes: Vermithor's door and skin, with a finger hollow in the grip. 38.7 kg, pizza floor 305°C, cool-down 42 min, 0.67× the Tread. Design inputs are read from `/cursor/stores/store-97fe1fa0-fd19-44b4-ac7d-36d872774744/`. Do not merge to main.
 
 ## 2. Completed in This Session
 - [x] Shop stack and heat model in `cad/freecad/stream_physics.py`.

@@ -327,6 +327,54 @@ def _render_png_pyside2(fragment: str, title: str, subtitle: str, out_path: Path
     del re
 
 
+class _ReportTap:
+    """Document observer. This FreeCAD build has no Console.AddObserver.
+
+    Invalid shapes are recorded as they recompute. After the last recompute
+    the build also rejects a part left Touched or Invalid.
+    """
+
+    def __init__(self) -> None:
+        self.errors: list[str] = []
+        self.warnings: list[str] = []
+
+    def slotRecomputedObject(self, obj) -> None:
+        shape = getattr(obj, "Shape", None)
+        if shape is None or shape.isNull() or not shape.isValid():
+            self.errors.append(f"{obj.Name} invalid")
+
+
+def _measured(made: list[tuple[str, Part.Shape, str]]) -> dict:
+    open_shells = []
+    volume = 0.0
+    for part, shape, _kind in made:
+        volume += float(shape.Volume)
+        closed = True
+        if hasattr(shape, "isClosed"):
+            try:
+                closed = bool(shape.isClosed())
+            except Exception:
+                closed = False
+        if not closed or not shape.isValid():
+            open_shells.append(part)
+    mx = my = mz = mass = 0.0
+    for _part, shape, _kind in made:
+        pieces = list(shape.Solids) if shape.Solids else [shape]
+        for piece in pieces:
+            part_volume = float(piece.Volume)
+            centre = piece.CenterOfMass
+            mx += centre.x * part_volume
+            my += centre.y * part_volume
+            mz += centre.z * part_volume
+            mass += part_volume
+    scale = mass if mass else 1.0
+    return {
+        "volume_mm3": round(volume, 1),
+        "com_mm": [round(mx / scale, 1), round(my / scale, 1), round(mz / scale, 1)],
+        "open_shells": open_shells,
+    }
+
+
 def build(name: str = "stormcloud") -> dict:
     hw = HARDWARE
     design = _load(name)
@@ -345,6 +393,8 @@ def build(name: str = "stormcloud") -> dict:
     if design.dragon in App.listDocuments():
         App.closeDocument(design.dragon)
     doc = App.newDocument(design.dragon)
+    tap = _ReportTap()
+    App.addDocumentObserver(tap)
     made: list[tuple[str, Part.Shape, str]] = []
 
     def add(part: str, shape: Part.Shape, kind: str) -> Part.Shape:
@@ -628,13 +678,37 @@ def build(name: str = "stormcloud") -> dict:
             return shape
 
         grip_box = _box(0.0, -hw["grip_len"] / 2.0, -hw["grip_height"] / 2.0, hw["grip_depth"], hw["grip_len"], hw["grip_height"])
-        groove = Part.makeCylinder(
-            hw["groove_r"],
-            hw["grip_len"] + 4.0,
-            App.Vector(hw["groove_r"], -hw["grip_len"] / 2.0 - 2.0, -hw["grip_height"] / 2.0),
-            App.Vector(0, 1, 0),
-        )
-        add(f"grip-{label}", place(grip_box.cut(groove)), "jarrah")
+        if design.grip_hand > 0.0:
+            # Finger hollow in the middle only. The ferrule ends stay square.
+            span = hw["grip_len"] - 2.0 * hw["ferrule_len"] - 4.0
+            y_hollow = -(span / 2.0)
+            hollow = Part.makeCylinder(
+                design.grip_hand,
+                span,
+                App.Vector(design.grip_hand, y_hollow, -hw["grip_height"] / 2.0),
+                App.Vector(0, 1, 0),
+            )
+            # 3 mm arris so the top inner corner does not dig. The top stays full.
+            chamfer = Part.Face(
+                Part.makePolygon(
+                    [
+                        App.Vector(0.0, y_hollow, hw["grip_height"] / 2.0),
+                        App.Vector(3.0, y_hollow, hw["grip_height"] / 2.0),
+                        App.Vector(0.0, y_hollow, hw["grip_height"] / 2.0 - 3.0),
+                        App.Vector(0.0, y_hollow, hw["grip_height"] / 2.0),
+                    ]
+                )
+            ).extrude(App.Vector(0.0, span, 0.0))
+            grip = grip_box.cut(hollow).cut(chamfer)
+        else:
+            groove = Part.makeCylinder(
+                hw["groove_r"],
+                hw["grip_len"] + 4.0,
+                App.Vector(hw["groove_r"], -hw["grip_len"] / 2.0 - 2.0, -hw["grip_height"] / 2.0),
+                App.Vector(0, 1, 0),
+            )
+            grip = grip_box.cut(groove)
+        add(f"grip-{label}", place(grip), "jarrah")
         press = hw["ferrule_press"]
         wall = hw["ferrule_wall"]
         for end, y0 in (
@@ -727,6 +801,13 @@ def build(name: str = "stormcloud") -> dict:
         }
 
     doc.recompute()
+    for obj in doc.Objects:
+        state = set(obj.State)
+        if "Invalid" in state or "Touched" in state:
+            tap.errors.append(f"{obj.Name} left {sorted(state)}")
+        shape = getattr(obj, "Shape", None)
+        if shape is not None and (shape.isNull() or not shape.isValid()):
+            tap.errors.append(f"{obj.Name} shape invalid")
     solids = [(part, shape) for part, shape, _kind in made]
     hits = _interfere(solids)
     press = [hit for hit in hits if "ferrule" in hit["a"] or "ferrule" in hit["b"]]
@@ -876,6 +957,30 @@ def build(name: str = "stormcloud") -> dict:
         gate["mark_depth"] = design.base_mark
         if not mark_edges:
             stray.append({"a": "base-mark", "b": "base-tub", "mm3": -1})
+    measured = _measured(made)
+    gate["measured"] = measured
+    gate["console_errors"] = tap.errors
+    gate["console_warnings"] = len(tap.warnings)
+    if measured["open_shells"]:
+        stray.append({"a": "shell", "b": measured["open_shells"][0], "mm3": -1})
+    if tap.errors:
+        stray.append({"a": "console", "b": "report-view", "mm3": -1})
+    steel_bb = by_name["pizza-steel"].BoundBox
+    gate["steel_mm"] = [round(steel_bb.XLength, 2), round(steel_bb.YLength, 2), round(steel_bb.ZLength, 2)]
+    if abs(steel_bb.ZLength - design.steel_t) > 0.2 or abs(steel_bb.XLength - design.steel_w) > 0.2:
+        stray.append({"a": "pizza-steel", "b": "spec", "mm3": -1})
+    if report["skin_C"] > 60.0 or report["under_C"] > 60.0 or report["grip_C"] > 40.0:
+        stray.append({"a": "touch", "b": "limit", "mm3": -1})
+    spec_path = out_dir / "spec.json"
+    if spec_path.exists():
+        spec = json.loads(spec_path.read_text(encoding="utf-8"))
+        expected = spec.get("steel_mm")
+        if expected and [round(value, 1) for value in gate["steel_mm"]] != [round(value, 1) for value in expected]:
+            stray.append({"a": "pizza-steel", "b": "spec-file", "mm3": -1})
+    try:
+        App.removeDocumentObserver(tap)
+    except Exception:
+        pass
     (out_dir / "gate.json").write_text(json.dumps(gate, indent=2) + "\n", encoding="utf-8")
     print("GATE", json.dumps(gate))
 
