@@ -1,0 +1,1 @@
+Argon checked the stored plate. It clears the hood insulation by 2 mm and the rear skin by about 12 mm, and it stays below z 0. The shelves butt the rear wall at y 661 and sit 0.6 mm under the plate. They clear the belly. No correction.

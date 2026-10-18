@@ -1,0 +1,9 @@
+{
+  "dragon": "Quicksilver",
+  "door": "Cannibal door. The lower arm welds to the pit wall and ends 35 mm under the door. The upper barrel is on the brow, 1 mm above the door. The pin ends inside that bore. Radial clearance 0.6 mm.",
+  "ready_kg": 33.994,
+  "modules_kg": {"pit": 10.967, "hearth": 9.094, "brow": 5.705, "tunnel": 8.228},
+  "wood_hot_gap_mm": 3.4,
+  "wood_hot_pair": ["grip-port", "post-port-0"],
+  "note": "The arms are no longer the stop. The hearth bail and the port panel still share the door's height. Centreline section removes the port half, so the pintle does not appear there. The brow lifts off the pin."
+}

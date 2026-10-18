@@ -1,0 +1,7 @@
+{
+  "dragon": "Dreamfyre",
+  "door": "Meraxes door, hung on a port pintle. Pin r 3.6 mm, barrel bore r 4.2 mm. The leaf bolts to the aluminium skin. The head leaves 0.8 mm of lift. The door stops on the arms at about 127°.",
+  "ready_kg": 33.985,
+  "modules_kg": {"pit": 10.839, "hearth": 9.094, "brow": 5.823, "tunnel": 8.228},
+  "note": "The earlier pin sat in free air. This one carries the door. Ferrule presses are unchanged. Common volume elsewhere is zero."
+}

@@ -1,0 +1,19 @@
+{
+  "created": {
+    "id": "v1_ChdMZ1hWYXR1REc4dU15dE1QdlBmTTJRbxIXTGdYVmF0dURHOHVNeXRNUHZQZk0yUW8",
+    "status": "in_progress",
+    "agent": "antigravity-preview-09-2026",
+    "environment_id": "84cda0edc8e448409261a8298dbe0f4f",
+    "model_requested": "gemini-4-argon",
+    "usage": {
+      "total_tokens": null,
+      "total_input_tokens": null,
+      "total_output_tokens": null,
+      "total_thought_tokens": null,
+      "total_tool_use_tokens": null,
+      "total_cached_tokens": null
+    },
+    "chars": 0
+  },
+  "id": "v1_ChdMZ1hWYXR1REc4dU15dE1QdlBmTTJRbxIXTGdYVmF0dURHOHVNeXRNUHZQZk0yUW8"
+}

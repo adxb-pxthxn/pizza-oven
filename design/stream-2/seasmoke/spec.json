@@ -1,0 +1,12 @@
+{
+  "dragon": "Seasmoke",
+  "joint": "1.5 mm mild foot butts the brow skin's outer corner. A shelf and a leg butt the tunnel skin's outer corner, 0.6 mm under the foot. Liner gap stays 2 mm. Skin opens 16 mm along the plate. No bolts.",
+  "grate": "Rods on the upper rails, 32 mm above the deep-fire rails. Lift the hearth off and it is a grill.",
+  "grip": "Jarrah grip on the brow, stainless ferrule, 0.15 mm radial press. The tunnel keeps its own grip.",
+  "etch": "Inside the brow: 300 is the deck. 550 is the ceiling.",
+  "mouth_mm": [424, 185],
+  "ready_kg": 30.951,
+  "modules_kg": {"pit": 10.482, "hearth": 8.963, "brow": 5.316, "tunnel": 6.19},
+  "solver": "SLSQP reaches 30.1 kg only by sitting on soffit 105 mm and skin 55°C. Shop keeps soffit 110 mm and 22 mm board.",
+  "note": "Morghul gauges. The brow drops onto the shelf. The pit cooks without the hearth."
+}

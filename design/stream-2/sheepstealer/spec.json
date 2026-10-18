@@ -1,0 +1,9 @@
+{
+  "dragon": "Sheepstealer",
+  "gasket": "Four strips of ceramic-fibre rope, 8 mm by 6 mm, uncompressed. 0.8 mm off the door face, 2.2 mm short of the skin. The mouth stays open inside the frame. Not a press fit.",
+  "damper": "Same shut flue plate as Syrax.",
+  "mouth_mm": [424, 185],
+  "ready_kg": 32.605,
+  "modules_kg": {"pit": 10.482, "hearth": 9.094, "brow": 5.193, "tunnel": 7.836},
+  "note": "The rope is the land the shut door was missing. The bread window stays the lumped steel, 61 min from 240°C to 180°C."
+}

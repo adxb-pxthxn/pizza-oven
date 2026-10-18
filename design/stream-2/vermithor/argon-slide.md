@@ -1,0 +1,1 @@
+Argon checked the steak pose. The plate, tang, rails, and stops stay clear, and a peel below z 30 passes under the plate. It read the post tops as z 158; they end at z 157.6, 0.4 mm short of the liner. The park is not a second solid. It is Y 468 to 638, 2 mm short of the rear stop.

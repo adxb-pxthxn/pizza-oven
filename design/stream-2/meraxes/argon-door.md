@@ -1,0 +1,1 @@
+Argon checked the door. The grip clears the bail by about 76 mm in Z. The 24 mm air gap is empty. The posts butt the outer skin. FreeCAD common volume on every other pair is zero. The ferrule press is the one overlap.

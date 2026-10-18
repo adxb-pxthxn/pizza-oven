@@ -1,0 +1,8 @@
+{
+  "dragon": "Urrax",
+  "grip": "Two mild pads, 1.5 mm, sandwich the tunnel skin. The posts stand on the outer pad. They clear the skin by 1.5 mm and the pad edge by 7.5 mm.",
+  "ready_kg": 34.041,
+  "modules_kg": {"pit": 10.967, "hearth": 9.094, "brow": 5.705, "tunnel": 8.275},
+  "wood_hot_gap_mm": 3.4,
+  "note": "The pad shows in plan under the tunnel grip. The brow grip still stands on the skin. Quicksilver's pintle is unchanged."
+}
