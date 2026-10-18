@@ -7,7 +7,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/stream-2-modular`. Draft PR. Do not merge.
-  - Vermax sized: 36.1 kg ready, hood 15.9 kg. Floating mild deck. CAD in progress.
+  - Vermax solid: 36.1 kg ready, hood 15.9 kg. FreeCAD gates passed. Section shows a low soffit inside a tall crown.
 
 ---
 

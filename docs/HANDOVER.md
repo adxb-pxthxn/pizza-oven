@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T17:50:00Z
+**Timestamp:** 2026-10-18T18:05:00Z
 **Current Branch / Commit:** design/stream-2-modular
 **Overall Status:** IN_PROGRESS
 
@@ -24,7 +24,7 @@ Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/an
 ---
 
 ## 2b. Stream 2 (this branch)
-Vermax is sized, not yet meshed. Three modules: pit 10.9 kg with the burner, hearth 9.3 kg, hood 15.9 kg. Ready 36.1 kg. Floating 4 mm mild deck, mouth 424 × 161, soffit at 118 mm. Skin 54.1°C in CalculiX. No cordierite. Wood only on grips, feet, and the gidgee peel rest. See `design/stream-2/README.md`.
+Vermax is a FreeCAD solid. Gates passed: 96 parts, 34.258 kg, three ferrule press fits, no other interference. Ready 36.1 kg with the burner. Pit 10.9, hearth 9.3, hood 15.9. Mouth 424 × 161, soffit at 118 mm inside a 256 mm crown, so the section shows a tall empty hood over a low ceiling. Skin 54.1°C in CalculiX. No cordierite. Wood only on grips, feet, and the gidgee peel rest. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.
