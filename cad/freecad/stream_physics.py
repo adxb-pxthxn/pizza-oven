@@ -398,10 +398,8 @@ def masses(v: Vault) -> dict[str, float]:
     steel = _mm3_to_kg(v.steel_w * v.steel_l * v.steel_t, DENS["mild"])
     plate_w, plate_l = plate_span(v)
     plate = _mm3_to_kg(plate_w * plate_l * v.plate_t, DENS["ss"])
-    if v.plate_pose == "rear":
-        rail_l = (v.length - 20.0) - (v.landing + 30.0)
-    else:
-        rail_l = v.steel_l
+    # Full slide, forward seat to the rear park, on every pose.
+    rail_l = (v.length - 20.0) - (v.landing + 30.0)
     rails = _mm3_to_kg(2.0 * rail_l * 12.0 * 1.2, DENS["ss"])
     buttons = _mm3_to_kg(6.0 * math.pi * 5.0 ** 2 * v.button_h, DENS["ss"])
 

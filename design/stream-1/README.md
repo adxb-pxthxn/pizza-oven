@@ -31,7 +31,7 @@ Arrax widens the plate to 480 mm inside the 500 mm barrel. The side gap is 10 mm
 
 Vermax lengthens the barrel to 780 mm so the same plate can slide back and leave a 240 mm bay. Five 4 mm rods sit in that bay, 20 mm below the mouth crown, so the front view shows the grate. Pizza numbers are with the plate slid forward. A 10 kW/m² crown on the bare bay still cambers a 6 mm plate by about 0.02 mm. The extra mass is shell, not deck. Cool-down stays 0.66× the Tread. Shut heat-up is 15 min.
 
-Tessarion is that barrel with the plate forward and the door shut. The door bottom is at 63.4 mm and the sill top is at 60.4 mm, so the shop gap is 3 mm. Ready mass is 37.2 kg. The earlier 214°C bread figure treated the mouth as open. Shut, gas at 260°C holds the floor at 240°C.
+Tessarion is that barrel with the plate forward and the door shut. The door bottom is at 63.4 mm and the sill top is at 60.4 mm, so the shop gap is 3 mm. Ready mass is 37.3 kg, the same as Vermax, because the rails run the full slide in both poses. The earlier 214°C bread figure treated the mouth as open. Shut, gas at 260°C holds the floor at 240°C.
 
 Sunfyre is the Tessarion body with the bread gas at 230°C. The shut door then holds the floor at 211°C and the plate at 223°C. That is the loaf. Pizza stays at gas 360°C and 301°C. Same solid as Tessarion.
 

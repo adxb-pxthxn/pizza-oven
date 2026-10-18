@@ -30,5 +30,13 @@
       "mm3": 176.34
     }
   ],
-  "analytical_ready_kg": 34.23
+  "analytical_ready_kg": 34.25,
+  "door_pose": "shut",
+  "box_d": 80.0,
+  "png": {
+    "front": "Shut arched door, shoulders and two grips, four feet. Not a round dome.",
+    "side": "Long barrel. Burner box at the rear, peel rest and pull at the front.",
+    "top": "Long plan, grips on both sides, four rack bosses. Not a circular plan.",
+    "section": "Centreline. Sky plate is the horizontal line in the arch. Steel is the deck."
+  }
 }

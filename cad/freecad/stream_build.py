@@ -350,7 +350,7 @@ def build(name: str = "stormcloud") -> dict:
         "ss",
     )
     rail_y = plate_y_forward
-    rail_l = (plate_y + plate_l) - rail_y
+    rail_l = (design.length - 20.0) - rail_y
     rail_z = plate_z - gap - 8.0
     for sign, label in ((-1.0, "port"), (1.0, "starboard")):
         add(

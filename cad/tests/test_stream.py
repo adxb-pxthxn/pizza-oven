@@ -78,6 +78,15 @@ class StormcloudPhysicsTest(unittest.TestCase):
         self.assertAlmostEqual(thermal["wall"]["oned_C"], live["skin_C"], delta=0.2)
         self.assertAlmostEqual(thermal["floor"]["oned_C"], live["under_C"], delta=0.2)
 
+    def test_rails_span_the_slide(self):
+        raw = json.loads((ROOT / "design" / "stream-1" / "optimizer.json").read_text(encoding="utf-8"))
+        for name, length in (("stormcloud", 590.0), ("vermax", 690.0)):
+            vault = Vault(**raw[name]["design"])
+            rail_l = (vault.length - 20.0) - (vault.landing + 30.0)
+            self.assertAlmostEqual(rail_l, length, delta=1.0)
+            expected = round(rail_l * 2.0 * 12.0 * 1.2 * 1e-9 * 7900.0, 3)
+            self.assertAlmostEqual(evaluate(vault)["parts"]["sky-rails"], expected, delta=0.01)
+
 
 class TyraxesPhysicsTest(unittest.TestCase):
     def test_pizza_pose_is_cooler_and_lighter(self):

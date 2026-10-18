@@ -426,9 +426,9 @@
 <path id= "140" d=" M -70 217.6 L -550 217.6 " />
 <path id= "141" d=" M -550 217.6 L -550 216.4 " />
 <path id= "142" d=" M -70 208 L -70 215.6 " />
-<path id= "143" d=" M -70 215.6 L -550 215.6 " />
-<path id= "144" d=" M -550 208 L -550 215.6 " />
-<path id= "145" d=" M -70 208 L -550 208 " />
+<path id= "143" d=" M -70 215.6 L -660 215.6 " />
+<path id= "144" d=" M -660 208 L -660 215.6 " />
+<path id= "145" d=" M -70 208 L -660 208 " />
 <path id= "146" d=" M -6 206.2 L -6 205.4 " />
 <path id= "147" d=" M -6 205.4 L -42 205.4 " />
 <path id= "148" d=" M -6 206.2 L -42 206.2 " />
@@ -651,7 +651,7 @@
 <text x="236" y="224" font-family="Georgia, serif" font-size="3.2" fill="#1c1a17">Section, centreline</text>
 <text x="352" y="224" font-family="Georgia, serif" font-size="3.2" fill="#1c1a17">Top, plan</text>
 <rect x="8" y="232" width="404" height="57" fill="#f7f4ee" stroke="#1c1a17" stroke-width="0.4"/>
-<text x="14" y="248" font-family="Georgia, serif" font-size="3.0" fill="#1c1a17">973 long × 670 wide × 410 tall · mouth arch 430×158 · steel 450×500×6 · ready 34.2 kg</text>
+<text x="14" y="248" font-family="Georgia, serif" font-size="3.0" fill="#1c1a17">973 long × 670 wide × 410 tall · mouth arch 430×158 · steel 450×500×6 · ready 34.3 kg</text>
 <text x="14" y="260" font-family="Georgia, serif" font-size="2.8" fill="#5c5348">Dimensions mm. Do not scale the drawing. Certified burner, valve, regulator and hose are bought. No jet is drawn.</text>
 <text x="14" y="272" font-family="Georgia, serif" font-size="2.8" fill="#5c5348">Crown objects lift at the cinch. The top rack and the stand are interfaces only and are not in the mass.</text>
 <text x="14" y="282" font-family="Georgia, serif" font-size="2.8" fill="#5c5348">Angas is the baseline. Morning and Moondancer are the early prototypes. Neither plan sits on the lowered tailgate.</text>
