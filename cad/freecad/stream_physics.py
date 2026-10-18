@@ -91,6 +91,11 @@ class Vault:
     frame_strap: float = 0.0
     swing_arm: float = 0.0
     module: float = 0.0
+    # End skin is a half-ring this far clear of the liner. Zero keeps the
+    # earlier solid-end mass, which the shop never cut.
+    fascia_gap: float = 0.0
+    probe: float = 0.0
+    base_mark: float = 0.0
 
 
 def stack_thickness(v: Vault) -> float:
@@ -411,8 +416,15 @@ def masses(v: Vault) -> dict[str, float]:
         DENS["fibre"],
     )
     skin_r = r + v.liner_t + v.fibre_t + v.air_gap
-    skin = _mm3_to_kg(lateral(skin_r, v.skin_t) + end_plates(skin_r, v.skin_t), DENS["al"])
-    skin -= _mm3_to_kg(v.mouth_w * v.mouth_h * v.skin_t, DENS["al"])
+    skin_mm3 = lateral(skin_r, v.skin_t)
+    if v.fascia_gap > 0.0:
+        inner = r + v.liner_t + v.fascia_gap
+        outer = skin_r + v.skin_t
+        skin_mm3 += math.pi * (outer * outer - inner * inner) * v.skin_t
+    else:
+        skin_mm3 += end_plates(skin_r, v.skin_t)
+        skin_mm3 -= v.mouth_w * v.mouth_h * v.skin_t
+    skin = _mm3_to_kg(skin_mm3, DENS["al"])
 
     plan_w = outer_width(v)
     plan_l = outer_length(v)
@@ -463,6 +475,10 @@ def masses(v: Vault) -> dict[str, float]:
         tray = _mm3_to_kg(160.0 * 120.0 * 1.5 + 220.0 * math.pi * 5.0 ** 2, DENS["ss"])
     else:
         tray = 0.0
+    if v.probe > 0.0:
+        gland = _mm3_to_kg(math.pi * (6.0 ** 2 - (v.probe / 2.0) ** 2) * 8.0, DENS["ss"])
+    else:
+        gland = 0.0
     feet = _mm3_to_kg(4.0 * math.pi * 16.0 ** 2 * 10.0, DENS["rubber"])
     rack = _mm3_to_kg(4.0 * math.pi * 6.0 ** 2 * 8.0, DENS["ss"])
     stand = _mm3_to_kg(4.0 * math.pi * 7.0 ** 2 * 8.0, DENS["ss"])
@@ -492,6 +508,7 @@ def masses(v: Vault) -> dict[str, float]:
         "plate-stops": stops,
         "cheek-straps": strap,
         "swing-tray": tray,
+        "probe-gland": gland,
         "feet": feet,
         "rack-bosses": rack,
         "stand-bosses": stand,
@@ -553,3 +570,121 @@ def evaluate(v: Vault) -> dict:
 
 def vector_keys() -> tuple[str, ...]:
     return ("steel_t", "fibre_t", "floor_fibre", "skin_t", "plate_t", "standoff", "air_gap")
+
+
+# Laser blank. The barrel is a true development. The ends are flat half-rings.
+SKIN_SEAM = 0.3
+SKIN_TAB = 12.0
+RIVET_PITCH = 40.0
+RIVET_D = 4.2
+BASE_MARK = "be vigilant. don't die."
+
+
+def skin_development(v: Vault) -> dict:
+    """Flat aluminium. Arc length is the mid-thickness of the rolled half-barrel."""
+    skin_r0 = v.radius + v.liner_t + v.fibre_t + v.air_gap
+    mid_r = skin_r0 + v.skin_t / 2.0
+    outer_r = skin_r0 + v.skin_t
+    inner_r = v.radius + v.liner_t + v.fascia_gap
+    arc = math.pi * mid_r
+    cyl = v.length - 2.0 * SKIN_SEAM
+    return {
+        "mid_r": mid_r,
+        "outer_r": outer_r,
+        "inner_r": inner_r,
+        "arc_mm": arc,
+        "cyl_mm": cyl,
+        "tab_mm": SKIN_TAB,
+        "rivet_d": RIVET_D,
+        "rivet_pitch": RIVET_PITCH,
+        "sheet_w": arc + 2.0 * SKIN_TAB,
+        "sheet_l": cyl,
+    }
+
+
+def gland_clears_mouth(v: Vault) -> bool:
+    """The bore sits in the front plate, beside the arch, not in the opening."""
+    x = v.mouth_w / 2.0 + 14.0
+    z = 70.0
+    return (x / (v.mouth_w / 2.0)) ** 2 + (z / v.mouth_h) ** 2 > 1.0
+
+
+def _dxf_pair(code: str, value: str) -> list[str]:
+    return [code, value]
+
+
+def write_skin_dxf(path, spec: dict, mark_edges: list[tuple[float, float, float, float]] | None = None) -> None:
+    """R12 entities. Tabs are the spring line. Rivets are every two modules."""
+    ents: list[str] = []
+
+    def line(x1: float, y1: float, x2: float, y2: float, layer: str) -> None:
+        ents.extend(
+            [
+                "0", "LINE", "8", layer,
+                "10", f"{x1:.3f}", "20", f"{y1:.3f}", "30", "0.000",
+                "11", f"{x2:.3f}", "21", f"{y2:.3f}", "31", "0.000",
+            ]
+        )
+
+    def circle(x: float, y: float, r: float, layer: str) -> None:
+        ents.extend(
+            [
+                "0", "CIRCLE", "8", layer,
+                "10", f"{x:.3f}", "20", f"{y:.3f}", "30", "0.000",
+                "40", f"{r:.3f}",
+            ]
+        )
+
+    def arc(cx: float, cy: float, r: float, a0: float, a1: float, layer: str) -> None:
+        ents.extend(
+            [
+                "0", "ARC", "8", layer,
+                "10", f"{cx:.3f}", "20", f"{cy:.3f}", "30", "0.000",
+                "40", f"{r:.3f}", "50", f"{a0:.3f}", "51", f"{a1:.3f}",
+            ]
+        )
+
+    tab = spec["tab_mm"]
+    arc_mm = spec["arc_mm"]
+    cyl = spec["cyl_mm"]
+    pitch = spec["rivet_pitch"]
+    hole = spec["rivet_d"] / 2.0
+    # Barrel, tabs included. X is the unrolled arc. Y is the barrel axis.
+    line(0.0, 0.0, arc_mm + 2.0 * tab, 0.0, "TAB")
+    line(arc_mm + 2.0 * tab, 0.0, arc_mm + 2.0 * tab, cyl, "TAB")
+    line(arc_mm + 2.0 * tab, cyl, 0.0, cyl, "TAB")
+    line(0.0, cyl, 0.0, 0.0, "TAB")
+    line(tab, 0.0, tab, cyl, "ROLL")
+    line(tab + arc_mm, 0.0, tab + arc_mm, cyl, "ROLL")
+    line(tab + arc_mm / 2.0, 0.0, tab + arc_mm / 2.0, cyl, "ROLL")
+    y = pitch / 2.0
+    while y < cyl - pitch / 4.0:
+        circle(tab / 2.0, y, hole, "RIVET")
+        circle(tab + arc_mm + tab / 2.0, y, hole, "RIVET")
+        y += pitch
+    # Two half-rings, flat on the diameter, to the right of the barrel.
+    gap = 30.0
+    cx = arc_mm + 2.0 * tab + gap + spec["outer_r"]
+    for name_y in (0.0, spec["outer_r"] + gap):
+        cy = -(spec["outer_r"] + 20.0 + name_y)
+        arc(cx, cy, spec["outer_r"], 0.0, 180.0, "FASCIA")
+        arc(cx, cy, spec["inner_r"], 0.0, 180.0, "FASCIA")
+        line(cx - spec["outer_r"], cy, cx - spec["inner_r"], cy, "FASCIA")
+        line(cx + spec["inner_r"], cy, cx + spec["outer_r"], cy, "FASCIA")
+        # Rivets on the outer rim, two modules apart along the arc.
+        step = pitch / spec["outer_r"]
+        theta = step
+        while theta < math.pi - step / 2.0:
+            rx = cx + spec["outer_r"] * math.cos(theta) * 0.96
+            ry = cy + spec["outer_r"] * math.sin(theta) * 0.96
+            circle(rx, ry, hole, "RIVET")
+            theta += step
+    if mark_edges:
+        xs = [value for edge in mark_edges for value in (edge[0], edge[2])]
+        ys = [value for edge in mark_edges for value in (edge[1], edge[3])]
+        ox = tab - min(xs)
+        oy = cyl + 40.0 - min(ys)
+        for x1, y1, x2, y2 in mark_edges:
+            line(x1 + ox, y1 + oy, x2 + ox, y2 + oy, "MARK")
+    body = "\n".join(["0", "SECTION", "2", "ENTITIES", *ents, "0", "ENDSEC", "0", "EOF"]) + "\n"
+    path.write_text(body, encoding="utf-8")

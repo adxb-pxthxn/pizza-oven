@@ -219,5 +219,36 @@ class SeasmokePhysicsTest(unittest.TestCase):
         self.assertLess(gate["swing_park"]["xmax"], gate["skin_xmin"])
 
 
+class SheepstealerPhysicsTest(unittest.TestCase):
+    def test_flat_skin_covers_the_fibre_and_the_gland_stays_out(self):
+        import math
+
+        from cad.freecad.stream_physics import gland_clears_mouth, skin_development
+
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["sheepstealer"]
+        self.assertEqual(saved["design"]["fascia_gap"], 2.0)
+        self.assertEqual(saved["design"]["probe"], 4.0)
+        self.assertEqual(saved["design"]["base_mark"], 0.3)
+        vault = Vault(**saved["design"])
+        live = evaluate(vault)
+        flat = skin_development(vault)
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        self.assertAlmostEqual(flat["arc_mm"], math.pi * flat["mid_r"], delta=0.01)
+        self.assertGreater(flat["inner_r"], saved["design"]["mouth_w"] / 2.0)
+        self.assertTrue(gland_clears_mouth(vault))
+        self.assertLess(live["parts"]["aluminium-skin"], 2.8)
+        gate = json.loads((ROOT / "design" / "stream-1" / "sheepstealer" / "gate.json").read_text(encoding="utf-8"))
+        self.assertEqual(gate["interference"], [])
+        self.assertGreaterEqual(gate["fascia_fibre_mm"], 8.0)
+        self.assertGreater(gate["fascia_liner_mm"], 2.0)
+        self.assertGreaterEqual(gate["gland_liner_mm"], 0.3)
+        self.assertGreater(gate["gland_fibre_mm"], 1.0)
+        self.assertEqual(gate["base_mark"], "be vigilant. don't die.")
+        dxf = (ROOT / "design" / "stream-1" / "sheepstealer" / "skin.dxf").read_text(encoding="utf-8")
+        self.assertIn("1074.234", dxf)
+        self.assertIn("\nFASCIA\n", dxf)
+
+
 if __name__ == "__main__":
     unittest.main()

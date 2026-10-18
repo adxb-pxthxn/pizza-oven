@@ -14,7 +14,15 @@ from pathlib import Path
 import FreeCAD as App
 import Part
 
-from cad.freecad.stream_physics import Vault, evaluate, plate_span, stack_thickness
+from cad.freecad.stream_physics import (
+    BASE_MARK,
+    Vault,
+    evaluate,
+    plate_span,
+    skin_development,
+    stack_thickness,
+    write_skin_dxf,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -111,6 +119,35 @@ def _cheek_strap(sign: float, skin_r: float, deck: float, y_mid: float, thick: f
     tab_x = sign * (skin_r + gap)
     tab = _box(tab_x if sign > 0.0 else tab_x - thick, y_mid - 20.0, 0.0, thick, 40.0, deck)
     return band.fuse(tab)
+
+
+def _scribe_mark(doc, base: Part.Shape, y_mid: float, depth: float):
+    """Cut the line into the underside. Readable when the oven is lifted."""
+    import Draft
+
+    font = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+    obj = Draft.makeShapeString(String=BASE_MARK, FontFile=font, Size=6.0, Tracking=0.0)
+    doc.recompute()
+    shape = obj.Shape
+    doc.removeObject(obj.Name)
+    wires = [wire for wire in shape.Wires if wire.isClosed()]
+    if not wires:
+        raise RuntimeError("base mark did not close")
+    solid = Part.Compound([Part.Face(wire) for wire in wires]).extrude(App.Vector(0.0, 0.0, depth))
+    mirror = App.Matrix()
+    mirror.scale(-1.0, 1.0, 1.0)
+    solid = solid.transformGeometry(mirror)
+    bb = solid.BoundBox
+    solid.translate(App.Vector(-bb.Center.x, y_mid - bb.Center.y, 0.0))
+    cut = base.cut(solid)
+    if cut.isNull() or not cut.isValid() or cut.Volume > base.Volume - 0.05:
+        raise RuntimeError("base mark did not cut the plate")
+    edges = []
+    for edge in solid.Edges:
+        pts = edge.discretize(8)
+        for start, end in zip(pts, pts[1:]):
+            edges.append((start.x, start.y, end.x, end.y))
+    return cut, edges
 
 
 def _arch_slab_x(width: float, rise: float, x0: float, depth: float, z_sill: float, y_c: float) -> Part.Shape:
@@ -266,6 +303,9 @@ def build(name: str = "stormcloud") -> dict:
                 App.Vector(0, 0, 1),
             )
             base = base.fuse(boss)
+    mark_edges: list[tuple[float, float, float, float]] = []
+    if design.base_mark > 0.0:
+        base, mark_edges = _scribe_mark(doc, base, length / 2.0, design.base_mark)
     add("base-tub", base, "al")
 
     add(
@@ -334,14 +374,25 @@ def build(name: str = "stormcloud") -> dict:
     fibre = fibre.fuse(fibre_front).fuse(fibre_rear).cut(mouth).cut(slot)
     add("fibre-arch", fibre, "fibre")
 
-    skin = _half_tube(skin_r0 + seam, skin_r, seam, length - seam, deck)
-    skin_front = _half_disc(skin_r, design.skin_t, -(design.fibre_t + design.air_gap + design.skin_t), deck).cut(
-        _half_disc(skin_r0, design.skin_t + 2.0, -(design.fibre_t + design.air_gap + design.skin_t) - 1.0, deck)
-    )
-    skin_rear = _half_disc(skin_r, design.skin_t, length + design.fibre_t + design.air_gap, deck).cut(
-        _half_disc(skin_r0, design.skin_t + 2.0, length + design.fibre_t + design.air_gap - 1.0, deck)
-    )
-    skin = skin.fuse(skin_front).fuse(skin_rear).cut(mouth).cut(slot)
+    skin = _half_tube(skin_r0 + seam, skin_r, seam, length - seam, deck).cut(mouth).cut(slot)
+    if design.fascia_gap > 0.0:
+        # Half-rings over the fibre faces. They stop clear of the liner.
+        inner = liner_r + design.fascia_gap
+        y_face = -(design.fibre_t + design.air_gap + design.skin_t)
+        y_rear = length + design.fibre_t + design.air_gap
+        for part, y0 in (("fascia-front", y_face), ("fascia-rear", y_rear)):
+            plate = _half_disc(skin_r - seam, design.skin_t, y0, deck).cut(
+                _half_disc(inner, design.skin_t + 2.0, y0 - 1.0, deck)
+            )
+            add(part, plate, "al")
+    else:
+        skin_front = _half_disc(skin_r, design.skin_t, -(design.fibre_t + design.air_gap + design.skin_t), deck).cut(
+            _half_disc(skin_r0, design.skin_t + 2.0, -(design.fibre_t + design.air_gap + design.skin_t) - 1.0, deck)
+        )
+        skin_rear = _half_disc(skin_r, design.skin_t, length + design.fibre_t + design.air_gap, deck).cut(
+            _half_disc(skin_r0, design.skin_t + 2.0, length + design.fibre_t + design.air_gap - 1.0, deck)
+        )
+        skin = skin.fuse(skin_front).fuse(skin_rear)
     # Rack bosses, clear of the skin by the seam, along the crown normal.
     for sx in (-1.0, 1.0):
         for sy in (-1.0, 1.0):
@@ -406,6 +457,14 @@ def build(name: str = "stormcloud") -> dict:
         _box(-hood_w / 2.0, 6.0, hood_z, hood_w, hw["hood_depth"], hw["hood_t"]),
         "ss",
     )
+    if design.probe > 0.0:
+        # Beside the arch, in the gas, clear of the liner face. Not through the fibre.
+        gx = design.mouth_w / 2.0 + 14.0
+        gy = 0.4
+        gz = deck + 70.0
+        outer = Part.makeCylinder(6.0, 8.0, App.Vector(gx, gy, gz), App.Vector(0, 1, 0))
+        bore = Part.makeCylinder(design.probe / 2.0, 12.0, App.Vector(gx, gy - 2.0, gz), App.Vector(0, 1, 0))
+        add("probe-gland", outer.cut(bore), "ss")
 
     door_rise = design.mouth_h + hw["door_border"]
     door_w = design.mouth_w + 2.0 * hw["door_border"]
@@ -675,6 +734,35 @@ def build(name: str = "stormcloud") -> dict:
         gate["png"]["front"] = "Door shut above the sill. Bread pose. The arch is the door, not a dome."
         gate["png"]["side"] = "Long barrel. Sill and shut door at the mouth. Cowl at the rear."
         gate["png"]["section"] = "Centreline. Sky plate covers the deck. Door is shut at the mouth."
+    if design.fascia_gap > 0.0:
+        flat = skin_development(design)
+        front = by_name["fascia-front"]
+        fibre_shape = by_name["fibre-arch"]
+        liner_shape = by_name["liner"]
+        gate["flat_arc_mm"] = round(flat["arc_mm"], 2)
+        gate["fascia_inner_r"] = round(flat["inner_r"], 2)
+        gate["fascia_fibre_mm"] = round(front.distToShape(fibre_shape)[0], 2)
+        gate["fascia_liner_mm"] = round(front.distToShape(liner_shape)[0], 2)
+        if gate["fascia_fibre_mm"] < 0.5 or gate["fascia_liner_mm"] < 0.5:
+            stray.append({"a": "fascia-front", "b": "stack", "mm3": -1})
+        if flat["inner_r"] <= design.mouth_w / 2.0:
+            stray.append({"a": "fascia-front", "b": "mouth", "mm3": -1})
+        dxf_path = out_dir / "skin.dxf"
+        write_skin_dxf(dxf_path, flat, mark_edges or None)
+        gate["dxf"] = dxf_path.name
+        gate["png"]["front"] = "Mouth open. Aluminium half-rings close the fibre. Door fin on the port cheek."
+    if design.probe > 0.0:
+        gland = by_name["probe-gland"]
+        gate["gland_liner_mm"] = round(gland.distToShape(by_name["liner"])[0], 2)
+        gate["gland_fibre_mm"] = round(gland.distToShape(by_name["fibre-arch"])[0], 2)
+        gate["probe_bore"] = design.probe
+        if gate["gland_liner_mm"] < 0.3 or gate["gland_fibre_mm"] < 1.0:
+            stray.append({"a": "probe-gland", "b": "stack", "mm3": -1})
+    if design.base_mark > 0.0:
+        gate["base_mark"] = BASE_MARK
+        gate["mark_depth"] = design.base_mark
+        if not mark_edges:
+            stray.append({"a": "base-mark", "b": "base-tub", "mm3": -1})
     (out_dir / "gate.json").write_text(json.dumps(gate, indent=2) + "\n", encoding="utf-8")
     print("GATE", json.dumps(gate))
 
