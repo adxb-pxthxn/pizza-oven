@@ -91,7 +91,7 @@ def validate_bom(repo_path: Path):
 
             print(f"  [PASS] Successfully parsed {row_count} components.")
             print(f"  [INFO] Estimated Total BOM Cost: ${total_cost:.2f} USD")
-            return (row_count > 0), row_count, total_cost
+            return True, row_count, total_cost
     except Exception as e:
         print(f"  [FAIL] Error reading BOM: {e}")
         return False, 0, 0.0

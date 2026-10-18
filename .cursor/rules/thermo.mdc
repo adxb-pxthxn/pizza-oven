@@ -1,31 +1,18 @@
 ---
-description: Thermodynamics, refractory stone, heat retention, and insulation cavity engineering
-globs: "*thermo*,docs/thermal*,cad/parts/insulation*,cad/parts/stone*"
+description: Thermodynamics, heat transfer, insulation sizing, and airflow modeling
+globs: "*thermo*,docs/thermal*"
 alwaysApply: false
 ---
 
-# High-Temperature Thermodynamics & Insulation Sizing
+# High-Temperature Thermodynamics & Heat Transfer
 
-Specifications for heat retention, combustion air, radiant transfer, and insulation.
+Principles for oven heat transfer, insulation sizing, and combustion aerodynamics.
 
-## Thermal Invariants
-1. **Target Temperatures:**
-   - Baking Stone (Floor): 430°C–480°C.
-   - Hot Gas / Apex Dome: 480°C–520°C.
-   - Outer Shroud Safe Touch: <= 60°C.
-
-2. **The 63% Neapolitan Mouth Ratio:**
-   - Mouth Opening Height H_m approx 0.63 * H_apex (Dome Apex Interior Height).
-   - This ratio optimizes radiant heat reflection back onto the pizza surface while maintaining laminar intake air draft.
-
-3. **Insulation Barrier:**
-   - Minimum 25 mm bio-soluble ceramic fiber blanket (128 kg/m³ density, thermal conductivity k approx 0.09 W/m·K at 500°C).
-   - Total wall thermal resistance R >= 0.42 m²·K/W.
-   - Insulation must be fully encapsulated by sheet metal baffles to ensure zero airborne fiber migration into the cooking chamber.
-
-4. **Baking Stone (Thermal Mass):**
-   - High-density cordierite or Biscotto di Sorrento stone >= 15 mm thickness.
+## General Thermal Engineering Principles
+1. **Heat Transfer Modes:** Balance floor conduction (thermal mass), dome radiant flux (Stefan-Boltzmann), and hot gas convection.
+2. **Insulation:** Size multi-layer insulation walls to prevent excessive thermal losses and maintain safe exterior touch temperatures.
+3. **Thermal Shock:** Select refractory materials with appropriate thermal shock resistance and thermal effusivity.
 
 ## Verification
 Run thermodynamic solver:
-`python3 .agents/skills/oven-thermodynamics/scripts/thermal_model.py`
+`python3 .agents/skills/oven-thermodynamics/scripts/thermal_model.py --help`

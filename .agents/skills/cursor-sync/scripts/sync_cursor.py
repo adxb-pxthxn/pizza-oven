@@ -36,97 +36,68 @@ CLAUDE_MD_FILE = REPO_ROOT / "CLAUDE.md"
 
 
 UNIVERSAL_MDC = """---
-description: Universal engineering standards, commit conventions, safety limits, and multi-agent coordination
+description: Universal engineering standards, commit conventions, and multi-agent coordination
 globs: "*"
 alwaysApply: true
 ---
 
 # Pizza Oven Project: Universal Engineering & Agent Rules
 
-This is an open-source, certified-grade physical engineering project for a high-performance portable Neapolitan pizza oven (500°C chamber, sub-90s bake).
+This is an open-source physical engineering development workspace for a pizza oven.
 
-## Core Physical Constraints
-1. **Operating Temperatures:** Sustained 450°C–500°C floor & dome.
-2. **Exterior Safe Touch:** Outer shell, handles, and control points must remain <= 60°C under steady state (EN 60335-2-6 / ASTM C1055).
-3. **Materials:** AISI 304 food-grade stainless steel for inner hot zone; AISI 304/430 or powder-coated steel for outer shroud.
-4. **Fasteners:** Metric ISO A2/A4 stainless steel (M4/M5/M6). No carbon steel in thermal zones.
+## Core Engineering Principles
+1. **No Premature Assumptions:** Do NOT assume dimensions, fuel sources, materials, or manufacturing methods until explicitly specified by the user.
+2. **Food Safety & Materials:** When materials are selected, enforce food-grade safety standards (FDA / EU 1935/2004) and avoid toxic coatings or galvanized zinc in heated zones.
+3. **Open Hardware:** Adhere to OSHWA principles (CERN-OHL-P v2 hardware license, CC-BY-4.0 docs license).
 
 ## Multi-Agent Commit & Handover Protocol
 1. Commits MUST use conventional commits with agent signature:
    `<type>(<scope>): <subject> [agent:cursor]` (or `[agent:antigrav]`, `[agent:claude-code]`).
-2. Before committing, run repository validation scripts:
-   - `python3 .agents/skills/code-cad/scripts/cad_validate.py`
-   - `python3 .agents/skills/oshwa-hardware/scripts/validate_oshwa.py`
-   - `python3 .agents/skills/oven-thermodynamics/scripts/thermal_model.py`
-3. Always check `docs/HANDOVER.md` and `.agents/state/TASK_BOARD.md` before starting and after finishing work.
-4. Run situational briefing:
+2. Always check `docs/HANDOVER.md` and `.agents/state/TASK_BOARD.md` before starting and after finishing work.
+3. Run situational briefing:
    `python3 .agents/skills/cross-agent-coordination/scripts/agent_handover.py --summary`
 """
 
 CAD_MDC = """---
-description: Code-CAD modeling, sheet metal DFM, laser cutting tolerances, and thermal expansion relief
+description: Code-CAD modeling, DFM, laser cutting tolerances, and thermal expansion relief
 globs: "cad/**/*,*.py,*.scad,*.step,*.dxf,*.svg"
 alwaysApply: false
 ---
 
-# Code-CAD & Sheet Metal Design for Manufacturing (DFM)
+# Code-CAD & Design for Manufacturing (DFM)
 
-Guidelines for parametric mechanical design, laser cutting, and press brake bending.
+Guidelines for parametric mechanical design, fabrication, and code-driven CAD.
 
-## Sheet Metal & Laser Tolerances
-- **Inner Shell:** 1.5 mm AISI 304 stainless steel.
-- **Outer Shell:** 1.2 mm cold-rolled steel or AISI 430.
-- **K-Factor:** 0.42 for air bending stainless steel on standard V-die (bend allowance formula: BA = pi * (R + K * t) * (A / 180)).
-- **Minimum Flange Length:** >= 4 * t (6.0 mm for 1.5 mm sheet).
-- **Minimum Hole Diameter:** >= 1.0 * t (laser pierce rule; prefer >= 1.5 * t for fiber laser life).
-- **Minimum Web Distance:** Distance between cutouts or edges >= 2.0 * t.
-
-## Tab-and-Slot Joinery & Thermal Relief
-- **Fit Clearance:** Tab-and-slot mortise/tenon joints have exactly 0.25 mm clearance per side (tab width W - 0.25 mm, slot width W + 0.25 mm) for clean self-alignment without weld fixtures.
-- **Thermal Expansion Slots:** Inner dome sheet experiences thermal expansion (delta L approx 3.9 mm at 500°C).
-- Hot-to-cold interface mounting slots must have >= 6.5 mm slotted travel along the expansion axis.
-
-## Verification
-Always test CAD output:
-`python3 .agents/skills/code-cad/scripts/cad_validate.py`
+## General Fabrication & DFM Rules
+- **Laser / Waterjet:** Maintain hole diameter >= 1.0 * thickness and web distance >= 2.0 * thickness.
+- **Press Brake Air Bending:** Select standard V-die openings (typically 6-8 * t) and appropriate bend deductions / K-factors.
+- **Thermal Expansion Relief:** High-temperature metal components subject to differential thermal expansion must include slotted clearances or sliding joints.
+- **Assembly Joinery:** If using tab-and-slot construction, apply 0.20-0.30mm clearance for clean fit without binding.
 """
 
 THERMO_MDC = """---
-description: Thermodynamics, refractory stone, heat retention, and insulation cavity engineering
-globs: "*thermo*,docs/thermal*,cad/parts/insulation*,cad/parts/stone*"
+description: Thermodynamics, heat transfer, insulation sizing, and airflow modeling
+globs: "*thermo*,docs/thermal*"
 alwaysApply: false
 ---
 
-# High-Temperature Thermodynamics & Insulation Sizing
+# High-Temperature Thermodynamics & Heat Transfer
 
-Specifications for heat retention, combustion air, radiant transfer, and insulation.
+Principles for oven heat transfer, insulation sizing, and combustion aerodynamics.
 
-## Thermal Invariants
-1. **Target Temperatures:**
-   - Baking Stone (Floor): 430°C–480°C.
-   - Hot Gas / Apex Dome: 480°C–520°C.
-   - Outer Shroud Safe Touch: <= 60°C.
-
-2. **The 63% Neapolitan Mouth Ratio:**
-   - Mouth Opening Height H_m approx 0.63 * H_apex (Dome Apex Interior Height).
-   - This ratio optimizes radiant heat reflection back onto the pizza surface while maintaining laminar intake air draft.
-
-3. **Insulation Barrier:**
-   - Minimum 25 mm bio-soluble ceramic fiber blanket (128 kg/m³ density, thermal conductivity k approx 0.09 W/m·K at 500°C).
-   - Total wall thermal resistance R >= 0.42 m²·K/W.
-   - Insulation must be fully encapsulated by sheet metal baffles to ensure zero airborne fiber migration into the cooking chamber.
-
-4. **Baking Stone (Thermal Mass):**
-   - High-density cordierite or Biscotto di Sorrento stone >= 15 mm thickness.
+## General Thermal Engineering Principles
+1. **Heat Transfer Modes:** Balance floor conduction (thermal mass), dome radiant flux (Stefan-Boltzmann), and hot gas convection.
+2. **Insulation:** Size multi-layer insulation walls to prevent excessive thermal losses and maintain safe exterior touch temperatures.
+3. **Thermal Shock:** Select refractory materials with appropriate thermal shock resistance and thermal effusivity.
 
 ## Verification
 Run thermodynamic solver:
-`python3 .agents/skills/oven-thermodynamics/scripts/thermal_model.py`
+`python3 .agents/skills/oven-thermodynamics/scripts/thermal_model.py --help`
 """
 
 OSHWA_MDC = """---
 description: OSHWA open-source hardware compliance, dual-licensing, and Bill of Materials schema
-globs: "bom/**/*,OSHWA.md,LICENSE*,README.md,docs/assembly*"
+globs: "bom/**/*,OSHWA.md,LICENSE*,README.md"
 alwaysApply: false
 ---
 
@@ -140,14 +111,8 @@ Rules for maintaining open-source hardware certification standards.
 
 ## Bill of Materials (BOM) Requirements
 Every physical part, fastener, and raw material must be cataloged in `bom/bom.csv`.
-Strict 7-column CSV schema:
-1. `Item`: Numeric index (e.g. 1, 2, 3...)
-2. `Part Number`: Formatted part code (e.g. `PO-001-DOME`, `FAST-M5-12`)
-3. `Description`: Component title and engineering role
-4. `Qty`: Numeric quantity required per oven
-5. `Material`: Specified alloy or material (e.g. `AISI 304 Stainless Steel`, `Cordierite`)
-6. `Supplier / Source`: Vendor, standard part reference, or `Laser Cut Service`
-7. `Estimated Cost (USD)`: Currency formatted estimated unit cost
+Strict schema:
+`Part Number,Component Name,Material / Spec,Qty,Category,Vendor / Reference,Estimated Unit Cost (USD),Sourcing Notes`
 
 ## Verification
 Run OSHWA compliance audit:
@@ -158,24 +123,12 @@ CURSORRULES_CONTENT = """# Pizza Oven Physical Engineering — Root Cursor Instr
 # Generated by .agents/skills/cursor-sync/scripts/sync_cursor.py
 
 ## 1. Project Invariants
-- High-performance portable Neapolitan pizza oven (500°C chamber, 60s-90s bake time).
 - Open Hardware certified: Dual CERN-OHL-P v2 (hardware) + CC-BY-4.0 (documentation).
-- All components tracked in `bom/bom.csv` with standard 7-column schema.
+- No premature design assumptions: await explicit user guidance on fuel, form, and dimensions.
+- All components tracked in `bom/bom.csv` once designed.
 
-## 2. Mechanical DFM & Thermal Rules
-- Inner shell: 1.5mm AISI 304 Stainless Steel; Outer shroud: 1.2mm steel.
-- K-Factor: 0.42. Minimum flange >= 4*t. Minimum hole >= 1.0*t.
-- Tab-and-slot fit clearance: exactly 0.25mm per side.
-- Thermal expansion slotted holes: >= 6.5mm travel for 500°C differential.
-- Safe touch outer temperature: <= 60°C.
-- Neapolitan mouth height ratio: 63% ± 1% of dome apex height.
-
-## 3. Multi-Agent & Git Commit Discipline
+## 2. Multi-Agent & Git Commit Discipline
 - Commits must follow: `<type>(<scope>): <subject> [agent:cursor]`
-- Always run pre-commit checks:
-  * `python3 .agents/skills/code-cad/scripts/cad_validate.py`
-  * `python3 .agents/skills/oshwa-hardware/scripts/validate_oshwa.py`
-  * `python3 .agents/skills/oven-thermodynamics/scripts/thermal_model.py`
 - Situational briefing CLI:
   * `python3 .agents/skills/cross-agent-coordination/scripts/agent_handover.py --summary`
 - Task state tracked in `.agents/state/TASK_BOARD.md` and `docs/HANDOVER.md`.

@@ -1,6 +1,6 @@
 ---
 description: OSHWA open-source hardware compliance, dual-licensing, and Bill of Materials schema
-globs: "bom/**/*,OSHWA.md,LICENSE*,README.md,docs/assembly*"
+globs: "bom/**/*,OSHWA.md,LICENSE*,README.md"
 alwaysApply: false
 ---
 
@@ -14,14 +14,8 @@ Rules for maintaining open-source hardware certification standards.
 
 ## Bill of Materials (BOM) Requirements
 Every physical part, fastener, and raw material must be cataloged in `bom/bom.csv`.
-Strict 7-column CSV schema:
-1. `Item`: Numeric index (e.g. 1, 2, 3...)
-2. `Part Number`: Formatted part code (e.g. `PO-001-DOME`, `FAST-M5-12`)
-3. `Description`: Component title and engineering role
-4. `Qty`: Numeric quantity required per oven
-5. `Material`: Specified alloy or material (e.g. `AISI 304 Stainless Steel`, `Cordierite`)
-6. `Supplier / Source`: Vendor, standard part reference, or `Laser Cut Service`
-7. `Estimated Cost (USD)`: Currency formatted estimated unit cost
+Strict schema:
+`Part Number,Component Name,Material / Spec,Qty,Category,Vendor / Reference,Estimated Unit Cost (USD),Sourcing Notes`
 
 ## Verification
 Run OSHWA compliance audit:

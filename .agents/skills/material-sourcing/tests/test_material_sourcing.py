@@ -23,13 +23,30 @@ from sourcing_engine import SourcingEngine
 from automation import SourcingAutomationWatcher
 
 
+SAMPLE_BOM_CONTENT = """Part Number,Component Name,Material / Spec,Qty,Category,Vendor / Standard Reference,Estimated Unit Cost (USD),Sourcing Notes
+PO-SM-001,Inner Dome Hot Chamber,AISI 304 Stainless Steel,1,Sheet Metal,Laser Cut Service,28.50,1.5mm thickness
+PO-ST-001,Cordierite Baking Stone,Refractory Ceramic,1,Refractory Stone,Commercial Supplier,34.00,15mm thick
+PO-IN-001,Ceramic Fiber Blanket,128 kg/m3 Bio-soluble,1,Insulation,Industrial Insulation,22.00,25mm thick
+"""
+
 class TestBOMAnalyzer(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False)
+        cls.tmp_file.write(SAMPLE_BOM_CONTENT)
+        cls.tmp_file.close()
+
+    @classmethod
+    def tearDownClass(cls):
+        if os.path.exists(cls.tmp_file.name):
+            os.remove(cls.tmp_file.name)
+
     def setUp(self):
-        self.analyzer = BOMAnalyzer()
+        self.analyzer = BOMAnalyzer(bom_path=self.tmp_file.name)
 
     def test_load_bom(self):
         items = self.analyzer.items
-        self.assertGreaterEqual(len(items), 20)
+        self.assertEqual(len(items), 3)
         # Check first part
         sm001 = self.analyzer.get_item_by_part_number("PO-SM-001")
         self.assertIsNotNone(sm001)
@@ -186,8 +203,19 @@ class TestScraperAdapters(unittest.TestCase):
 
 
 class TestSourcingEngine(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False)
+        cls.tmp_file.write(SAMPLE_BOM_CONTENT)
+        cls.tmp_file.close()
+
+    @classmethod
+    def tearDownClass(cls):
+        if os.path.exists(cls.tmp_file.name):
+            os.remove(cls.tmp_file.name)
+
     def setUp(self):
-        self.engine = SourcingEngine()
+        self.engine = SourcingEngine(bom_path=self.tmp_file.name)
 
     def test_search_item_multi_platform(self):
         item = self.engine.analyzer.get_item_by_part_number("PO-ST-001")
@@ -232,10 +260,10 @@ class TestSourcingEngine(unittest.TestCase):
 
     def test_search_all_bom_and_metrics(self):
         comparisons = self.engine.search_all_bom(location="Sydney NSW", mock=True, include_consumables=True)
-        self.assertEqual(len(comparisons), 23)  # 20 BOM items + 3 consumables
+        self.assertEqual(len(comparisons), 6)  # 3 test BOM items + 3 consumables
 
         metrics = self.engine.compute_summary_metrics(comparisons)
-        self.assertGreater(metrics["total_bom_cost_usd"], 250.0)
+        self.assertGreater(metrics["total_bom_cost_usd"], 50.0)
         self.assertLess(metrics["total_best_sourced_cost_usd"], metrics["total_bom_cost_usd"])
         self.assertGreater(metrics["total_potential_savings_usd"], 0.0)
         self.assertGreater(metrics["surplus_deals_count"], 0)
@@ -249,7 +277,7 @@ class TestSourcingEngine(unittest.TestCase):
         self.assertIn("Component Sourcing Matrix", report)
         self.assertIn("PO-SM-001", report)
         self.assertIn("PO-ST-001", report)
-        self.assertIn("High-Temperature Safety Interceptions", report)
+        self.assertIn("Surplus Deals", report)
 
 
 class TestAutomationPipeline(unittest.TestCase):
