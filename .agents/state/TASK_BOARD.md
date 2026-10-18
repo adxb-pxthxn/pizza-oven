@@ -19,6 +19,8 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ---
 
 ## DONE
+- [x] **[TASK-003]** `CAD`: build123d toolchain, placeholder assembly, STEP/STL export, unit tests *(Priority: HIGH, Assigned: cursor)*
+  - Placeholder only. User design requirements remain TASK-002.
 - [x] **[TASK-001]** `COORDINATION`: Multi-agent orchestration, Cursor sync, and automated review pipeline *(Priority: HIGH, Assigned: antigrav)*
 - [x] **[TASK-000]** `SETUP`: Repository initialization, CERN-OHL-P v2 & CC-BY licenses, open hardware skills foundation *(Priority: HIGH, Assigned: antigrav)*
 

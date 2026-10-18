@@ -68,6 +68,12 @@ alwaysApply: false
 
 Guidelines for parametric mechanical design, fabrication, and code-driven CAD.
 
+## Parametric toolchain
+- Master dimensions are millimetre fields in `cad/parameters.py`. The checked-in model is a placeholder, not a product specification.
+- Export with `python3 -m cad.build` (STEP AP214 + STL) into gitignored `cad/output/`.
+- Test with `python3 -m unittest cad.tests.test_placeholder_assembly`.
+- Conventions: `.agents/skills/cad/SKILL.md`.
+
 ## General Fabrication & DFM Rules
 - **Laser / Waterjet:** Maintain hole diameter >= 1.0 * thickness and web distance >= 2.0 * thickness.
 - **Press Brake Air Bending:** Select standard V-die openings (typically 6-8 * t) and appropriate bend deductions / K-factors.

@@ -148,13 +148,15 @@ When exporting flat sheet metal patterns to laser cutting nesting software (e.g.
 When generating or modifying CAD models in this repository:
 
 1. **Inspect / Update Master Parameters**:
-   - Edit master dimension variables in `cad/model_generator.py` or provide a JSON override.
+   - Edit named millimetre fields on `OvenParameters` in `cad/parameters.py`. Part builders take that object and do not keep a second copy of a dimension.
+   - The values checked in with the toolchain are a generic placeholder. Do not replace them with a commercial product's dimensions.
 2. **Run Geometric & DFM Validation**:
-   - Execute `.agents/skills/code-cad/scripts/cad_validate.py` against the specification.
-   - Verify minimum hole diameters, bridge thicknesses, Neapolitan 63% mouth ratio, and thermal expansion slot travel.
+   - Execute `python3 -m unittest cad.tests.test_placeholder_assembly` after installing `cad/requirements.txt`.
+   - Execute `.agents/skills/code-cad/scripts/cad_validate.py` against a specification once one exists.
+   - Verify minimum hole diameters, bridge thicknesses, and thermal expansion slot travel when those features exist.
 3. **Generate Assets**:
-   - Run `python3 cad/model_generator.py --stone 12 --format all --out-dir cad/exports/`
-   - Review DXF files for laser cutting, SVG for documentation/drawings, and STL/OBJ for 3D inspection.
+   - Run `python3 -m cad.build`
+   - That writes STEP AP214 and STL to gitignored `cad/output/`. Do not commit those files. `cad/exports/` is for a published release, not for this command.
 4. **Verify Assembly Clearances**:
    - Check that insulation blanket cavity has $>25\text{ mm}$ clearance everywhere between hot dome and outer shroud.
    - Check that stone slides freely with $5\text{ mm}$ clearance on all sides.

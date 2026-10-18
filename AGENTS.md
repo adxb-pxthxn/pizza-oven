@@ -24,16 +24,29 @@ This repository is an open-source physical engineering and mechanical developmen
    - Keep `docs/HANDOVER.md` and `.agents/state/TASK_BOARD.md` updated between agent sessions.
    - Practice atomic commits with agent signatures (e.g. `[agent:antigrav]` or `[agent:cursor]`).
 
+## Parametric CAD
+
+Editable source is build123d Python. Generated STEP/STL are not committed.
+
+- Dimensions: `cad/parameters.py` (millimetres). The checked-in values are a generic placeholder shell, not a product specification.
+- Install (only when building or testing CAD): `python3 -m pip install -r cad/requirements.txt` inside a venv. Pins are build123d 0.13.0 and cadquery-ocp-novtk 8.0.1.1.0. Python 3.11–3.14. macOS arm64 wheel notes are in `cad/README.md`.
+- Build: `python3 -m cad.build` writes `cad/output/placeholder_oven_assembly.step` (AP214, millimetres) and `.stl`. `cad/output/` is gitignored.
+- Test: `python3 -m unittest cad.tests.test_placeholder_assembly`
+- Preview and opening STEP in FreeCAD or Fusion 360: `cad/README.md`
+- Agent conventions: `.agents/skills/cad/SKILL.md` (the `.cursor/skills` symlink exposes the same file)
+
 ## Cursor Cloud specific instructions
 
-- There is no package manifest and no dev server. The default image already has Python 3.12 (standard library only), Node.js 22, and Google Chrome. Do not add a requirements file or start a web process for routine work.
-- Product commands are listed in `README.md`. The automated test is `python3 .agents/skills/material-sourcing/tests/test_material_sourcing.py` (stdlib `unittest`, offline).
+- The default image has Python 3.12 (standard library), Node.js 22, and Google Chrome. Routine non-CAD work stays offline. Do not start a web process.
+- CAD dependencies are optional and are not preinstalled. Install `cad/requirements.txt` when a task builds or tests models. The Linux x86_64 wheel for the pinned `cadquery-ocp-novtk` installs with pip on this image.
+- Product commands are listed in `README.md`. The stdlib test is `python3 .agents/skills/material-sourcing/tests/test_material_sourcing.py` (offline). The CAD test needs the install above.
 - Anatomy figures are plain Node ESM. `node .agents/skills/anatomy/examples/dial-indicator/build.mjs` rewrites the HTML next to that script; a correct rebuild leaves git clean. Anatomy's own `scripts/*.test.mjs` need a temporary `NODE_PATH` with `react`, `react-dom`, `typescript`, and `esbuild`, as in `.agents/skills/anatomy/.github/workflows/ci.yml`.
 
 ## Available Skills
 - `anatomy`: Isometric technical figures, cutaways, and interactive visual explainers.
 - `mechanical-engineering`: General sheet metal DFM, bend allowance calculator, thermal expansion calculator, GD&T, food safety standards.
 - `code-cad`: Parametric code-CAD modeling guidelines, layer conventions, interchange export pipelines.
+- `cad`: build123d conventions for the in-repo model (`cad/parameters.py`, `python3 -m cad.build`).
 - `oshwa-hardware`: Open-source hardware audit, BOM validation, OSHWA checklist.
 - `oven-thermodynamics`: High-temp thermal modeling, heat transfer formulas, multi-layer insulation calculations.
 - `material-sourcing`: Local vendor search, classifieds scraping (Gumtree, Facebook Marketplace, Google), and BOM price comparison.
