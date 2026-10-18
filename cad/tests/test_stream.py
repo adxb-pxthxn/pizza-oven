@@ -160,6 +160,11 @@ class TessarionPhysicsTest(unittest.TestCase):
         self.assertLess(live["bread_floor_C"], 250.0)
         self.assertLessEqual(live["floor_C"], 305.0)
         self.assertGreaterEqual(live["scorch_s"], 125.0)
+        gate = json.loads((ROOT / "design" / "stream-1" / "tessarion" / "gate.json").read_text(encoding="utf-8"))
+        self.assertEqual(gate["solids"], 48)
+        self.assertEqual(gate["interference"], [])
+        self.assertAlmostEqual(gate["door_zmin"], 63.4, delta=0.2)
+        self.assertGreater(gate["door_zmin"], gate["sill_zmax"])
 
 
 class SunfyrePhysicsTest(unittest.TestCase):

@@ -358,11 +358,13 @@ def build(name: str = "stormcloud") -> dict:
             _box(sign * (plate_w / 2.0 - 10.0) - 4.0, rail_y, rail_z, 8.0, rail_l, 8.0 - gap),
             "ss",
         )
-    if design.plate_pose == "rear":
-        # In the mouth, so the front view shows the grate. Still under the crown.
+    bay_y = design.length - 20.0 - plate_l
+    if bay_y - design.landing > 200.0:
+        # Permanent grate in the bay the plate uncovers when it slides back.
+        # The plate passes 15 mm above these rods when it is forward.
         rod_z = deck + design.mouth_h - 20.0
         y_a = design.landing + 16.0
-        y_b = plate_y - 12.0
+        y_b = bay_y - 12.0
         half = math.sqrt(max(radius * radius - (rod_z - deck) ** 2, 0.0)) - 8.0
         for index, rod_x in enumerate((-120.0, -60.0, 0.0, 60.0, 120.0)):
             if abs(rod_x) + 2.0 > half or y_b - y_a < 40.0:
