@@ -6,7 +6,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `STREAM-1`: Long-vault prototypes on `design/stream-1-original` *(Priority: HIGH, Assigned: cursor)*
-  - Best oven is Caraxes, 38.7 kg. Grip hollow, measured gate. Inputs are in the store id path, not bot. Do not merge to main.
+  - Best oven is Caraxes, 38.7 kg. Shop sheet is `design/stream-1/caraxes/BUILD.md`. Re-read `inspiration.md` in the store folder each iteration. Do not merge to main.
 
 ---
 
