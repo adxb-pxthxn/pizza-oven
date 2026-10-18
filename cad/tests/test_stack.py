@@ -505,5 +505,38 @@ class DreamfyreTests(unittest.TestCase):
                 self.assertEqual(part["zone"], "cool", part["id"])
 
 
+class CannibalTests(unittest.TestCase):
+    def test_the_spacers_tie_the_inner_plate_to_the_skin(self) -> None:
+        design = Stack(
+            dragon="Cannibal",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True, rod_rail=True,
+            wind=True, panel=True, door_air=True, door_hinge=True, door_tie=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        skin = items["door-skin"]
+        plate = items["door-inner"]
+        board = items["door-ins"]
+        tie = items["tie-door-0"]
+        skin_inner = skin["corner"][1] + skin["size"][1]
+        plate_outer = plate["corner"][1]
+        self.assertAlmostEqual(tie["origin"][1], skin_inner, places=2)
+        self.assertAlmostEqual(tie["origin"][1] + tie["length"], plate_outer, places=2)
+        self.assertGreater(tie["length"], 30.0)
+        # The board gave up a border. The spacer sits in it.
+        self.assertGreater(board["corner"][0], skin["corner"][0] + tie["r_out"])
+        self.assertGreater(tie["origin"][0] - tie["r_out"], skin["corner"][0])
+        self.assertLess(tie["origin"][0] + tie["r_out"], board["corner"][0])
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertLess(result["body_length_mm"], 880.0)
+        self.assertGreaterEqual(result["mouth_h"], 180.0)
+        self.assertEqual(items["tie-door-0"]["module"], "brow")
+
+
 if __name__ == "__main__":
     unittest.main()

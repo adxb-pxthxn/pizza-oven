@@ -153,6 +153,8 @@ class Stack:
     door_air: bool = False
     # Dreamfyre: a port pintle. The barrels run on the pin. The leaf bolts to the skin.
     door_hinge: bool = False
+    # Cannibal: spacers tie the inner plate to the skin. The hinge holds the whole door.
+    door_tie: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -1130,7 +1132,12 @@ def parts(s: Stack) -> list[dict]:
     door_h = mh - 3.0
     door_back = -(skin_off + 1.0) - (8.0 if s.gasket else 0.0)
     items.append(_box("door-inner", "hood", "mild", "hot", door_x, door_back - 1.2, 1.5, door_w, 1.2, door_h))
-    items.append(_box("door-ins", "hood", "micro", "cool", door_x, door_back - 1.2 - door_t_ins, 1.5, door_w, door_t_ins, door_h))
+    ins_inset = 8.0 if s.door_tie else 0.0
+    items.append(_box(
+        "door-ins", "hood", "micro", "cool",
+        door_x + ins_inset, door_back - 1.2 - door_t_ins, 1.5 + ins_inset,
+        door_w - 2.0 * ins_inset, door_t_ins, door_h - 2.0 * ins_inset,
+    ))
     # Sixteen millimetres of board alone leaves the outer face near 90°C.
     door_air = 24.0 if s.door_air else 0.0
     items.append(_box(
@@ -1138,6 +1145,23 @@ def parts(s: Stack) -> list[dict]:
         door_x, door_back - 1.2 - door_t_ins - door_air - 0.8, 1.5, door_w, 0.8, door_h,
     ))
     door_front = door_back - 1.2 - door_t_ins - door_air - 0.8
+    if s.door_tie:
+        # Across the air and the board, in the border the board gave up.
+        # One end butts the skin, the other butts the inner plate.
+        skin_inner_y = door_front + 0.8
+        plate_outer_y = door_back - 1.2
+        margin = 4.0
+        for index, (tx, tz) in enumerate((
+            (door_x + margin, 1.5 + margin),
+            (door_x + door_w - margin, 1.5 + margin),
+            (door_x + margin, 1.5 + door_h - margin),
+            (door_x + door_w - margin, 1.5 + door_h - margin),
+        )):
+            items.append(_tube(
+                f"tie-door-{index}", "hood", "ss", "hot",
+                [tx, skin_inner_y, tz], [0, 1, 0],
+                0.0, 2.5, plate_outer_y - skin_inner_y,
+            ))
     if s.door_hinge:
         items.extend(_door_hinge(s, door_x, door_front))
     else:

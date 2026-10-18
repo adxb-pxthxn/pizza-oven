@@ -43,6 +43,7 @@ def _from(x: np.ndarray, proto: Stack) -> Stack:
         panel=proto.panel,
         door_air=proto.door_air,
         door_hinge=proto.door_hinge,
+        door_tie=proto.door_tie,
         **values,
     )
 
@@ -101,12 +102,14 @@ def solve(proto: Stack, bounds: list[tuple[float, float]], x0: list[float]) -> d
 
 
 def _proto(name: str) -> Stack:
-    if name in ("vermithor", "silverwing", "vhagar", "balerion", "meraxes", "dreamfyre"):
+    if name in ("vermithor", "silverwing", "vhagar", "balerion", "meraxes", "dreamfyre", "cannibal"):
         dragon = {
             "vermithor": "Vermithor", "silverwing": "Silverwing", "vhagar": "Vhagar",
             "balerion": "Balerion", "meraxes": "Meraxes", "dreamfyre": "Dreamfyre",
+            "cannibal": "Cannibal",
         }[name]
-        carried = ("silverwing", "vhagar", "balerion", "meraxes", "dreamfyre")
+        carried = ("silverwing", "vhagar", "balerion", "meraxes", "dreamfyre", "cannibal")
+        hinged = ("dreamfyre", "cannibal")
         return Stack(
             dragon=dragon,
             deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
@@ -116,10 +119,11 @@ def _proto(name: str) -> Stack:
             seated=True, grill=True, broiler=True, bail=True,
             damper_shut=True, gasket=True, slide=True,
             rod_rail=(name in carried),
-            wind=(name in ("vhagar", "balerion", "meraxes", "dreamfyre")),
-            panel=(name in ("balerion", "meraxes", "dreamfyre")),
-            door_air=(name in ("meraxes", "dreamfyre")),
-            door_hinge=(name == "dreamfyre"),
+            wind=(name in ("vhagar", "balerion", "meraxes", "dreamfyre", "cannibal")),
+            panel=(name in ("balerion", "meraxes", "dreamfyre", "cannibal")),
+            door_air=(name in ("meraxes", "dreamfyre", "cannibal")),
+            door_hinge=(name in hinged),
+            door_tie=(name == "cannibal"),
         )
     if name == "sheepstealer":
         return Stack(
@@ -179,7 +183,7 @@ def main() -> None:
     import os
     name = os.environ.get("DRAGON", "vermax")
     proto = _proto(name)
-    hi_names = ("seasmoke", "caraxes", "meleys", "syrax", "sheepstealer", "vermithor", "silverwing", "vhagar", "balerion", "meraxes", "dreamfyre")
+    hi_names = ("seasmoke", "caraxes", "meleys", "syrax", "sheepstealer", "vermithor", "silverwing", "vhagar", "balerion", "meraxes", "dreamfyre", "cannibal")
     hi_front = 310.0 if name in hi_names else 290.0
     hi_air = 20.0 if name in hi_names else 16.0
     soffit_bounds = (148.0, 165.0) if name in hi_names and name != "seasmoke" else (105.0, 140.0)

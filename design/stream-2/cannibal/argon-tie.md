@@ -1,0 +1,1 @@
+Argon checked the four spacers. Each butts the skin at y=-88.2 and the inner plate at y=-48.2. The board's corner is 3.2 mm clear of the spacer wall. The port spacer stays 0.8 mm off the hinge ear, the skin between them. No pair shares volume.
