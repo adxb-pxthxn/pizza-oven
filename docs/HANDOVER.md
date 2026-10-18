@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T19:25:00Z
+**Timestamp:** 2026-10-18T19:30:00Z
 **Current Branch / Commit:** design/stream-2-modular
 **Overall Status:** IN_PROGRESS
 
@@ -24,7 +24,7 @@ Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/an
 ---
 
 ## 2b. Stream 2 (this branch)
-Silverwing is the current stack. Vermithor's slide, on 8 mm rods instead of 10 by 16 mm flats. Plate still Y 180 to 350 at Z 100. Pit 10.5 kg. Hearth 9.1 kg. Brow 5.2 kg. Tunnel 8.2 kg. Ready 33.0 kg. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Flux stays 13.8 kW/m². Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Vhagar. See `design/stream-2/README.md`.
+Vhagar is the current stack. Silverwing's rods, plus a mild wind-back stored under the rear overhang. Stand it on the rim when the hood is off. Pit 10.8 kg. Hearth 9.1 kg. Brow 5.2 kg. Tunnel 8.2 kg. Ready 33.4 kg. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Flux stays 13.8 kW/m². Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Balerion. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.

@@ -145,6 +145,8 @@ class Stack:
     slide: bool = False
     # Silverwing: those rails are 8 mm rods. The flat bars were more steel than the span needs.
     rod_rail: bool = False
+    # Vhagar: a mild wind-back stored under the rear overhang. It stands on the rim when the hood is off.
+    wind: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -691,6 +693,23 @@ def parts(s: Stack) -> list[dict]:
             f"foot-{index}", "pit", "jarrah", "cool",
             [fx, fy, z_foot], [0, 0, 1], 0.0, foot_r, FOOT_H,
         ))
+
+    if s.wind:
+        # Behind the belly, below the hood insulation, clear of the rear skin.
+        # Two shelves butt the rear wall. The plate sits 0.6 mm above them.
+        wind_y = 684.0
+        wind_z = -120.0
+        items.append(_box(
+            "wind-back", "pit", "mild", "hot",
+            -180.0, wind_y, wind_z, 360.0, 1.2, 100.0,
+        ))
+        shelf_top = wind_z - 0.6
+        for step, xoff in enumerate((-90.0, 90.0)):
+            items.append(_box(
+                f"wind-shelf-{step}", "pit", "mild", "hot",
+                xoff - 12.0, pit_inner_l + s.pit_t, shelf_top - 2.0,
+                24.0, wind_y + 1.2 - (pit_inner_l + s.pit_t), 2.0,
+            ))
 
     # Carry grips. Bar runs front-to-back so a person at each side can lift.
     # Posts stand off the bare firebox wall. The ferrule is the only press fit.

@@ -345,5 +345,31 @@ class SilverwingTests(unittest.TestCase):
         self.assertLessEqual(result["skin_C"], 55.0)
 
 
+class VhagarTests(unittest.TestCase):
+    def test_the_wind_back_stores_under_the_overhang(self) -> None:
+        design = Stack(
+            dragon="Vhagar",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True, rod_rail=True, wind=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        plate = items["wind-back"]
+        self.assertEqual(plate["module"], "pit")
+        self.assertGreater(plate["corner"][1], 682.0)
+        self.assertLess(plate["corner"][2] + plate["size"][2], 0.0)
+        shelf = items["wind-shelf-0"]
+        self.assertEqual(shelf["corner"][1], 661.0)
+        self.assertLess(shelf["corner"][2] + shelf["size"][2], plate["corner"][2] - 0.4)
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertLess(result["modules_kg"]["pit"], 12.0)
+        self.assertLess(result["modules_kg"]["tunnel"], result["modules_kg"]["pit"])
+        self.assertLess(result["body_length_mm"], 880.0)
+
+
 if __name__ == "__main__":
     unittest.main()

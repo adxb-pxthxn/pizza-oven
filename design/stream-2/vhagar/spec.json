@@ -1,0 +1,7 @@
+{
+  "dragon": "Vhagar",
+  "wind": "A 1.2 mm mild plate, 360 by 100 mm, stored at Y 684, Z -120 to -20, under the rear overhang. Two shelves butt the rear wall at Y 661. The plate sits 0.6 mm above them. When the hood comes off, stand it on the rear rim. That pose is not a second solid.",
+  "ready_kg": 33.354,
+  "modules_kg": {"pit": 10.839, "hearth": 9.094, "brow": 5.193, "tunnel": 8.228},
+  "note": "Silverwing's rods and the rope stay. The flux is still 13.8 kW/m²."
+}

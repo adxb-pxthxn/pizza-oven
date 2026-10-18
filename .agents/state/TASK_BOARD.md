@@ -7,7 +7,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/stream-2-modular`. Draft PR. Do not merge.
-  - Silverwing is current: 33.0 kg, Vermithor's slide on 8 mm rods, pit 10.5 kg still heaviest. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
+  - Vhagar is current: 33.4 kg, wind-back on the pit, rods, rope, slide. Pit 10.8 kg still heaviest. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
 
 ---
 
