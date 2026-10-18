@@ -81,6 +81,8 @@ class Vault:
     pizza_gas: float = 370.0
     broil_gas: float = 500.0
     bread_gas: float = 260.0
+    box_d: float = 80.0
+    door_pose: str = "shut"
 
 
 def stack_thickness(v: Vault) -> float:
@@ -329,8 +331,8 @@ def cooldown_open_s(v: Vault, t_floor: float) -> float:
     return _cool_seconds(capacity, areas_m2(v)["steel"], 0.79, 0.40, 15.0, t_floor, 60.0)
 
 
-def heatup_minutes(v: Vault, floor_c: float, plate_c: float, t_gas: float) -> dict[str, float]:
-    """Energy to the setpoints, and the minutes a 6 kW burner takes at 35% hold-in."""
+def heatup_minutes(v: Vault, floor_c: float, plate_c: float, t_gas: float, eta: float = 0.35) -> dict[str, float]:
+    """Energy to the setpoints. 0.35 is the door-open hold-in. 0.55 is the door shut."""
     steel_kg = (v.steel_w * v.steel_l * v.steel_t) * 1e-9 * DENS["mild"]
     plate_w, plate_l = plate_span(v)
     plate_kg = (plate_w * plate_l * v.plate_t) * 1e-9 * DENS["ss"]
@@ -344,8 +346,14 @@ def heatup_minutes(v: Vault, floor_c: float, plate_c: float, t_gas: float) -> di
         + liner_kg * CP["ss"] * (t_gas - T_AMB) * 0.85
         + fibre_kg * CP["fibre"] * (t_gas - T_AMB) * 0.5
     )
-    watts = BURNER_KW * 1000.0 * 0.35
-    return {"energy_MJ": energy / 1e6, "minutes": energy / watts / 60.0, "steel_kg": steel_kg}
+    watts = BURNER_KW * 1000.0 * eta
+    shut = BURNER_KW * 1000.0 * 0.55
+    return {
+        "energy_MJ": energy / 1e6,
+        "minutes": energy / watts / 60.0,
+        "shut_minutes": energy / shut / 60.0,
+        "steel_kg": steel_kg,
+    }
 
 
 def masses(v: Vault) -> dict[str, float]:
@@ -395,7 +403,9 @@ def masses(v: Vault) -> dict[str, float]:
     hood = _mm3_to_kg(v.mouth_w * 40.0 * 0.8, DENS["ss"])
     frame = _mm3_to_kg((door_w * door_h - v.mouth_w * v.mouth_h) * 1.2, DENS["ss"])
 
-    box = _mm3_to_kg((180 * 140 * 2 + 180 * 80 * 2 + 140 * 80) * 0.8, DENS["ss"])
+    # Shell only. Depth follows the cowl; 80 mm is the Stormcloud housing.
+    box_d = v.box_d
+    box = _mm3_to_kg((180.0 * 140.0 * 2.0 + 180.0 * box_d * 2.0 + 140.0 * box_d) * 0.8, DENS["ss"])
     grips = _mm3_to_kg(2.0 * 140.0 * 36.0 * 28.0 * 0.72, DENS["jarrah"])
     ferrules = _mm3_to_kg(4.0 * math.pi * (16.0 ** 2 - 14.0 ** 2) * 8.0, DENS["gidgee"])
     posts = _mm3_to_kg(4.0 * math.pi * 3.0 ** 2 * v.standoff, DENS["ss"])
@@ -472,6 +482,7 @@ def evaluate(v: Vault) -> dict:
         "tread_cooldown_s": tread,
         "cooldown_ratio": cool / tread,
         "heatup_min": heat["minutes"],
+        "heatup_shut_min": heat["shut_minutes"],
         "heatup_MJ": heat["energy_MJ"],
         "steel_kg": heat["steel_kg"],
         "grip_C": grip_temperature(skin["outer_C"], v.standoff),

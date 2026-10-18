@@ -91,6 +91,22 @@ def _half_disc(radius: float, thick: float, y0: float, z_axis: float) -> Part.Sh
     return disc.common(upper)
 
 
+def _arch_slab_x(width: float, rise: float, x0: float, depth: float, z_sill: float, y_c: float) -> Part.Shape:
+    """Half-ellipse in the YZ plane, extruded along +X. Used for the parked door."""
+    points = []
+    steps = 28
+    for index in range(steps + 1):
+        theta = math.pi * index / steps
+        y = y_c + (width / 2.0) * math.cos(theta)
+        z = z_sill + rise * math.sin(theta)
+        points.append(App.Vector(x0, y, z))
+    points.append(App.Vector(x0, y_c - width / 2.0, z_sill - 1.0))
+    points.append(App.Vector(x0, y_c + width / 2.0, z_sill - 1.0))
+    points.append(points[0])
+    face = Part.Face(Part.makePolygon(points))
+    return face.extrude(App.Vector(depth, 0.0, 0.0))
+
+
 def _arch_cutter(width: float, rise: float, y0: float, depth: float, z_sill: float) -> Part.Shape:
     """Half-ellipse mouth. The top corners of a rectangle would leave the barrel."""
     points = []
@@ -327,31 +343,63 @@ def build(name: str = "stormcloud") -> dict:
         "ss",
     )
 
-    door_y = y_front - hw["door_gap"] - (2.0 * hw["door_skin"] + hw["door_fibre"])
     door_rise = design.mouth_h + hw["door_border"]
     door_w = design.mouth_w + 2.0 * hw["door_border"]
-    door_cut = _arch_cutter(door_w, door_rise, door_y - 1.0, 2.0 * hw["door_skin"] + hw["door_fibre"] + 2.0, deck - hw["door_border"])
-    door_blank = _box(
-        -door_w / 2.0 - 4.0,
-        door_y,
-        deck - hw["door_border"] - 4.0,
-        door_w + 8.0,
-        2.0 * hw["door_skin"] + hw["door_fibre"],
-        door_rise + hw["door_border"] + 8.0,
-    )
-    add("door", door_blank.common(door_cut), "ss")
-
-    pull_y = door_y - hw["pull_gap"] - hw["pull_d"]
-    add(
-        "door-pull",
-        _box(-hw["pull_len"] / 2.0, pull_y, deck + 40.0, hw["pull_len"], hw["pull_d"], hw["pull_h"]),
-        "jarrah",
-    )
+    door_t = 2.0 * hw["door_skin"] + hw["door_fibre"]
+    z_sill = deck - hw["door_border"]
+    if design.door_pose == "open":
+        # Pizza pose. Thickness along X, arch in YZ, wholly port of the skin.
+        # A 90 degree swing about the front jamb would cut the shell, so the
+        # door is placed, not rotated.
+        x_in = -(skin_r + 3.0)
+        y_c = y_front + 12.0 + door_w / 2.0
+        door_cut = _arch_slab_x(door_w, door_rise, x_in - door_t - 1.0, door_t + 2.0, z_sill, y_c)
+        door_blank = _box(
+            x_in - door_t,
+            y_c - door_w / 2.0 - 4.0,
+            z_sill - 4.0,
+            door_t,
+            door_w + 8.0,
+            door_rise + hw["door_border"] + 8.0,
+        )
+        add("door", door_blank.common(door_cut), "ss")
+        add(
+            "door-pull",
+            _box(
+                x_in - door_t - hw["pull_gap"] - hw["pull_d"],
+                y_c - hw["pull_len"] / 2.0,
+                deck + 40.0,
+                hw["pull_d"],
+                hw["pull_len"],
+                hw["pull_h"],
+            ),
+            "jarrah",
+        )
+    elif design.door_pose == "shut":
+        door_y = y_front - hw["door_gap"] - door_t
+        door_cut = _arch_cutter(door_w, door_rise, door_y - 1.0, door_t + 2.0, z_sill)
+        door_blank = _box(
+            -door_w / 2.0 - 4.0,
+            door_y,
+            z_sill - 4.0,
+            door_w + 8.0,
+            door_t,
+            door_rise + hw["door_border"] + 8.0,
+        )
+        add("door", door_blank.common(door_cut), "ss")
+        pull_y = door_y - hw["pull_gap"] - hw["pull_d"]
+        add(
+            "door-pull",
+            _box(-hw["pull_len"] / 2.0, pull_y, deck + 40.0, hw["pull_len"], hw["pull_d"], hw["pull_h"]),
+            "jarrah",
+        )
+    else:
+        raise RuntimeError(f"unknown door_pose {design.door_pose}")
 
     box_y = length + design.fibre_t + design.air_gap + design.skin_t + hw["box_gap"]
     add(
         "burner-box",
-        _box(-hw["box_w"] / 2.0, box_y, slot_z - 10.0, hw["box_w"], hw["box_d"], hw["box_h"]),
+        _box(-hw["box_w"] / 2.0, box_y, slot_z - 10.0, hw["box_w"], design.box_d, hw["box_h"]),
         "ss",
     )
 
@@ -439,13 +487,33 @@ def build(name: str = "stormcloud") -> dict:
         "interference": stray,
         "press_fits": press,
         "analytical_ready_kg": round(report["ready_kg"], 3),
-        "png": {
-            "front": "Shut arched door, shoulders and two grips, four feet. Not a round dome.",
-            "side": "Long barrel. Burner box at the rear, peel rest and pull at the front.",
-            "top": "Long plan, grips on both sides, four rack bosses. Not a circular plan.",
-            "section": "Centreline. Sky plate is the horizontal line in the arch. Steel is the deck.",
-        },
+        "door_pose": design.door_pose,
+        "box_d": design.box_d,
+        "png": (
+            {
+                "front": "Mouth arch open. Door is the thin fin on the port cheek.",
+                "side": "Long barrel. Parked door is the arch along the port side. Short cowl at the rear.",
+                "top": "Long plan. Door is a strip outside the port skin. Not a circular plan.",
+                "section": "Centreline. Sky plate is the horizontal line. The parked door is off this cut.",
+            }
+            if design.door_pose == "open"
+            else {
+                "front": "Shut arched door, shoulders and two grips, four feet. Not a round dome.",
+                "side": "Long barrel. Burner box at the rear, peel rest and pull at the front.",
+                "top": "Long plan, grips on both sides, four rack bosses. Not a circular plan.",
+                "section": "Centreline. Sky plate is the horizontal line in the arch. Steel is the deck.",
+            }
+        ),
     }
+    if design.door_pose == "open":
+        door_bb = doc.getObject("door").Shape.BoundBox
+        skin_bb = doc.getObject("skin").Shape.BoundBox
+        gate["door_xmax"] = round(door_bb.XMax, 1)
+        gate["skin_xmin"] = round(skin_bb.XMin, 1)
+        if door_bb.XMax > -(design.mouth_w / 2.0):
+            stray.append({"a": "door", "b": "mouth", "mm3": -1})
+        if door_bb.XMax >= skin_bb.XMin - 1.0:
+            stray.append({"a": "door", "b": "skin-envelope", "mm3": -1})
     (out_dir / "gate.json").write_text(json.dumps(gate, indent=2) + "\n", encoding="utf-8")
     print("GATE", json.dumps(gate))
 
@@ -486,7 +554,7 @@ def build(name: str = "stormcloud") -> dict:
         print("PNG", out_dir / f"{view_name}.png")
     if stray or invalid:
         raise RuntimeError(f"gate failed: stray={len(stray)} invalid={invalid}")
-    print("STORMCLOUD_BUILT", design.dragon)
+    print("BUILT", design.dragon)
     return gate
 
 

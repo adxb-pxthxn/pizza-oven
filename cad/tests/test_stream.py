@@ -76,5 +76,24 @@ class StormcloudPhysicsTest(unittest.TestCase):
         self.assertEqual(thermal["dragon"], "Stormcloud")
 
 
+class TyraxesPhysicsTest(unittest.TestCase):
+    def test_pizza_pose_is_cooler_and_lighter(self):
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["tyraxes"]
+        self.assertEqual(saved["design"]["door_pose"], "open")
+        self.assertEqual(saved["design"]["box_d"], 48.0)
+        self.assertEqual(saved["design"]["pizza_gas"], 360.0)
+        live = evaluate(Vault(**saved["design"]))
+        self.assertTrue(saved["success"])
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        self.assertAlmostEqual(saved["result"]["floor_C"], live["floor_C"], delta=0.2)
+        self.assertLessEqual(live["floor_C"], 305.0)
+        self.assertGreaterEqual(live["scorch_s"], 125.0)
+        self.assertLess(live["heatup_shut_min"], 16.0)
+        self.assertLess(live["ready_kg"], evaluate(stormcloud())["ready_kg"])
+        self.assertLessEqual(live["under_C"], 60.0)
+        self.assertGreaterEqual(live["broil_W_m2"], 8000.0)
+
+
 if __name__ == "__main__":
     unittest.main()

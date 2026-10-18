@@ -1,23 +1,24 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T17:45:00Z
+**Timestamp:** 2026-10-18T18:15:00Z
 **Current Branch / Commit:** design/stream-1-original
 **Overall Status:** IN_PROGRESS
 
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-Stream 1 is the long barrel after Morning and Moondancer. Stormcloud is sized: free 6 mm mild-steel floor, sky plate, 75 mm ceramic fibre, 34.5 kg, pizza floor 302°C, open cool-down 0.66× the Tread, 23 min heat-up. The FreeCAD solid is the next step. Do not merge to main.
+Stream 1 is the long barrel after Morning and Moondancer. Stormcloud is the shut-door reference (34.2 kg, floor 309°C). Tyraxes parks the door on the port cheek and runs gas at 360°C (34.1 kg, floor 301°C, shut heat-up 14 min). Do not merge to main.
 
 ## 2. Completed in This Session
 - [x] Shop stack and heat model in `cad/freecad/stream_physics.py`.
-- [x] SLSQP mass minimum, then 25 mm blanket snap, in `design/stream-1/optimizer.json`.
+- [x] Stormcloud solid, interference gate, four views.
+- [x] Tyraxes solid. Door xmax −337.8 mm, skin xmin −334.8 mm. Ferrule press fits only.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
-1. Build Stormcloud through `tools/argon/antigravity.py` and `cad/freecad/stream_build.py`.
+1. Next dragon is Arrax. Keep the barrel. Change something a measurement can catch.
 2. Keep wood off the arch. The sky plate stays removable.
-3. Next dragon after the renders is Tyraxes, only if a measured gate fails.
+3. Argon answers text. Do not pull a sandbox over `/workspace`.
 
 ## 4. Guiding Invariants
 - Fuel is gas. Floor is normalised mild steel, free, no cordierite, no zinc.
