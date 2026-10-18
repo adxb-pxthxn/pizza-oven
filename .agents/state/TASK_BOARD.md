@@ -20,6 +20,10 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ---
 
 ## UNDER_REVIEW
+- [ ] **[TASK-006]** `TOOLS`: Claude Opus 5.5 CAD harness *(Priority: HIGH, Assigned: cursor)*
+  - Branch `tools/opus-harness`. Draft PR. Do not merge from the harness session.
+  - `python3 tools/opus/test_opus.py` passes offline. `ping` needs `ANTHROPIC_API_KEY`.
+  - Global cap defaults to $21. Task files are in `tools/opus/tasks/`.
 - [ ] **[TASK-005]** `DESIGN`: Morning and Moondancer, the early Angas prototypes *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/morning-moondancer`. Ready-for-review PR against `main`. Ported from `cursor/angas-dragon-variants-d981` with no `research/` files.
   - Morning 19.12 kg wood body. Moondancer 15.57 kg aluminium shell. Stone in. Cap was 20 kg.

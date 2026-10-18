@@ -1,0 +1,13 @@
+{
+  "model_family": "claude-opus-5-5",
+  "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+  "rate_card": "https://assets.claude.com/1ef7a4a8e373004bc89d710b0a6f3f219323344f.pdf",
+  "as_of": "2026-10-07",
+  "usd_per_mtok": {
+    "input": 4.0,
+    "output": 20.0,
+    "cache_write_5m": 5.0,
+    "cache_write_1h": 8.0,
+    "cache_read": 0.2
+  }
+}
