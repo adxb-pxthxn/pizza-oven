@@ -56,6 +56,7 @@ DENS = {
     "jarrah": 820.0,
     "gidgee": 1200.0,
     "ptfe": 2200.0,
+    "rope": 350.0,
     "keepout": 0.0,
 }
 K = {
@@ -138,6 +139,8 @@ class Stack:
     bail: bool = False
     # Syrax: the damper is shut across the flue. Bread, not the parked pizza pose.
     damper_shut: bool = False
+    # Sheepstealer: the door stands off the skin and a rope sits in the gap.
+    gasket: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -952,7 +955,7 @@ def parts(s: Stack) -> list[dict]:
     door_x = hx0 + CHEEK + 1.5
     door_w = MOUTH_W - 3.0
     door_h = mh - 3.0
-    door_back = -(skin_off + 1.0)
+    door_back = -(skin_off + 1.0) - (8.0 if s.gasket else 0.0)
     items.append(_box("door-inner", "hood", "mild", "hot", door_x, door_back - 1.2, 1.5, door_w, 1.2, door_h))
     items.append(_box("door-ins", "hood", "micro", "cool", door_x, door_back - 1.2 - door_t_ins, 1.5, door_w, door_t_ins, door_h))
     items.append(_box("door-skin", "hood", "al", "cool", door_x, door_back - 1.2 - door_t_ins - 0.8, 1.5, door_w, 0.8, door_h))
@@ -962,6 +965,23 @@ def parts(s: Stack) -> list[dict]:
         [door_x + 8.0, door_front - 8.0, 10.0], [0, 0, 1],
         0.0, 3.0, door_h - 16.0,
     ))
+    if s.gasket:
+        # Uncompressed rope in the gap the door opened. Off the door face,
+        # still short of the skin, so the seal is a part and not a press.
+        # Four strips. The mouth stays open inside the frame.
+        bead = 8.0
+        inset = 6.0
+        rope_y = door_back + 0.8
+        rope_dy = 6.0
+        x0 = door_x + inset
+        x1 = door_x + door_w - inset
+        z0 = 1.5 + inset
+        z1 = 1.5 + door_h - inset
+        stile_h = (z1 - bead) - (z0 + bead)
+        items.append(_box("door-rope-bottom", "hood", "rope", "hot", x0, rope_y, z0, x1 - x0, rope_dy, bead))
+        items.append(_box("door-rope-top", "hood", "rope", "hot", x0, rope_y, z1 - bead, x1 - x0, rope_dy, bead))
+        items.append(_box("door-rope-port", "hood", "rope", "hot", x0, rope_y, z0 + bead, bead, rope_dy, stile_h))
+        items.append(_box("door-rope-starboard", "hood", "rope", "hot", x1 - bead, rope_y, z0 + bead, bead, rope_dy, stile_h))
 
     # Flue, front top, in the eyebrow. Four walls and a parked damper.
     flue_w = 120.0

@@ -251,5 +251,42 @@ class SyraxTests(unittest.TestCase):
         self.assertGreaterEqual(result["bread_window_min"], 25.0)
 
 
+class SheepstealerTests(unittest.TestCase):
+    def _design(self) -> Stack:
+        return Stack(
+            dragon="Sheepstealer",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True,
+        )
+
+    def test_the_rope_sits_clear_in_the_door_gap(self) -> None:
+        design = self._design()
+        items = {part["id"]: part for part in parts(design)}
+        door = items["door-inner"]
+        skin = items["skin-lintel"]
+        door_face = door["corner"][1] + door["size"][1]
+        skin_face = skin["corner"][1]
+        for name in ("door-rope-top", "door-rope-bottom", "door-rope-port", "door-rope-starboard"):
+            rope = items[name]
+            self.assertEqual(rope["material"], "rope")
+            self.assertEqual(rope["module"], "brow")
+            self.assertGreater(rope["corner"][1], door_face + 0.5)
+            self.assertLess(rope["corner"][1] + rope["size"][1], skin_face - 1.0)
+        top = items["door-rope-top"]
+        port = items["door-rope-port"]
+        star = items["door-rope-starboard"]
+        opening = star["corner"][0] - (port["corner"][0] + port["size"][0])
+        self.assertGreater(opening, 300.0)
+        self.assertLess(top["size"][2], 20.0)
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertGreaterEqual(result["bread_window_min"], 25.0)
+        self.assertLessEqual(result["skin_C"], 55.0)
+
+
 if __name__ == "__main__":
     unittest.main()

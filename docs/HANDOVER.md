@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T19:00:00Z
+**Timestamp:** 2026-10-18T19:15:00Z
 **Current Branch / Commit:** design/stream-2-modular
 **Overall Status:** IN_PROGRESS
 
@@ -24,7 +24,7 @@ Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/an
 ---
 
 ## 2b. Stream 2 (this branch)
-Syrax is the current stack. The damper is shut across the flue, tang out the top. Door shut with it: bread. Pit 10.5 kg. Hearth 9.1 kg, jarrah bail. Brow 5.2 kg. Tunnel 7.8 kg. Ready 32.6 kg. Roof 150 mm, steak plate at 100 mm behind the pie. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Meleys is the bail. Caraxes is the plate. Seasmoke is the seat. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Sheepstealer. See `design/stream-2/README.md`.
+Sheepstealer is the current stack. A ceramic rope sits in the door gap, four strips, 0.8 mm off the door and 2.2 mm short of the skin. Syrax's damper stays shut. Pit 10.5 kg. Hearth 9.1 kg, jarrah bail. Brow 5.2 kg. Tunnel 7.8 kg. Ready 32.6 kg. Roof 150 mm, steak plate at 100 mm behind the pie. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min, still the lumped steel. Pack cool-down 27 min with the door open. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Vermithor. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.
