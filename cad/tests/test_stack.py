@@ -657,5 +657,40 @@ class UrraxTests(unittest.TestCase):
         self.assertGreaterEqual(result["mouth_h"], 180.0)
 
 
+class TerraxTests(unittest.TestCase):
+    def test_the_brow_grip_stands_on_steel(self) -> None:
+        design = Stack(
+            dragon="Terrax",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True, rod_rail=True,
+            wind=True, panel=True, door_air=True, door_hinge=True,
+            door_tie=True, door_swing=True, hood_pad=True, brow_pad=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        skin = items["skin-top-brow"]
+        outer = items["brow-pad-outer"]
+        inner = items["brow-pad-inner"]
+        post = items["post-brow-0"]
+        skin_top = skin["corner"][2] + skin["size"][2]
+        self.assertAlmostEqual(outer["corner"][2], skin_top, places=2)
+        self.assertAlmostEqual(inner["corner"][2] + inner["size"][2], skin["corner"][2], places=2)
+        self.assertAlmostEqual(post["origin"][2], outer["corner"][2] + outer["size"][2], places=2)
+        self.assertGreater(post["origin"][2], skin_top)
+        self.assertEqual(outer["module"], "brow")
+        self.assertGreaterEqual(outer["corner"][1], skin["corner"][1])
+        self.assertLessEqual(outer["corner"][1] + outer["size"][1], skin["corner"][1] + skin["size"][1])
+        # The tunnel pad from Urrax is still there.
+        self.assertIn("hood-pad-outer", items)
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertGreaterEqual(result["wood_hot_gap_mm"], 2.0)
+        self.assertLess(result["skin_C"], 55.01)
+        self.assertLess(result["body_length_mm"], 880.0)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -7,7 +7,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/stream-2-modular`. Draft PR. Do not merge.
-  - Urrax is current: 34.0 kg, hood grip on a mild pad, Quicksilver pintle. Pit 11.0 kg still heaviest. The brow grip still stands on the skin. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
+  - Terrax is current: 34.1 kg, brow and tunnel grips on mild pads, Quicksilver pintle. Pit 11.0 kg still heaviest. The door grip still stands on the door skin. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
 
 ---
 

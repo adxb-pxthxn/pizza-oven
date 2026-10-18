@@ -159,6 +159,8 @@ class Stack:
     door_swing: bool = False
     # Urrax: the hood grip stands on a mild pad. The skin is only the cladding.
     hood_pad: bool = False
+    # Terrax: the brow grip stands on the same kind of pad.
+    brow_pad: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -671,16 +673,29 @@ def _seat(s: Stack) -> list[dict]:
 
 
 def _brow_grip(s: Stack) -> list[dict]:
-    """Jarrah grip on the tall brow, so that module has its own handle."""
+    """Jarrah grip on the tall brow, so that module has its own handle.
+
+    Terrax puts a mild pad under the posts. The skin stays the cladding.
+    """
     skin_top_z = s.front_h + s.liner_t + s.ins_t + s.air_gap + s.skin_t
     post = 16.0
     grip_y = 72.0
-    axis_z = skin_top_z + post + 0.4 + 18.0
+    pad_t = 1.5 if s.brow_pad else 0.0
     items = []
+    if s.brow_pad:
+        items.append(_box(
+            "brow-pad-outer", "brow", "mild", "cool",
+            -50.0, grip_y - 10.0, skin_top_z, 100.0, 20.0, pad_t,
+        ))
+        items.append(_box(
+            "brow-pad-inner", "brow", "mild", "cool",
+            -50.0, grip_y - 10.0, skin_top_z - s.skin_t - pad_t, 100.0, 20.0, pad_t,
+        ))
+    axis_z = skin_top_z + pad_t + post + 0.4 + 18.0
     for step, xoff in enumerate((-40.0, 40.0)):
         items.append(_tube(
             f"post-brow-{step}", "brow", "ss", "cool",
-            [xoff, grip_y, skin_top_z], [0, 0, 1],
+            [xoff, grip_y, skin_top_z + pad_t], [0, 0, 1],
             0.0, POST_D / 2.0, post,
         ))
     items.append(_part(

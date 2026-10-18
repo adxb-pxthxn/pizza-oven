@@ -489,6 +489,41 @@ URRAX = Stack(
     hood_pad=True,
 )
 
+TERRAX = Stack(
+    dragon="Terrax",
+    deck_t=4.0,
+    ins_t=22.0,
+    floor_ins=12.0,
+    belly_ins=12.0,
+    liner_t=0.6,
+    skin_t=0.6,
+    pit_t=1.0,
+    front_h=294.0,
+    soffit_h=150.0,
+    air_gap=16.0,
+    standoff=54.0,
+    launch_y=150.0,
+    stepped=True,
+    sloped=True,
+    split=True,
+    seated=True,
+    grill=True,
+    broiler=True,
+    bail=True,
+    damper_shut=True,
+    gasket=True,
+    slide=True,
+    rod_rail=True,
+    wind=True,
+    panel=True,
+    door_air=True,
+    door_hinge=True,
+    door_tie=True,
+    door_swing=True,
+    hood_pad=True,
+    brow_pad=True,
+)
+
 DRAGONS = {
     "vermax": VERMAX,
     "arrax": ARRAX,
@@ -508,6 +543,7 @@ DRAGONS = {
     "cannibal": CANNIBAL,
     "quicksilver": QUICKSILVER,
     "urrax": URRAX,
+    "terrax": TERRAX,
 }
 
 FORBIDDEN_CONSOLE_TOKENS = ("Error", "Recompute failed", "subshape")
