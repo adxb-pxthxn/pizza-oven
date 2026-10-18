@@ -151,6 +151,8 @@ class Stack:
     panel: bool = False
     # Meraxes: 24 mm of air in the door, and a jarrah grip on the outer skin.
     door_air: bool = False
+    # Dreamfyre: a port pintle. The barrels run on the pin. The leaf bolts to the skin.
+    door_hinge: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -409,6 +411,80 @@ def _append_cowl(items: list, s: Stack, pid: str, material: str, zone: str,
         f"{pid}-lower", "tunnel", material, zone, x, dx,
         mid_y + dy, mid_z + dz, y1, z_lo, start, thick,
     ))
+
+
+def _door_hinge(s: Stack, door_x: float, door_front: float) -> list[dict]:
+    """Port pintle, drawn shut, with running clearance.
+
+    The barrels are on the door. The pin is on the skin. Radial gap is 0.6 mm,
+    so the door can turn and the solids do not meet. The barrel sits 0.4 mm
+    above the arm and 0.8 mm under the head. The leaf bolts to the aluminium
+    skin. It is not a weld.
+    """
+    skin_x = -chamber_w() / 2.0 - (s.ins_t + s.air_gap)
+    pin_r = 3.6
+    barrel_in = 4.2
+    barrel_out = 7.0
+    axis_x = door_x - 16.0
+    axis_y = door_front - 19.0
+    pin_z = 22.0
+    # Lower barrel sits 0.4 mm above the arm. Upper barrel ends 0.4 mm under the head.
+    knuckles = ((22.4, 44.0), (112.0, 44.0))
+    upper_end = knuckles[-1][0] + knuckles[-1][1]
+    pin_len = (upper_end + 0.4) - pin_z
+    head_z = upper_end + 0.8
+    head_len = 4.0
+    top_z = head_z + head_len
+    y_leaf = axis_y - 8.0
+
+    def _leaf(pid: str, z0: float, z1: float, y1: float) -> dict:
+        return _box(
+            pid, "hood", "mild", "cool",
+            skin_x - 16.0, y_leaf, z0, 16.0, y1 - y_leaf, z1 - z0,
+        )
+
+    def _arm(pid: str, z0: float, z1: float) -> dict:
+        return _box(
+            pid, "hood", "mild", "cool",
+            skin_x, y_leaf, z0, (axis_x + 10.0) - skin_x, 16.0, z1 - z0,
+        )
+
+    items = [
+        _leaf("hinge-leaf-low", 19.0, pin_z, 36.0),
+        _arm("hinge-arm-low", 19.0, pin_z),
+        _tube(
+            "hinge-pin", "hood", "ss", "cool",
+            [axis_x, axis_y, pin_z], [0, 0, 1],
+            0.0, pin_r, pin_len,
+        ),
+        _tube(
+            "hinge-head", "hood", "ss", "cool",
+            [axis_x, axis_y, head_z], [0, 0, 1],
+            0.0, 8.0, head_len,
+        ),
+        _arm("hinge-arm-high", top_z, top_z + 3.0),
+        _leaf("hinge-leaf-high", top_z, top_z + 3.0, 12.0),
+    ]
+    for index, (kz, length) in enumerate(knuckles):
+        items.append(_tube(
+            f"hinge-barrel-{index}", "hood", "ss", "cool",
+            [axis_x, axis_y, kz], [0, 0, 1],
+            barrel_in, barrel_out, length,
+        ))
+        # Strap meets the barrel on the +Y tangent, then turns onto the door skin.
+        strap_y = axis_y + barrel_out
+        strap_t = 2.2
+        items.append(_box(
+            f"hinge-strap-{index}", "hood", "mild", "cool",
+            axis_x - 6.0, strap_y, kz + 8.0,
+            (door_x + 18.0) - (axis_x - 6.0), strap_t, length - 16.0,
+        ))
+        items.append(_box(
+            f"hinge-ear-{index}", "hood", "mild", "cool",
+            door_x, strap_y + strap_t, kz + 8.0,
+            22.0, door_front - (strap_y + strap_t), length - 16.0,
+        ))
+    return items
 
 
 def _box(pid: str, module: str, material: str, zone: str, x: float, y: float, z: float,
@@ -1062,11 +1138,15 @@ def parts(s: Stack) -> list[dict]:
         door_x, door_back - 1.2 - door_t_ins - door_air - 0.8, 1.5, door_w, 0.8, door_h,
     ))
     door_front = door_back - 1.2 - door_t_ins - door_air - 0.8
-    items.append(_tube(
-        "hinge-pin", "hood", "ss", "cool",
-        [door_x + 8.0, door_front - 8.0, 10.0], [0, 0, 1],
-        0.0, 3.0, door_h - 16.0,
-    ))
+    if s.door_hinge:
+        items.extend(_door_hinge(s, door_x, door_front))
+    else:
+        # Earlier dragons: a pin in free air, not a hinge.
+        items.append(_tube(
+            "hinge-pin", "hood", "ss", "cool",
+            [door_x + 8.0, door_front - 8.0, 10.0], [0, 0, 1],
+            0.0, 3.0, door_h - 16.0,
+        ))
     if s.door_air:
         # The outer skin is the face you meet. Wood, not the aluminium.
         post_len = 18.0
@@ -1380,6 +1460,42 @@ def _polygons_overlap(poly_a: list[tuple[float, float]], poly_b: list[tuple[floa
     return True
 
 
+def _parallel_tube_clear(a: dict, b: dict) -> bool:
+    """Same-axis tubes that do not cut each other's metal.
+
+    Box bounds overlap a pin that sits in a bore. That running fit is not a
+    hit. A shared cylindrical face is clear, as a shared box face is. A pin
+    that enters the wall stays a hit.
+    """
+    if a.get("shape") != "tube" or b.get("shape") != "tube":
+        return False
+    if a.get("axis") != b.get("axis"):
+        return False
+    axis = a["axis"]
+    oa = a["origin"]
+    ob = b["origin"]
+    if axis == [1, 0, 0]:
+        dist = math.hypot(oa[1] - ob[1], oa[2] - ob[2])
+    elif axis == [0, 1, 0]:
+        dist = math.hypot(oa[0] - ob[0], oa[2] - ob[2])
+    elif axis == [0, 0, 1]:
+        dist = math.hypot(oa[0] - ob[0], oa[1] - ob[1])
+    else:
+        return False
+    ra_out = float(a["r_out"])
+    rb_out = float(b["r_out"])
+    ra_in = float(a["r_in"])
+    rb_in = float(b["r_in"])
+    pad = 0.05
+    if dist + pad >= ra_out + rb_out:
+        return True
+    if dist + ra_out <= rb_in + pad and ra_out < rb_out:
+        return True
+    if dist + rb_out <= ra_in + pad and rb_out < ra_out:
+        return True
+    return False
+
+
 def aabb_collisions(items: list[dict]) -> list[tuple[str, str]]:
     """Overlaps. Boxes use their bounds. A folded plate uses the real polygon, so a
     parallel cowl is not a hit just because the bounds cross. Press fits are excluded.
@@ -1401,6 +1517,8 @@ def aabb_collisions(items: list[dict]) -> list[tuple[str, str]]:
                 continue
             box_b = _aabb(part_b)
             if not _overlap(box_a, box_b):
+                continue
+            if _parallel_tube_clear(part_a, part_b):
                 continue
             poly_b = _yz_polygon(part_b)
             span_b = _x_interval(part_b)

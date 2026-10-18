@@ -1,0 +1,14 @@
+{
+  "dragon": "Dreamfyre",
+  "slab": {
+    "outer_C": 62.11,
+    "expected_C": 62.11,
+    "error_C": 0.0
+  },
+  "wall_outer_C": 54.95,
+  "wall_oned_C": 54.95,
+  "wall_error_C": 0.0,
+  "under_outer_C": 51.06,
+  "under_oned_C": 51.11,
+  "under_error_C": -0.05
+}

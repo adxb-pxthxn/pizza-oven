@@ -442,5 +442,68 @@ class MeraxesTests(unittest.TestCase):
         self.assertLess(result["body_length_mm"], 880.0)
 
 
+def _tube(pid: str, r_in: float, r_out: float, origin: list[float]) -> dict:
+    return {
+        "id": pid,
+        "shape": "tube",
+        "origin": origin,
+        "axis": [0, 0, 1],
+        "r_in": r_in,
+        "r_out": r_out,
+        "length": 40.0,
+    }
+
+
+class DreamfyreTests(unittest.TestCase):
+    def _design(self) -> Stack:
+        return Stack(
+            dragon="Dreamfyre",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True, rod_rail=True,
+            wind=True, panel=True, door_air=True, door_hinge=True,
+        )
+
+    def test_a_pin_in_a_bore_is_not_a_hit(self) -> None:
+        pin = _tube("pin", 0.0, 3.6, [0.0, 0.0, 0.0])
+        bore = _tube("bore", 4.2, 7.0, [0.0, 0.0, 0.0])
+        self.assertEqual(aabb_collisions([pin, bore]), [])
+        wall = _tube("wall", 3.0, 7.0, [0.0, 0.0, 0.0])
+        self.assertEqual(aabb_collisions([pin, wall]), [("pin", "wall")])
+
+    def test_the_pintle_clears_the_barrel_and_bolts_to_the_skin(self) -> None:
+        design = self._design()
+        items = {part["id"]: part for part in parts(design)}
+        pin = items["hinge-pin"]
+        barrel = items["hinge-barrel-0"]
+        self.assertLess(pin["r_out"] + 0.4, barrel["r_in"])
+        self.assertEqual(pin["origin"][0], barrel["origin"][0])
+        self.assertEqual(pin["origin"][1], barrel["origin"][1])
+        upper = items["hinge-barrel-1"]
+        head = items["hinge-head"]
+        play = head["origin"][2] - (upper["origin"][2] + upper["length"])
+        self.assertGreater(play, 0.3)
+        self.assertLess(play, 1.0)
+        skin = items["skin-port-brow"]
+        leaf = items["hinge-leaf-low"]
+        self.assertAlmostEqual(leaf["corner"][0] + leaf["size"][0], skin["corner"][0], places=2)
+        self.assertEqual(leaf["material"], "mild")
+        ear = items["hinge-ear-0"]
+        door = items["door-skin"]
+        self.assertAlmostEqual(ear["corner"][1] + ear["size"][1], door["corner"][1], places=2)
+        self.assertGreater(barrel["origin"][2], items["hinge-arm-low"]["corner"][2] + items["hinge-arm-low"]["size"][2])
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertLess(result["skin_C"], 55.01)
+        self.assertLess(result["body_length_mm"], 880.0)
+        self.assertGreaterEqual(result["mouth_h"], 180.0)
+        for part in parts(design):
+            if part["material"] in ("jarrah", "gidgee"):
+                self.assertEqual(part["zone"], "cool", part["id"])
+
+
 if __name__ == "__main__":
     unittest.main()
