@@ -31,6 +31,8 @@ Arrax widens the plate to 480 mm inside the 500 mm barrel. The side gap is 10 mm
 
 Vermax lengthens the barrel to 780 mm so the same plate can slide back and leave a 240 mm bay. Five 4 mm rods sit in that bay, 20 mm below the mouth crown, so the front view shows the grate. Pizza numbers are with the plate slid forward. A 10 kW/m² crown on the bare bay still cambers a 6 mm plate by about 0.02 mm. The extra mass is shell, not deck. Cool-down stays 0.66× the Tread. Shut heat-up is 15 min.
 
+Tessarion is that barrel with the plate forward and the door shut. The door bottom is at 63.4 mm and the sill top is at 60.4 mm, so the shop gap is 3 mm. Bread floor is 214°C at gas 260°C. Ready mass is 37.2 kg.
+
 Blanket is 25 mm ceramic fibre (3 on the arch, 2 under the floor). Skin is 1.0 mm aluminium. Air gap is 8 mm so it stays laminar. The plate is AS/NZS 3678-250, normalised, seasoned, not fastened. Stormcloud keeps 25 mm beside the liner. Arrax keeps 10 mm, with stops at 4 mm. Growth at 320°C is 2.0 mm. No zinc. No paint. No cordierite.
 
 Files: `cad/freecad/stream_physics.py`, `cad/freecad/stream_optimize.py`, `optimizer.json`, `thermal-fea.json`.

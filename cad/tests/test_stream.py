@@ -134,5 +134,19 @@ class VermaxPhysicsTest(unittest.TestCase):
         self.assertGreater(bay, 200.0)
 
 
+class TessarionPhysicsTest(unittest.TestCase):
+    def test_bread_pose_keeps_vermax_heat(self):
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["tessarion"]
+        self.assertEqual(saved["design"]["door_pose"], "shut")
+        self.assertEqual(saved["design"]["plate_pose"], "in")
+        self.assertEqual(saved["design"]["length"], 780.0)
+        live = evaluate(Vault(**saved["design"]))
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        self.assertAlmostEqual(live["bread_floor_C"], 214.0, delta=1.0)
+        self.assertLessEqual(live["floor_C"], 305.0)
+        self.assertGreaterEqual(live["scorch_s"], 125.0)
+
+
 if __name__ == "__main__":
     unittest.main()

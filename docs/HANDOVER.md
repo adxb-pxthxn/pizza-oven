@@ -16,9 +16,10 @@ Stream 1 is the long barrel after Morning and Moondancer. Best current oven is V
 - [x] Tyraxes solid. Door xmax −337.8 mm, skin xmin −334.8 mm. Ferrule press fits only.
 - [x] Arrax solid. Sill ymax −86.8 mm, steel ymin 40 mm, side gap 10 mm. 43 solids.
 - [x] Vermax solid. Plate ymin 280 mm, broil bay 240 mm, 48 solids, ferrules only.
+- [x] Tessarion solid. Door starts 3 mm above the deck. Sill top is 1 mm below it. Bread pose.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
-1. Next dragon is Tessarion. Keep the bay, the stops, and the open mouth.
+1. The family is Stormcloud through Tessarion. A further dragon needs a new measured fault.
 2. Keep wood off the arch. The sky plate stays removable.
 3. Argon answers text. Do not pull a sandbox over `/workspace`.
 

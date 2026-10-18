@@ -417,6 +417,10 @@ def build(name: str = "stormcloud") -> dict:
         )
     elif design.door_pose == "shut":
         door_y = y_front - hw["door_gap"] - door_t
+        # The sill occupies the threshold. The door stops above it.
+        if design.sill_d > 0.0:
+            z_sill = deck + 3.0
+            door_rise = design.mouth_h + 12.0 - 3.0
         door_cut = _arch_cutter(door_w, door_rise, door_y - 1.0, door_t + 2.0, z_sill)
         door_blank = _box(
             -door_w / 2.0 - 4.0,
@@ -591,6 +595,16 @@ def build(name: str = "stormcloud") -> dict:
             stray.append({"a": "sky-plate", "b": "rear-liner", "mm3": -1})
         gate["png"]["front"] = "Mouth open. Five grate bars in the arch. Door fin on the port cheek."
         gate["png"]["section"] = "Centreline. Plate is the rear half. Grate bars cross the front bay."
+    if design.door_pose == "shut" and design.sill_d > 0.0:
+        door_bb = by_name["door"].BoundBox
+        sill_bb = by_name["launch-sill"].BoundBox
+        gate["door_zmin"] = round(door_bb.ZMin, 1)
+        gate["sill_zmax"] = round(sill_bb.ZMax, 1)
+        if door_bb.ZMin <= sill_bb.ZMax:
+            stray.append({"a": "door", "b": "launch-sill", "mm3": -1})
+        gate["png"]["front"] = "Door shut above the sill. Bread pose. The arch is the door, not a dome."
+        gate["png"]["side"] = "Long barrel. Sill and shut door at the mouth. Cowl at the rear."
+        gate["png"]["section"] = "Centreline. Sky plate covers the deck. Door is shut at the mouth."
     (out_dir / "gate.json").write_text(json.dumps(gate, indent=2) + "\n", encoding="utf-8")
     print("GATE", json.dumps(gate))
 
