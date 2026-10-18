@@ -16,7 +16,7 @@ Cool-down is the open door, sky plate lifted out, steel from its pizza equilibri
 | Pizza floor | — | stone ~430°C | stone ~430°C | 309°C, gas 370°C | 301°C, gas 360°C | 301°C | **305°C, gas 360°C** |
 | Scorch time | — | — | — | 122 s | 130 s | 130 s | **130 s** |
 | Broil | — | — | — | 10.6 kW/m² | 10.6 kW/m² | 10.6 kW/m² | **10.6 kW/m², 240 mm bay** |
-| Bread floor | — | — | — | 240°C shut | 240°C shut | 240°C shut | **240°C at gas 260°C** |
+| Bread floor | — | — | — | 240°C shut | 240°C shut | 240°C shut | **216°C at gas 230°C** |
 | Camber | — | — | — | 0.003 mm | 0.003 mm | 0.003 mm | **0.003 mm** |
 | Open cool-down | benchmark | — | — | 42 min, 0.67× | 42 min, 0.66× | 42 min, 0.66× | **42 min, 0.67× Tread** |
 | Heat-up | — | — | — | 23 min open | 22 / 14 min | 23 / 15 min | **24 min open, 15 min shut** |
