@@ -4,7 +4,7 @@ import csv
 import os
 import re
 import sys
-from typing import List, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 scripts_dir = os.path.dirname(os.path.abspath(__file__))
 if scripts_dir not in sys.path:
