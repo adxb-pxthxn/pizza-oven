@@ -1,0 +1,7 @@
+{
+  "dragon": "Silverwing",
+  "rails": "Same slide as Vermithor. The 10 by 16 mm flats become 8 mm rods. The posts stand on the rods. That face is a butt, not a press. Plate still Y 180 to 350 at Z 100. Park for pizza is short of the rear stop.",
+  "ready_kg": 32.997,
+  "modules_kg": {"pit": 10.482, "hearth": 9.094, "brow": 5.193, "tunnel": 8.228},
+  "note": "The flux is still 13.8 kW/m². The rods are the gauge the span actually needs."
+}

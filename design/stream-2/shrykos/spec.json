@@ -1,0 +1,11 @@
+{
+  "dragon": "Shrykos",
+  "launch_y_mm": 150,
+  "cowl": "45 degree brake fold",
+  "front_h_mm": 294,
+  "soffit_h_mm": 110,
+  "mouth_mm": [424, 185],
+  "ready_kg": 30.582,
+  "modules_kg": {"pit": 10.378, "hearth": 8.963, "hood": 11.241},
+  "note": "Same gauges as Arrax. The square step is a folded plate. The grate stays in the pit."
+}

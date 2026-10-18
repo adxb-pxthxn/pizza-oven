@@ -1,0 +1,7 @@
+{
+  "dragon": "Cannibal",
+  "door": "Dreamfyre door. Four stainless spacers, 40 mm, butt the outer skin and the inner plate. The board steps in 8 mm. Corner clearance to the board is 3.2 mm.",
+  "ready_kg": 33.972,
+  "modules_kg": {"pit": 10.839, "hearth": 9.094, "brow": 5.811, "tunnel": 8.228},
+  "note": "Without the spacers the pintle holds only the skin. The inner plate was loose. Centreline section does not cut the corners, so the spacers do not appear there."
+}

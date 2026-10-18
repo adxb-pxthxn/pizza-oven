@@ -1,0 +1,9 @@
+{
+  "dragon": "Syrax",
+  "damper": "Shut across the flue bore, 1.5 mm clear of the walls. A tang stands 18 mm out of the top so it can be lifted. Bread pose. Pizza parks it beside the flue, which is the Meleys drawing.",
+  "bail": "Same jarrah sill bail as Meleys.",
+  "mouth_mm": [424, 185],
+  "ready_kg": 32.586,
+  "modules_kg": {"pit": 10.482, "hearth": 9.094, "brow": 5.174, "tunnel": 7.836},
+  "note": "Door shut, damper shut. The bread window is still the lumped steel, 61 min from 240°C to 180°C."
+}

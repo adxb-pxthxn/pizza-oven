@@ -1,0 +1,1 @@
+Argon checked the brow pads. Each shares a face with the brow skin and does not enter it. The posts meet the outer pad at z=334.70 and stay 1.5 mm clear of the skin. The nearest pad edge is 7.5 mm from a post wall. No pair shares volume.

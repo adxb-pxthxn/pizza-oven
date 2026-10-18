@@ -1,0 +1,1 @@
+The managed agent checked the first seat and found both plates in open air, clear of the skins, with the shelf 7 mm above the tunnel corner. The foot now butts the brow skin's outer corner. A shelf and a short leg butt the tunnel skin's outer corner, 0.6 mm under the foot.

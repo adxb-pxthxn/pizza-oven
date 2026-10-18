@@ -1,0 +1,1 @@
+Argon checked the four rope strips. They sit from y −46.2 to −40.2, 0.8 mm off the door and 2.2 mm short of the skin, and frame a 393 × 154 mm opening. The flue, the hinge, and the bail stay clear. No correction.
