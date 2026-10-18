@@ -150,6 +150,75 @@ def _scribe_mark(doc, base: Part.Shape, y_mid: float, depth: float):
     return cut, edges
 
 
+def _spin_about(shape: Part.Shape, origin: App.Vector, degrees: float) -> Part.Shape:
+    spun = shape.copy()
+    spun.rotate(origin, App.Vector(0.0, 0.0, 1.0), degrees)
+    return spun
+
+
+def _hinged_door(design, hw, deck: float, skin_r: float, y_front: float):
+    """Mouth-sized door on two straps. Built shut, returned open.
+
+    The pin is outboard of the skin. The straps bridge the port jamb to the
+    pin, so the arch itself is not a wing. A +90 degree swing about the pin
+    lays the door along the port side.
+    """
+    door_w = design.mouth_w + 2.0 * hw["door_border"]
+    door_rise = design.mouth_h + hw["door_border"] - 3.0
+    door_t = 2.0 * hw["door_skin"] + hw["door_fibre"]
+    z0 = deck + 3.0
+    # Far enough port that the pull, which was on the outer face, clears the skin when parked.
+    ax = -(skin_r + door_t + hw["pull_gap"] + hw["pull_d"] + 3.2)
+    ay = y_front - 6.0
+    origin = App.Vector(ax, ay, 0.0)
+    door_y = ay - door_t
+    door_cut = _arch_cutter(door_w, door_rise, door_y - 1.0, door_t + 2.0, z0)
+    door_blank = _box(
+        -door_w / 2.0 - 4.0,
+        door_y,
+        z0 - 4.0,
+        door_w + 8.0,
+        door_t,
+        door_rise + hw["door_border"] + 8.0,
+    )
+    door = door_blank.common(door_cut)
+    bore_r = design.hinge / 2.0 + 0.4
+    strap_z = (z0 + 6.0, z0 + door_rise - 22.0)
+    for sz in strap_z:
+        strap = _box(ax - 8.0, door_y, sz, (-door_w / 2.0 + 6.0) - (ax - 8.0), 2.0, 16.0)
+        bore = Part.makeCylinder(bore_r, 20.0, App.Vector(ax, ay, sz - 2.0), App.Vector(0.0, 0.0, 1.0))
+        door = door.fuse(strap.cut(bore))
+    pull = _box(
+        -hw["pull_len"] / 2.0,
+        door_y - hw["pull_gap"] - hw["pull_d"],
+        deck + 40.0,
+        hw["pull_len"],
+        hw["pull_d"],
+        hw["pull_h"],
+    )
+    pin_z = z0 - 16.0
+    pin_h = door_rise + 32.0
+    pin = Part.makeCylinder(design.hinge / 2.0, pin_h, App.Vector(ax, ay, pin_z), App.Vector(0.0, 0.0, 1.0))
+    # Stile inboard of the parked door, foot welded into the base wall, eyes on the pin.
+    stile_x = ax + door_t + 2.0
+    stile = _box(stile_x, ay + 6.0, z0 - 16.0, 10.0, (y_front + 6.0) - (ay + 6.0), door_rise + 28.0)
+    foot = _box(stile_x, ay + 4.0, z0 - 16.0, (-(skin_r) + 2.0) - stile_x, (y_front + 8.0) - (ay + 4.0), 10.0)
+    post = stile.fuse(foot)
+    for lz in (z0 - 16.0, z0 + door_rise - 4.0):
+        eye = _box(ax - 10.0, ay - 10.0, lz, (stile_x + 10.0) - (ax - 10.0), 20.0, 12.0)
+        bore = Part.makeCylinder(bore_r, 16.0, App.Vector(ax, ay, lz - 2.0), App.Vector(0.0, 0.0, 1.0))
+        post = post.fuse(eye.cut(bore))
+    shut = door.copy()
+    return {
+        "door": _spin_about(door, origin, 90.0),
+        "pull": _spin_about(pull, origin, 90.0),
+        "pin": pin,
+        "lugs": [("hinge-post", post)],
+        "shut": shut,
+        "axis": (ax, ay),
+    }
+
+
 def _arch_slab_x(width: float, rise: float, x0: float, depth: float, z_sill: float, y_c: float) -> Part.Shape:
     """Half-ellipse in the YZ plane, extruded along +X. Used for the parked door."""
     points = []
@@ -470,7 +539,16 @@ def build(name: str = "stormcloud") -> dict:
     door_w = design.mouth_w + 2.0 * hw["door_border"]
     door_t = 2.0 * hw["door_skin"] + hw["door_fibre"]
     z_sill = deck - hw["door_border"]
-    if design.door_pose == "open":
+    shut_door = None
+    if design.door_pose == "open" and design.hinge > 0.0:
+        hinged = _hinged_door(design, hw, deck, skin_r, y_front)
+        add("door", hinged["door"], "ss")
+        add("door-pull", hinged["pull"], "jarrah")
+        add("hinge-pin", hinged["pin"], "ss")
+        for lug_name, lug_shape in hinged["lugs"]:
+            add(lug_name, lug_shape, "al")
+        shut_door = hinged["shut"]
+    elif design.door_pose == "open":
         # Pizza pose. Thickness along X, arch in YZ, wholly port of the skin.
         # A 90 degree swing about the front jamb would cut the shell, so the
         # door is placed, not rotated.
@@ -646,7 +724,12 @@ def build(name: str = "stormcloud") -> dict:
     solids = [(part, shape) for part, shape, _kind in made]
     hits = _interfere(solids)
     press = [hit for hit in hits if "ferrule" in hit["a"] or "ferrule" in hit["b"]]
-    stray = [hit for hit in hits if hit not in press]
+    weld = [
+        hit
+        for hit in hits
+        if {hit["a"], hit["b"]} == {"hinge-post", "base-tub"}
+    ]
+    stray = [hit for hit in hits if hit not in press and hit not in weld]
     invalid = [part for part, shape, _kind in made if not shape.isValid()]
 
     out_dir = ROOT / "design" / "stream-1" / name
@@ -664,6 +747,7 @@ def build(name: str = "stormcloud") -> dict:
         },
         "interference": stray,
         "press_fits": press,
+        "welds": weld,
         "analytical_ready_kg": round(report["ready_kg"], 3),
         "door_pose": design.door_pose,
         "box_d": design.box_d,
@@ -703,6 +787,26 @@ def build(name: str = "stormcloud") -> dict:
             stray.append({"a": "door", "b": "mouth", "mm3": -1})
         if door_bb.XMax >= skin_bb.XMin - 1.0:
             stray.append({"a": "door", "b": "skin-envelope", "mm3": -1})
+        if design.hinge > 0.0 and shut_door is not None:
+            shut_bb = shut_door.BoundBox
+            gate["shut_xmin"] = round(shut_bb.XMin, 1)
+            gate["shut_xmax"] = round(shut_bb.XMax, 1)
+            gate["shut_zmin"] = round(shut_bb.ZMin, 1)
+            gate["hinge_d"] = design.hinge
+            if shut_bb.XMin > -design.mouth_w / 2.0 or shut_bb.XMax < design.mouth_w / 2.0:
+                stray.append({"a": "door-shut", "b": "mouth", "mm3": -1})
+            sill_bb = by_name["launch-sill"].BoundBox
+            gap_sill = shut_door.distToShape(by_name["launch-sill"])[0]
+            gap_skin = shut_door.distToShape(by_name["skin"])[0]
+            gate["shut_sill_mm"] = round(gap_sill, 2)
+            gate["shut_skin_mm"] = round(gap_skin, 2)
+            if gap_sill < 1.0 or gap_skin < 1.0:
+                stray.append({"a": "door-shut", "b": "stack", "mm3": -1})
+            if shut_bb.ZMin <= sill_bb.ZMax:
+                stray.append({"a": "door-shut", "b": "sill-height", "mm3": -1})
+            if swing_park is not None:
+                swing_park["xmax"] = round(door_bb.XMin - 4.0, 1)
+                gate["swing_park"] = swing_park
     if design.sill_d > 0.0:
         sill_bb = by_name["launch-sill"].BoundBox
         steel_bb = by_name["pizza-steel"].BoundBox

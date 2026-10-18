@@ -1,14 +1,14 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T21:10:00Z
+**Timestamp:** 2026-10-18T20:45:00Z
 **Current Branch / Commit:** design/stream-1-original
 **Overall Status:** IN_PROGRESS
 
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-Stream 1 best oven is Sheepstealer: Seasmoke's heat and straps, skin as a laser blank, half-ring ends, mouth-frame gland. 38.5 kg, pizza floor 305°C, bay underside 56°C, cool-down 0.67× the Tread. No tilt. Do not merge to main.
+Stream 1 best oven is Silverwing: Sheepstealer's heat and flat skin, plus a hinged mouth-sized door. 38.7 kg, pizza floor 305°C, bay underside 56°C, cool-down 0.67× the Tread. Do not merge to main.
 
 ## 2. Completed in This Session
 - [x] Shop stack and heat model in `cad/freecad/stream_physics.py`.

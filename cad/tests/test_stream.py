@@ -250,5 +250,24 @@ class SheepstealerPhysicsTest(unittest.TestCase):
         self.assertIn("\nFASCIA\n", dxf)
 
 
+class SilverwingPhysicsTest(unittest.TestCase):
+    def test_the_door_hinges_clear_of_the_shell(self):
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["silverwing"]
+        self.assertEqual(saved["design"]["hinge"], 8.0)
+        live = evaluate(Vault(**saved["design"]))
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        self.assertGreater(live["parts"]["hinge"], 0.1)
+        gate = json.loads((ROOT / "design" / "stream-1" / "silverwing" / "gate.json").read_text(encoding="utf-8"))
+        self.assertEqual(gate["interference"], [])
+        self.assertLess(gate["door_xmax"], gate["skin_xmin"] - 1.0)
+        self.assertLessEqual(gate["shut_xmin"], -saved["design"]["mouth_w"] / 2.0)
+        self.assertGreaterEqual(gate["shut_xmax"], saved["design"]["mouth_w"] / 2.0)
+        self.assertGreater(gate["shut_zmin"], gate["sill_zmax"])
+        self.assertGreaterEqual(gate["shut_sill_mm"], 1.0)
+        self.assertGreater(gate["shut_skin_mm"], 1.0)
+        self.assertEqual(gate["welds"], [{"a": "base-tub", "b": "hinge-post", "mm3": 90.0}])
+
+
 if __name__ == "__main__":
     unittest.main()

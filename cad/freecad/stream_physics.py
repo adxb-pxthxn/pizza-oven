@@ -96,6 +96,7 @@ class Vault:
     fascia_gap: float = 0.0
     probe: float = 0.0
     base_mark: float = 0.0
+    hinge: float = 0.0
 
 
 def stack_thickness(v: Vault) -> float:
@@ -479,6 +480,14 @@ def masses(v: Vault) -> dict[str, float]:
         gland = _mm3_to_kg(math.pi * (6.0 ** 2 - (v.probe / 2.0) ** 2) * 8.0, DENS["ss"])
     else:
         gland = 0.0
+    if v.hinge > 0.0:
+        # Two 2 mm straps from the mouth arch out to the pin, plus the pin and two lugs.
+        strap_l = (outer_radius(v) + 13.6 + 12.0 + 16.0 + 3.2) - (v.mouth_w / 2.0 + 18.0)
+        hinge_kg = _mm3_to_kg(2.0 * strap_l * 16.0 * 2.0, DENS["ss"])
+        hinge_kg += _mm3_to_kg(math.pi * (v.hinge / 2.0) ** 2 * (v.mouth_h + 50.0), DENS["ss"])
+        hinge_kg += _mm3_to_kg(2.0 * 20.0 * 16.0 * 14.0, DENS["al"])
+    else:
+        hinge_kg = 0.0
     feet = _mm3_to_kg(4.0 * math.pi * 16.0 ** 2 * 10.0, DENS["rubber"])
     rack = _mm3_to_kg(4.0 * math.pi * 6.0 ** 2 * 8.0, DENS["ss"])
     stand = _mm3_to_kg(4.0 * math.pi * 7.0 ** 2 * 8.0, DENS["ss"])
@@ -509,6 +518,7 @@ def masses(v: Vault) -> dict[str, float]:
         "cheek-straps": strap,
         "swing-tray": tray,
         "probe-gland": gland,
+        "hinge": hinge_kg,
         "feet": feet,
         "rack-bosses": rack,
         "stand-bosses": stand,
