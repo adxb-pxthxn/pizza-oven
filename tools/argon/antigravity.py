@@ -294,17 +294,45 @@ def output_text(payload: dict) -> str:
     return "\n".join(chunks).strip()
 
 
+def _decode_b64(body: str) -> bytes | None:
+    """Decode one base64 block. A truncated block is skipped, not raised."""
+    if "===== FILE " in body or "===== B64 " in body:
+        return None
+    blob = re.sub(r"[^A-Za-z0-9+/=]", "", body)
+    if not blob:
+        return None
+    try:
+        return base64.b64decode(blob, validate=False)
+    except Exception:
+        return None
+
+
 def extract_files(text: str) -> list[tuple[str, bytes]]:
-    """Pull files the agent emitted between FILE and B64 markers."""
-    found: list[tuple[str, bytes]] = []
+    """Pull files the agent emitted between FILE and B64 markers.
+
+    A long answer can contain two copies when the model continues after a
+    truncated block. The later complete copy wins. A base64 span that runs
+    into the next marker is dropped instead of raising.
+    """
+    found: dict[str, bytes] = {}
+    order: list[str] = []
     for match in FILE_RE.finditer(text):
         path = match.group("path").strip()
-        found.append((path, match.group("body").encode("utf-8")))
+        body = match.group("body")
+        if "===== FILE " in body or "===== B64 " in body:
+            continue
+        if path not in found:
+            order.append(path)
+        found[path] = body.encode("utf-8")
     for match in B64_RE.finditer(text):
         path = match.group("path").strip()
-        blob = re.sub(r"\s+", "", match.group("body"))
-        found.append((path, base64.b64decode(blob, validate=False)))
-    return found
+        data = _decode_b64(match.group("body"))
+        if data is None:
+            continue
+        if path not in found:
+            order.append(path)
+        found[path] = data
+    return [(path, found[path]) for path in order]
 
 
 def write_files(files: list[tuple[str, bytes]], root: Path) -> list[Path]:
@@ -398,6 +426,14 @@ def cmd_ping(args: argparse.Namespace) -> int:
     return 0 if text.strip() == "ANTIGRAVITY_OK" else 2
 
 
+def cmd_pull(args: argparse.Namespace) -> int:
+    text = Path(args.text).read_text(encoding="utf-8")
+    written = write_files(extract_files(text), Path(args.pull_root))
+    for path in written:
+        print(f"pulled {path}")
+    return 0 if written else 2
+
+
 def cmd_run(args: argparse.Namespace) -> int:
     sources = [parse_source_spec(spec) for spec in args.source]
     prompt = _read_prompt(args.prompt_file)
@@ -482,6 +518,11 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--text-out", help="Write the agent's text answer here.")
     run.add_argument("--pull-root", help="Write FILE and B64 markers under this directory.")
     run.set_defaults(func=cmd_run)
+
+    pull = sub.add_parser("pull", help="Write FILE and B64 markers from a saved answer.")
+    pull.add_argument("--text", required=True, help="Saved agent answer.")
+    pull.add_argument("--pull-root", required=True)
+    pull.set_defaults(func=cmd_pull)
 
     follow = sub.add_parser("continue", parents=[common], help="Continue an existing sandbox.")
     follow.add_argument("--id", required=True)

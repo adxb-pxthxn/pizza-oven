@@ -124,6 +124,26 @@ class FileMarkerTests(unittest.TestCase):
         self.assertEqual(files["cad/freecad/build_variant.py"], b"print('oven')")
         self.assertEqual(files["design/variants/morning/front.png"], b"png-bytes")
 
+    def test_later_copy_wins_and_a_truncated_block_is_skipped(self) -> None:
+        encoded = base64.b64encode(b"png-bytes").decode("ascii")
+        text = (
+            "===== B64 design/variants/morning/top.png =====\n"
+            "AAAA\u2014not-closed\n"
+            "===== FILE cad/freecad/build_variant.py =====\n"
+            "first\n"
+            "===== END FILE =====\n"
+            "===== END B64 =====\n"
+            "===== FILE cad/freecad/build_variant.py =====\n"
+            "second\n"
+            "===== END FILE =====\n"
+            "===== B64 design/variants/morning/top.png =====\n"
+            f"{encoded}\n"
+            "===== END B64 =====\n"
+        )
+        files = dict(antigravity.extract_files(text))
+        self.assertEqual(files["cad/freecad/build_variant.py"], b"second")
+        self.assertEqual(files["design/variants/morning/top.png"], b"png-bytes")
+
     def test_refuses_parent_paths(self) -> None:
         with self.assertRaises(antigravity.AntigravityError):
             antigravity.write_files([("../secret", b"no")], Path("/tmp"))
