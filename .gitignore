@@ -71,3 +71,7 @@ dist/
 .env
 .env.local
 local_settings.py
+
+# Opus harness spend ledger and the last session status
+tools/opus/ledger.jsonl
+tools/opus/last-run.json
