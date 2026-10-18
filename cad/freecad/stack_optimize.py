@@ -34,6 +34,7 @@ def _from(x: np.ndarray, proto: Stack) -> Stack:
         seated=proto.seated,
         grill=proto.grill,
         broiler=proto.broiler,
+        bail=proto.bail,
         **values,
     )
 
@@ -92,6 +93,15 @@ def solve(proto: Stack, bounds: list[tuple[float, float]], x0: list[float]) -> d
 
 
 def _proto(name: str) -> Stack:
+    if name == "meleys":
+        return Stack(
+            dragon="Meleys",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+        )
     if name == "caraxes":
         return Stack(
             dragon="Caraxes",
@@ -122,9 +132,9 @@ def main() -> None:
     import os
     name = os.environ.get("DRAGON", "vermax")
     proto = _proto(name)
-    hi_front = 310.0 if name in ("seasmoke", "caraxes") else 290.0
-    hi_air = 20.0 if name in ("seasmoke", "caraxes") else 16.0
-    soffit_bounds = (148.0, 165.0) if name == "caraxes" else (105.0, 140.0)
+    hi_front = 310.0 if name in ("seasmoke", "caraxes", "meleys") else 290.0
+    hi_air = 20.0 if name in ("seasmoke", "caraxes", "meleys") else 16.0
+    soffit_bounds = (148.0, 165.0) if name in ("caraxes", "meleys") else (105.0, 140.0)
     bounds = [
         (4.0, 7.0),    # deck_t
         (18.0, 45.0),  # ins_t

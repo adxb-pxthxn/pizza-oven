@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T18:46:00Z
+**Timestamp:** 2026-10-18T18:51:00Z
 **Current Branch / Commit:** design/stream-2-modular
 **Overall Status:** IN_PROGRESS
 
@@ -24,7 +24,7 @@ Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/an
 ---
 
 ## 2b. Stream 2 (this branch)
-Caraxes is the current stack. The roof over the pizza is 150 mm. A plate at 100 mm hangs behind the pie, rack 50 mm under it. Tunnel 7.8 kg. Brow 5.1 kg. Pit 10.5 kg. Hearth 9.0 kg. Ready 32.4 kg. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Seasmoke is the seat and the grill. Morghul is the bare split. Shrykos is the one-piece cowl. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Meleys. See `design/stream-2/README.md`.
+Meleys is the current stack. The hearth (9.1 kg) lifts by a jarrah bail on the sill. Pit 10.5 kg. Brow 5.1 kg. Tunnel 7.8 kg. Ready 32.5 kg. Roof 150 mm, steak plate at 100 mm behind the pie. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Caraxes is the plate. Seasmoke is the seat. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Syrax. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.

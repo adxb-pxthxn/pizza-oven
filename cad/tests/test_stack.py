@@ -205,5 +205,28 @@ class CaraxesTests(unittest.TestCase):
         self.assertLess(result["heatup_min"], 25.0)
 
 
+class MeleysTests(unittest.TestCase):
+    def test_the_hearth_lifts_by_wood(self) -> None:
+        design = Stack(
+            dragon="Meleys",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        grip = items["grip-hearth"]
+        self.assertEqual(grip["material"], "jarrah")
+        self.assertEqual(grip["zone"], "cool")
+        self.assertEqual(grip["module"], "hearth")
+        self.assertLess(items["ferrule-hearth"]["r_in"], grip["profile"][0][1])
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertLess(result["modules_kg"]["hearth"], 11.0)
+        self.assertLess(result["modules_kg"]["hearth"], result["modules_kg"]["pit"])
+        self.assertLessEqual(result["skin_C"], 55.0)
+
+
 if __name__ == "__main__":
     unittest.main()

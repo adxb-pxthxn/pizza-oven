@@ -134,6 +134,8 @@ class Stack:
     grill: bool = False
     # Caraxes: the roof stays high over the pizza. A plate hangs under it for the steak.
     broiler: bool = False
+    # Meleys: a jarrah bail on the sill, so the hot hearth lifts by wood.
+    bail: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -503,6 +505,42 @@ def _brow_grip(s: Stack) -> list[dict]:
     items.append(_tube(
         "ferrule-brow", "brow", "ss", "cool",
         [-GRIP_LEN / 2.0, grip_y, axis_z],
+        [1, 0, 0],
+        GRIP_PROFILE[0][1] - FERRULE_PRESS,
+        GRIP_PROFILE[0][1] + 3.0,
+        FERRULE_LEN,
+    ))
+    return items
+
+
+def _hearth_bail(s: Stack) -> list[dict]:
+    """One jarrah grip in front of the sill. Posts grow back onto the sill face."""
+    sill_front = -(s.pit_t + 16.0 + 0.6 + SILL_L)
+    post_len = 36.0
+    # Washer sits on the outer end of the post. The grip starts clear of it.
+    grip_y = sill_front - post_len - 3.2 - 0.6 - 18.0
+    z = -s.deck_t / 2.0
+    items = []
+    for step, xoff in enumerate((-30.0, 30.0)):
+        items.append(_tube(
+            f"post-hearth-{step}", "hearth", "ss", "cool",
+            [xoff, sill_front - post_len, z], [0, 1, 0],
+            0.0, POST_D / 2.0, post_len,
+        ))
+        items.append(_tube(
+            f"washer-hearth-{step}", "hearth", "ptfe", "cool",
+            [xoff, sill_front - post_len - 3.2, z], [0, 1, 0],
+            0.0, 8.0, 3.0,
+        ))
+    items.append(_part(
+        "grip-hearth", "hearth", "jarrah", "cool", "revolve",
+        origin=[-GRIP_LEN / 2.0, grip_y, z],
+        axis=[1, 0, 0],
+        profile=[list(pair) for pair in GRIP_PROFILE],
+    ))
+    items.append(_tube(
+        "ferrule-hearth", "hearth", "ss", "cool",
+        [-GRIP_LEN / 2.0, grip_y, z],
         [1, 0, 0],
         GRIP_PROFILE[0][1] - FERRULE_PRESS,
         GRIP_PROFILE[0][1] + 3.0,
@@ -1003,6 +1041,8 @@ def parts(s: Stack) -> list[dict]:
     if s.seated:
         items.extend(_seat(s))
         items.extend(_brow_grip(s))
+    if s.bail:
+        items.extend(_hearth_bail(s))
 
     return items
 
@@ -1017,6 +1057,7 @@ PRESS_FITS = (
 # must not fail the press gate for a pair that dragon does not have.
 OPTIONAL_PRESS = (
     ("ferrule-brow", "grip-brow"),
+    ("ferrule-hearth", "grip-hearth"),
 )
 
 

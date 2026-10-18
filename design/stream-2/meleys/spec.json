@@ -1,0 +1,11 @@
+{
+  "dragon": "Meleys",
+  "bail": "Jarrah grip on the sill, two stainless posts 36 mm long, PTFE washers, 0.15 mm radial ferrule press. At a 300°C root the grip is 39.5°C.",
+  "roof_mm": 150,
+  "broiler": "Same plate as Caraxes, Z 100, Y 470 to 640.",
+  "mouth_mm": [424, 185],
+  "ready_kg": 32.518,
+  "modules_kg": {"pit": 10.482, "hearth": 9.094, "brow": 5.106, "tunnel": 7.836},
+  "solver": "With the roof held, SLSQP reaches 31.7 kg at the 148 mm bound. Shop keeps 150 mm and 22 mm board.",
+  "note": "Lift the hearth by the wood. The pit left behind is the fire, with the grate at cooking height or down on the deep rails."
+}
