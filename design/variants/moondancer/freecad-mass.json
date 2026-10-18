@@ -1,0 +1,239 @@
+{
+  "name": "moondancer",
+  "dragon": "Moondancer",
+  "freecad_kg": 13.921,
+  "analytical_kg": 13.738,
+  "ready_with_burner_kg": 15.771,
+  "outer_diameter": 546.8,
+  "body_height": 247.7,
+  "handle_r": 257.1,
+  "handle_z": 200.7,
+  "skin_C": 54.95,
+  "grip_C": 26.21,
+  "parts": [
+    {
+      "name": "base_pan",
+      "kind": "al",
+      "kg": 0.571,
+      "crown": false
+    },
+    {
+      "name": "base_lip",
+      "kind": "al",
+      "kg": 0.05,
+      "crown": false
+    },
+    {
+      "name": "floor_insulation",
+      "kind": "micro",
+      "kg": 1.212,
+      "crown": false
+    },
+    {
+      "name": "stone_pan",
+      "kind": "ss",
+      "kg": 0.822,
+      "crown": false
+    },
+    {
+      "name": "floor_cordierite",
+      "kind": "cordierite",
+      "kg": 4.364,
+      "crown": false
+    },
+    {
+      "name": "liner_skirt",
+      "kind": "ss",
+      "kg": 0.772,
+      "crown": false
+    },
+    {
+      "name": "wall_insulation",
+      "kind": "micro",
+      "kg": 1.552,
+      "crown": false
+    },
+    {
+      "name": "outer_skirt",
+      "kind": "al",
+      "kg": 0.376,
+      "crown": false
+    },
+    {
+      "name": "liner_dome",
+      "kind": "ss",
+      "kg": 0.897,
+      "crown": true
+    },
+    {
+      "name": "crown_insulation",
+      "kind": "micro",
+      "kg": 2.163,
+      "crown": true
+    },
+    {
+      "name": "outer_dome",
+      "kind": "al",
+      "kg": 0.608,
+      "crown": true
+    },
+    {
+      "name": "cinch_band",
+      "kind": "ss",
+      "kg": 0.13,
+      "crown": false
+    },
+    {
+      "name": "dowel_a",
+      "kind": "ss",
+      "kg": 0.001,
+      "crown": false
+    },
+    {
+      "name": "dowel_b",
+      "kind": "ss",
+      "kg": 0.001,
+      "crown": false
+    },
+    {
+      "name": "mouth_frame",
+      "kind": "ss",
+      "kg": 0.181,
+      "crown": false
+    },
+    {
+      "name": "peel_landing",
+      "kind": "al",
+      "kg": 0.041,
+      "crown": false
+    },
+    {
+      "name": "handle_port",
+      "kind": "jarrah",
+      "kg": 0.041,
+      "crown": false
+    },
+    {
+      "name": "post_port_a",
+      "kind": "ss",
+      "kg": 0.004,
+      "crown": false
+    },
+    {
+      "name": "washer_port_a",
+      "kind": "ptfe",
+      "kg": 0.001,
+      "crown": false
+    },
+    {
+      "name": "post_port_b",
+      "kind": "ss",
+      "kg": 0.004,
+      "crown": false
+    },
+    {
+      "name": "washer_port_b",
+      "kind": "ptfe",
+      "kg": 0.001,
+      "crown": false
+    },
+    {
+      "name": "handle_starboard",
+      "kind": "jarrah",
+      "kg": 0.041,
+      "crown": false
+    },
+    {
+      "name": "post_starboard_a",
+      "kind": "ss",
+      "kg": 0.004,
+      "crown": false
+    },
+    {
+      "name": "washer_starboard_a",
+      "kind": "ptfe",
+      "kg": 0.001,
+      "crown": false
+    },
+    {
+      "name": "post_starboard_b",
+      "kind": "ss",
+      "kg": 0.004,
+      "crown": false
+    },
+    {
+      "name": "washer_starboard_b",
+      "kind": "ptfe",
+      "kg": 0.001,
+      "crown": false
+    },
+    {
+      "name": "foot_0",
+      "kind": "rubber",
+      "kg": 0.006,
+      "crown": false
+    },
+    {
+      "name": "foot_1",
+      "kind": "rubber",
+      "kg": 0.006,
+      "crown": false
+    },
+    {
+      "name": "foot_2",
+      "kind": "rubber",
+      "kg": 0.006,
+      "crown": false
+    },
+    {
+      "name": "rack_boss_0",
+      "kind": "ss",
+      "kg": 0.005,
+      "crown": true
+    },
+    {
+      "name": "rack_boss_1",
+      "kind": "ss",
+      "kg": 0.005,
+      "crown": true
+    },
+    {
+      "name": "rack_boss_2",
+      "kind": "ss",
+      "kg": 0.005,
+      "crown": true
+    },
+    {
+      "name": "rack_boss_3",
+      "kind": "ss",
+      "kg": 0.005,
+      "crown": true
+    },
+    {
+      "name": "stand_boss_0",
+      "kind": "ss",
+      "kg": 0.01,
+      "crown": false
+    },
+    {
+      "name": "stand_boss_1",
+      "kind": "ss",
+      "kg": 0.01,
+      "crown": false
+    },
+    {
+      "name": "stand_boss_2",
+      "kind": "ss",
+      "kg": 0.01,
+      "crown": false
+    },
+    {
+      "name": "stand_boss_3",
+      "kind": "ss",
+      "kg": 0.01,
+      "crown": false
+    }
+  ],
+  "fcstd": "/workspace/design/variants/moondancer/moondancer.FCStd",
+  "step": "/workspace/design/variants/moondancer/moondancer.step"
+}
