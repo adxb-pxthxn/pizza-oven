@@ -1,14 +1,14 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T20:45:00Z
+**Timestamp:** 2026-10-18T22:23:00Z
 **Current Branch / Commit:** design/stream-1-original
-**Overall Status:** IN_PROGRESS
+**Overall Status:** READY_FOR_NEXT_AGENT
 
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-Stream 1 best oven is Vermithor: Silverwing's hinged door, with the post lapped onto the floor. 38.7 kg, pizza floor 305°C, bay underside 56°C, cool-down 0.67× the Tread. Do not merge to main.
+Overnight stream closed on Vermithor. 38.7 kg, pizza floor 305°C, bay underside 56°C, cool-down 42 min, 0.67× the Tread. Hinged door, flat skin, post lapped onto the floor. Do not merge to main.
 
 ## 2. Completed in This Session
 - [x] Shop stack and heat model in `cad/freecad/stream_physics.py`.

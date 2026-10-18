@@ -6,7 +6,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `STREAM-1`: Long-vault prototypes on `design/stream-1-original` *(Priority: HIGH, Assigned: cursor)*
-  - Best oven is Vermithor, 38.7 kg. Hinged door, post lapped onto the floor. Do not merge to main.
+  - Overnight stream closed. Best oven is Vermithor, 38.7 kg. Do not merge to main.
 
 ---
 
