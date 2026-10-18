@@ -41,5 +41,5 @@ Angas 430 stays the baseline on `design/tailgate-oven`. Two early prototypes sit
 
 ## 5. Active Locks & Touched Files
 - **Active Locks:** None.
-- **Key paths:** `cad/freecad/`, `design/variants/`, `tools/freecad_mcp/`, `bom/bom.csv`.
+- **Key paths:** `cad/freecad/`, `design/variants/`, `tools/freecad_mcp/`, `bom/bom.csv`. Web meshes sit beside the STEP files: `morning.glb`, `moondancer.glb`, and the matching STL.
 - **Mass to believe:** FreeCAD solid plus the 1.85 kg burner allowance. Morning 19.12 kg. Moondancer 15.57 kg.

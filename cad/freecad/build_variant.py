@@ -485,6 +485,14 @@ def build(name: str, hw: dict | None = None) -> dict:
     exploded_step = out_dir / f"{design.name}-exploded.step"
     compound.exportStep(str(step))
     exploded_shape.exportStep(str(exploded_step))
+    from cad.freecad.web_mesh import export_view_meshes
+
+    export_view_meshes(
+        out_dir,
+        design.name,
+        [(obj.Name, kind, crown, obj.Shape) for obj, kind, crown in made if kind != "allowance"],
+        lift,
+    )
 
     cut_extent = outer_r + design.standoff + cfg["grip_d"] + cfg["landing_depth"] + 40.0
     half_box = Part.makeBox(
