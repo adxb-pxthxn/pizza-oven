@@ -27,4 +27,4 @@ Terrax: pit 11.0 kg, hearth 9.1 kg, brow 5.8 kg, tunnel 8.3 kg. The brow grip st
 
 CalculiX on Terrax: slab 62.11°C against 62.11°C. Hood wall 54.95°C against 54.95°C. Underside 51.06°C against 51.11°C.
 
-Shop: flat 4 mm plate, folded or welded 0.6–1.0 mm mild, 0.6 mm aluminium skin, microporous board trimmed on the WorkBee. University TIG. Makerspace lathe for the grips, ferrules, and feet. The CO2 lasers cut templates, not steel.
+Shop: flat 4 mm plate, folded or welded 0.6–1.0 mm mild, 0.6 mm aluminium skin, microporous board trimmed on the WorkBee. University TIG. Makerspace lathe for the grips, ferrules, and feet. The CO2 lasers cut templates, not steel. The sequence is `design/stream-2/terrax/BUILD.md`.
