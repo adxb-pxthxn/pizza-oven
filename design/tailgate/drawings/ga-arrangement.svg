@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420mm" height="297mm" viewBox="0 0 420 297">
+<rect width="420" height="297" fill="#f7f4ee"/>
+<rect x="8" y="8" width="404" height="281" fill="none" stroke="#1c1a17" stroke-width="0.6"/>
+<rect x="8" y="252" width="404" height="37" fill="none" stroke="#1c1a17" stroke-width="0.4"/>
+<text x="14" y="266" font-family="Georgia, serif" font-size="5.2" fill="#1c1a17">General arrangement — front, side, top</text>
+<text x="14" y="274" font-family="Georgia, serif" font-size="3.2" fill="#5c5348">Angas 430 · Adib's tailgate oven · gas, circular dome · sheet 1 of 4</text>
+<text x="14" y="282" font-family="Georgia, serif" font-size="2.8" fill="#5c5348">Dimensions mm. Scale as noted. Hardware CERN-OHL-P v2. This sheet CC-BY-4.0. 18 Oct 2026.</text>
+<text x="300" y="266" font-family="Georgia, serif" font-size="3.2" fill="#1c1a17">Do not scale the drawing.</text>
+<text x="300" y="274" font-family="Georgia, serif" font-size="2.8" fill="#5c5348">Certified burner, FFD, regulator, hose: bought.</text>
+<text x="300" y="282" font-family="Georgia, serif" font-size="2.8" fill="#5c5348">Crown lifts at the brass cinch. Stone does not pass the mouth.</text>
+
+<text x="14" y="20" font-family="Georgia, serif" font-size="3.4" fill="#1c1a17">Scale 1:8</text>
+<rect x="35.825" y="175.9125" width="84.35" height="23.90" fill="#efe6d6" stroke="#1c1a17" stroke-width="0.45"/>
+<path d="M 35.83 175.91 A 42.17 5.62 0 0 1 120.17 175.91" fill="#e4e2de" stroke="#1c1a17" stroke-width="0.45"/>
+<rect x="51.75" y="179.04" width="52.50" height="11.88" fill="#1c1a17" stroke="#c4a46a" stroke-width="0.8"/>
+<rect x="3.95" y="183.91" width="27.50" height="4.00" rx="1.2" fill="#6b3e28" stroke="#1c1a17" stroke-width="0.25"/>
+<rect x="124.55" y="183.91" width="27.50" height="4.00" rx="1.2" fill="#6b3e28" stroke="#1c1a17" stroke-width="0.25"/>
+<line x1="35.83" y1="177.41" x2="120.17" y2="177.41" stroke="#8a6a32" stroke-width="1.3"/>
+<text x="16" y="108" font-family="Georgia, serif" font-size="3.6" fill="#1c1a17">Front, mouth toward you</text>
+<line x1="35.83" y1="201.00" x2="120.17" y2="201.00" stroke="#1c1a17" stroke-width="0.25"/><text x="70.00" y="201.50" font-family="Georgia, serif" font-size="3.1" fill="#1c1a17">Ø 675</text>
+<line x1="128.18" y1="200.00" x2="128.18" y2="157.49" stroke="#1c1a17" stroke-width="0.25"/><text x="130.18" y="178.74" font-family="Georgia, serif" font-size="3.1" fill="#1c1a17">340 high</text>
+<line x1="51.75" y1="191.66" x2="104.25" y2="191.66" stroke="#1c1a17" stroke-width="0.25"/><text x="62.00" y="192.16" font-family="Georgia, serif" font-size="3.1" fill="#1c1a17">mouth 420 × 95</text>
+<rect x="250" y="175.9125" width="84.35" height="24.09" fill="#efe6d6" stroke="#1c1a17" stroke-width="0.45"/>
+<path d="M 250.00 175.91 Q 292.18 157.49 334.35 175.91" fill="#e4e2de" stroke="#1c1a17" stroke-width="0.45"/>
+<rect x="244.00" y="179.04" width="8" height="11.88" fill="#1c1a17"/>
+<text x="248" y="36" font-family="Georgia, serif" font-size="3.6" fill="#1c1a17">Side, mouth at left</text>
+<line x1="250.00" y1="201.00" x2="334.35" y2="201.00" stroke="#1c1a17" stroke-width="0.25"/><text x="270.00" y="201.50" font-family="Georgia, serif" font-size="3.1" fill="#1c1a17">Ø 675 deep</text>
+<circle cx="78" cy="78" r="42.175" fill="#efe6d6" stroke="#1c1a17" stroke-width="0.45"/>
+<circle cx="80" cy="78" r="26.88" fill="none" stroke="#8a6a32" stroke-width="0.3" stroke-dasharray="1.2 0.8"/>
+<rect x="8.33" y="76.00" width="27.50" height="4" fill="#6b3e28"/>
+<rect x="120.17" y="76.00" width="27.50" height="4" fill="#6b3e28"/>
+<text x="16" y="34" font-family="Georgia, serif" font-size="3.6" fill="#1c1a17">Top. Dashed circle is the 430 stone. Handles left and right.</text>
+<text x="200" y="70" font-family="Georgia, serif" font-size="3.2" fill="#1c1a17">Floor Ø430. Chamber Ø470. Apex 165. Mouth/apex 0.576.</text>
+<text x="200" y="78" font-family="Georgia, serif" font-size="3.2" fill="#1c1a17">Handle span 1165. Fits between the arches (1224) with the handles on.</text>
+<text x="200" y="90" font-family="Georgia, serif" font-size="3.2" fill="#5c5348">Plan is wider than the lowered tailgate is deep (517). It stands on the ground or a table.</text>
+</svg>

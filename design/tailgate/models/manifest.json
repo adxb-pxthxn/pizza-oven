@@ -1,0 +1,68 @@
+{
+  "name": "angas-430",
+  "units": "mm",
+  "step_schema": "AP214",
+  "envelope": {
+    "outer_diameter_mm": 674.8,
+    "body_height_mm": 340.1,
+    "handle_span_mm": 1164.8,
+    "floor_diameter_mm": 430.0,
+    "chamber_id_mm": 470.0,
+    "apex_mm": 165.0,
+    "mouth_mm": [
+      420.0,
+      95.0
+    ],
+    "mouth_over_apex": 0.576
+  },
+  "skin_C": {
+    "wall": {
+      "R": 1.4623,
+      "flux_W_m2": 328.26,
+      "skin_C": 52.83
+    },
+    "crown": {
+      "R": 1.3902,
+      "flux_W_m2": 345.29,
+      "skin_C": 54.53
+    }
+  },
+  "mass_kg": {
+    "by_kind_kg": {
+      "steel": 18.3,
+      "aes": 6.33,
+      "casi": 2.34,
+      "cordierite": 6.1,
+      "brass": 2.11,
+      "jarrah": 0.53
+    },
+    "burner_allowance_kg": 1.85,
+    "stone_kg": 6.1,
+    "legs_kg": 0,
+    "ready_kg": 37.56,
+    "stone_out_kg": 31.46,
+    "carry_without_stone_or_legs_kg": 31.46
+  },
+  "files": {
+    "table": {
+      "step": "/workspace/design/tailgate/models/angas-430.step",
+      "stl": "/workspace/design/tailgate/models/angas-430.stl"
+    },
+    "tripod": {
+      "step": "/workspace/design/tailgate/models/angas-430-tripod.step",
+      "stl": "/workspace/design/tailgate/models/angas-430-tripod.stl"
+    },
+    "exploded": {
+      "step": "/workspace/design/tailgate/models/angas-430-exploded.step",
+      "stl": "/workspace/design/tailgate/models/angas-430-exploded.stl"
+    },
+    "cutaway": {
+      "step": "/workspace/design/tailgate/models/angas-430-cutaway.step",
+      "stl": "/workspace/design/tailgate/models/angas-430-cutaway.stl"
+    },
+    "stowed": {
+      "step": "/workspace/design/tailgate/models/angas-430-stowed.step",
+      "stl": "/workspace/design/tailgate/models/angas-430-stowed.stl"
+    }
+  }
+}
