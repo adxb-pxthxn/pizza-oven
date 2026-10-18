@@ -1,0 +1,16 @@
+# Parametric CAD toolchain. Python >=3.11 and <3.15.
+# Same pins as the root pyproject.toml dependencies.
+#
+#   python3 -m venv .venv
+#   source .venv/bin/activate
+#   python3 -m pip install -r cad/requirements.txt
+#
+# uv:
+#   uv venv
+#   uv pip install -r cad/requirements.txt
+#
+# Apple Silicon: pip/uv select the macosx_11_0_arm64 wheel of
+# cadquery-ocp-novtk when Python itself is arm64. See cad/README.md
+# before fighting a source build.
+build123d==0.13.0
+cadquery-ocp-novtk==8.0.1.1.0

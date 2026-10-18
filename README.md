@@ -32,9 +32,11 @@ pizza-oven/
 ├── bom/
 │   └── bom.csv                  # Bill of Materials template
 ├── cad/
-│   ├── parts/                   # Individual part models
-│   ├── assemblies/              # Master assembly models
-│   └── exports/                 # Manufacturing exports (STEP, DXF, STL)
+│   ├── parameters.py            # Placeholder dimensions (millimetres)
+│   ├── parts/                   # Parametric part builders
+│   ├── assemblies/              # Assemblies regenerated from parameters
+│   ├── output/                  # Gitignored STEP/STL from `python3 -m cad.build`
+│   └── exports/                 # Published interchange, when a design is released
 ├── docs/
 │   └── HANDOVER.md              # Cross-agent session handover document
 ├── .cursorrules                 # Cursor root configuration
@@ -66,6 +68,19 @@ This workspace includes specialized skills in `.agents/skills/`:
 | **`multi-agent-review`** | Dual-agent "Maker / Critic" review harness. | `python3 .agents/skills/multi-agent-review/scripts/agent_review.py --maker <name>` |
 
 ---
+
+## Parametric CAD
+
+The modelling kernel is build123d. Placeholder geometry (floor slab, dome shell, insulation layer) regenerates from `cad/parameters.py`.
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+python3 -m pip install -r cad/requirements.txt
+python3 -m cad.build
+python3 -m unittest cad.tests.test_placeholder_assembly
+```
+
+Install notes for macOS Apple Silicon, the OCP wheel, `ocp_vscode`, FreeCAD, and Fusion 360 are in `cad/README.md`. Build products under `cad/output/` are gitignored.
 
 ## Licensing
 
