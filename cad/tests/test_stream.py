@@ -95,5 +95,26 @@ class TyraxesPhysicsTest(unittest.TestCase):
         self.assertGreaterEqual(live["broil_W_m2"], 8000.0)
 
 
+class ArraxPhysicsTest(unittest.TestCase):
+    def test_wider_floor_still_clears_its_growth(self):
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["arrax"]
+        self.assertEqual(saved["design"]["steel_w"], 480.0)
+        self.assertEqual(saved["design"]["sill_d"], 90.0)
+        self.assertEqual(saved["design"]["stop_gap"], 4.0)
+        self.assertEqual(saved["design"]["door_pose"], "open")
+        live = evaluate(Vault(**saved["design"]))
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        self.assertAlmostEqual(saved["result"]["floor_C"], live["floor_C"], delta=0.2)
+        self.assertGreater(live["side_gap_mm"], live["growth_mm"] + 5.0)
+        self.assertGreater(live["parts"]["plate-stops"], 0.05)
+        self.assertGreater(saved["design"]["stop_gap"], live["growth_mm"])
+        self.assertGreater(live["pizza_clearance"], 45.0)
+        self.assertLessEqual(live["floor_C"], 315.0)
+        self.assertGreaterEqual(live["scorch_s"], 120.0)
+        self.assertGreater(live["parts"]["launch-sill"], 0.2)
+        self.assertLess(live["parts"]["launch-sill"], 0.6)
+
+
 if __name__ == "__main__":
     unittest.main()

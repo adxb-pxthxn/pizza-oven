@@ -275,6 +275,23 @@ def build(name: str = "stormcloud") -> dict:
         "mild",
     )
 
+    if design.stop_gap > 0.0:
+        # Fences overlap the plate in height and stay below the deck.
+        # The gap is the growth allowance. They are not fasteners.
+        stop_t, stop_h = 2.0, 3.0
+        z_plate = button_z + design.button_h + gap
+        y0 = design.landing
+        y1 = design.landing + design.steel_l
+        x0 = -design.steel_w / 2.0
+        x1 = design.steel_w / 2.0
+        g = design.stop_gap
+        add("stop-front", _box(x0, y0 - g - stop_t, z_plate, design.steel_w, stop_t, stop_h), "ss")
+        add("stop-rear", _box(x0, y1 + g, z_plate, design.steel_w, stop_t, stop_h), "ss")
+        side_y = y0 + g + stop_t
+        side_l = design.steel_l - 2.0 * (g + stop_t)
+        add("stop-port", _box(x0 - g - stop_t, side_y, z_plate, stop_t, side_l, stop_h), "ss")
+        add("stop-starboard", _box(x1 + g, side_y, z_plate, stop_t, side_l, stop_h), "ss")
+
     mouth = _arch_cutter(design.mouth_w, design.mouth_h, y_front - 5.0, -y_front + 8.0, deck)
     slot_z = deck + 0.62 * radius
     slot = _box(-hw["slot_w"] / 2.0, length - 2.0, slot_z, hw["slot_w"], stack_thickness(design) + 6.0, hw["slot_h"])
@@ -464,6 +481,21 @@ def build(name: str = "stormcloud") -> dict:
         "jarrah",
     )
 
+    if design.sill_d > 0.0 and design.sill_w > 0.0:
+        # Forward of the front wall, 1 mm under the deck, not touching the free plate.
+        add(
+            "launch-sill",
+            _box(
+                -design.sill_w / 2.0,
+                y_front - 2.0 - design.sill_d,
+                deck - 1.0 - design.sill_t,
+                design.sill_w,
+                design.sill_d,
+                design.sill_t,
+            ),
+            "ss",
+        )
+
     doc.recompute()
     solids = [(part, shape) for part, shape, _kind in made]
     hits = _interfere(solids)
@@ -505,22 +537,42 @@ def build(name: str = "stormcloud") -> dict:
             }
         ),
     }
+    by_name = {part: shape for part, shape, _kind in made}
     if design.door_pose == "open":
-        door_bb = doc.getObject("door").Shape.BoundBox
-        skin_bb = doc.getObject("skin").Shape.BoundBox
+        door_bb = by_name["door"].BoundBox
+        skin_bb = by_name["skin"].BoundBox
         gate["door_xmax"] = round(door_bb.XMax, 1)
         gate["skin_xmin"] = round(skin_bb.XMin, 1)
         if door_bb.XMax > -(design.mouth_w / 2.0):
             stray.append({"a": "door", "b": "mouth", "mm3": -1})
         if door_bb.XMax >= skin_bb.XMin - 1.0:
             stray.append({"a": "door", "b": "skin-envelope", "mm3": -1})
+    if design.sill_d > 0.0:
+        sill_bb = by_name["launch-sill"].BoundBox
+        steel_bb = by_name["pizza-steel"].BoundBox
+        gate["sill_ymax"] = round(sill_bb.YMax, 1)
+        gate["steel_ymin"] = round(steel_bb.YMin, 1)
+        gate["sill_zmax"] = round(sill_bb.ZMax, 1)
+        gate["side_gap_mm"] = round(report["side_gap_mm"], 2)
+        if sill_bb.YMax >= steel_bb.YMin - 1.0:
+            stray.append({"a": "launch-sill", "b": "pizza-steel", "mm3": -1})
+        if sill_bb.ZMax > deck - 0.5:
+            stray.append({"a": "launch-sill", "b": "deck", "mm3": -1})
+        gate["png"]["front"] = "Mouth arch open. Launch sill is the lip under the opening."
+        gate["png"]["side"] = "Long barrel. Sill projects under the mouth. Parked door on the port cheek."
     (out_dir / "gate.json").write_text(json.dumps(gate, indent=2) + "\n", encoding="utf-8")
     print("GATE", json.dumps(gate))
 
     fcstd = out_dir / f"{name}.FCStd"
     doc.saveAs(str(fcstd))
     step = out_dir / f"{name}.step"
-    Part.export([doc.getObject(part) for part, _s, _k in made], str(step))
+    export_objs = []
+    for part, _shape, _kind in made:
+        obj = doc.getObject(part) or doc.getObject(part.replace("-", "_"))
+        if obj is None:
+            raise RuntimeError(f"missing object {part}")
+        export_objs.append(obj)
+    Part.export(export_objs, str(step))
 
     section_box = _box(-1.0e4, -1.0e4, -1.0e4, 1.0e4, 2.0e4, 2.0e4)
     section = compound.cut(section_box)

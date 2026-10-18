@@ -4,28 +4,30 @@ Long-vault prototypes after Morning and Moondancer. Gas, 15 inch pizza, no cordi
 
 Cool-down is the open door, sky plate lifted out, steel from its pizza equilibrium down to 60°C. The Tread figure is a 2.8 kg cordierite deck from 400°C through a lower mouth. Heat-up is a 6 kW burner with 35% of the fuel staying in the metal and the hot third of the blanket.
 
-| | Tread | Morning | Moondancer | Stormcloud | Tyraxes |
-|---|---|---|---|---|---|
-| Ready mass | 13.5 kg | 19.2 kg | 15.8 kg | 34.2 kg | **34.1 kg** |
-| Plan | — | Ø572 × ~260 tall | Ø547 × ~250 tall | overall 973 × 670 × 410 | **928 × 714 × 410, door parked** |
-| Floor | stone | cordierite Ø420 × 15 | cordierite Ø420 × 15 | mild steel 450 × 500 × 6 | **same plate, free** |
-| Mouth | low | 420 × 95 | 420 × 95 | arch 430 × 158, shut | **same arch, open** |
-| Crown | — | apex 165 | apex 165 | radius 250, length 680 | **same barrel** |
-| Skin | hot | 50°C wood | 55°C aluminium | 55.1°C aluminium | **55.1°C** |
-| Underside | — | 60°C | 60°C | 55°C | **54°C** |
-| Pizza floor | — | stone ~430°C | stone ~430°C | 309°C, plate 341°C, gas 370°C | **301°C, plate 332°C, gas 360°C** |
-| Scorch time | — | stone, not this model | stone | 122 s | **130 s to 230°C on a 1 mm face** |
-| Broil | — | — | — | 10.6 kW/m² | **10.6 kW/m², plate out** |
-| Bread floor | — | — | — | 214°C | **214°C, door shut, gas 260°C** |
-| Camber | — | — | — | 0.003 mm | **0.003 mm** |
-| Open cool-down | benchmark | — | — | 42 min, 0.67× Tread | **42 min, 0.66× Tread** |
-| Heat-up | — | — | — | 23 min door open | **22 min open, 14 min shut** |
-| Carry | one person | tub, not the tailgate | tub | two people | **two people, high side handles** |
+| | Tread | Morning | Moondancer | Stormcloud | Tyraxes | Arrax |
+|---|---|---|---|---|---|---|
+| Ready mass | 13.5 kg | 19.2 kg | 15.8 kg | 34.2 kg | 34.1 kg | **35.4 kg** |
+| Plan | — | Ø572 × ~260 tall | Ø547 × ~250 tall | overall 973 × 670 × 410 | 928 × 714 × 410 | **990 × 714 × 410** |
+| Floor | stone | cordierite Ø420 × 15 | cordierite Ø420 × 15 | mild steel 450 × 500 × 6 | same plate | **480 × 500 × 6, 4 mm stops** |
+| Mouth | low | 420 × 95 | 420 × 95 | arch 430 × 158, shut | same arch, open | **open, 90 mm sill** |
+| Crown | — | apex 165 | apex 165 | radius 250, length 680 | same barrel | **same barrel** |
+| Skin | hot | 50°C wood | 55°C aluminium | 55.1°C aluminium | 55.1°C | **55.1°C** |
+| Underside | — | 60°C | 60°C | 55°C | 54°C | **54°C** |
+| Pizza floor | — | stone ~430°C | stone ~430°C | 309°C, plate 341°C, gas 370°C | 301°C, plate 332°C | **301°C, plate 332°C, gas 360°C** |
+| Scorch time | — | stone, not this model | stone | 122 s | 130 s | **130 s to 230°C on a 1 mm face** |
+| Broil | — | — | — | 10.6 kW/m² | 10.6 kW/m² | **10.6 kW/m², plate out** |
+| Bread floor | — | — | — | 214°C | 214°C | **214°C, door shut, gas 260°C** |
+| Camber | — | — | — | 0.003 mm | 0.003 mm | **0.003 mm** |
+| Open cool-down | benchmark | — | — | 42 min, 0.67× Tread | 42 min, 0.66× | **42 min, 0.66× Tread** |
+| Heat-up | — | — | — | 23 min door open | 22 min open, 14 min shut | **23 min open, 15 min shut** |
+| Carry | one person | tub, not the tailgate | tub | two people | two people | **two people, high side handles** |
 
 Stormcloud is over the old 20 kg cap because the steel deck is 10.6 kg and the blanket is 75 mm on the arch. The cap was for a cordierite dome. A 6 mm plate is the thin end of the warp limit. The extra mass is the pizza steel and the fibre, not a timber costume.
 
 Tyraxes is the pizza pose of that barrel. The door is parked on the port cheek, 3 mm clear of the skin, so the front view is the mouth. The burner cowl is 48 mm deep instead of 80 mm. Gas at 360°C holds the floor at 301°C, which gives 130 s before the face reaches 230°C. Door-shut heat-up is 14 min.
 
-Blanket is 25 mm ceramic fibre (3 on the arch, 2 under the floor). Skin is 1.0 mm aluminium. Air gap is 8 mm so it stays laminar. The plate is AS/NZS 3678-250, normalised, seasoned, not fastened, 25 mm side gap against 2.0 mm of growth at 320°C. No zinc. No paint. No cordierite.
+Arrax widens the plate to 480 mm inside the 500 mm barrel. The side gap is 10 mm against 1.95 mm of growth. Four stainless stops sit 4 mm off the plate, below the deck, so a launch cannot walk the plate onto the sill. The sill is 400 × 90 × 1.2 mm, 1 mm under the deck, 127 mm clear of the cold plate. Turning clearance is 49 mm each side of a 15 inch pizza. The extra kilogram is the wider plate.
+
+Blanket is 25 mm ceramic fibre (3 on the arch, 2 under the floor). Skin is 1.0 mm aluminium. Air gap is 8 mm so it stays laminar. The plate is AS/NZS 3678-250, normalised, seasoned, not fastened. Stormcloud keeps 25 mm beside the liner. Arrax keeps 10 mm, with stops at 4 mm. Growth at 320°C is 2.0 mm. No zinc. No paint. No cordierite.
 
 Files: `cad/freecad/stream_physics.py`, `cad/freecad/stream_optimize.py`, `optimizer.json`, `thermal-fea.json`.

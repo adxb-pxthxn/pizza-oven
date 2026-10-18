@@ -6,7 +6,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `STREAM-1`: Long-vault prototypes on `design/stream-1-original` *(Priority: HIGH, Assigned: cursor)*
-  - Stormcloud and Tyraxes solids are in. Next is Arrax. Do not merge to main.
+  - Stormcloud, Tyraxes, and Arrax solids are in. Next is Vermax. Do not merge to main.
 
 ---
 

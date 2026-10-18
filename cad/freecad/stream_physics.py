@@ -83,6 +83,10 @@ class Vault:
     bread_gas: float = 260.0
     box_d: float = 80.0
     door_pose: str = "shut"
+    sill_w: float = 0.0
+    sill_d: float = 0.0
+    sill_t: float = 1.2
+    stop_gap: float = 0.0
 
 
 def stack_thickness(v: Vault) -> float:
@@ -412,6 +416,15 @@ def masses(v: Vault) -> dict[str, float]:
     washers = _mm3_to_kg(4.0 * math.pi * 8.0 ** 2 * 3.0, DENS["ptfe"])
     peel = _mm3_to_kg(v.mouth_w * 22.0 * 14.0, DENS["jarrah"])
     pull = _mm3_to_kg(90.0 * 22.0 * 16.0, DENS["jarrah"])
+    sill = _mm3_to_kg(v.sill_w * v.sill_d * v.sill_t, DENS["ss"])
+    stop_t, stop_h = 2.0, 3.0
+    if v.stop_gap > 0.0:
+        end_mm3 = 2.0 * v.steel_w * stop_t * stop_h
+        side_len = v.steel_l - 2.0 * (v.stop_gap + stop_t)
+        side_mm3 = 2.0 * side_len * stop_t * stop_h
+        stops = _mm3_to_kg(end_mm3 + side_mm3, DENS["ss"])
+    else:
+        stops = 0.0
     feet = _mm3_to_kg(4.0 * math.pi * 16.0 ** 2 * 10.0, DENS["rubber"])
     rack = _mm3_to_kg(4.0 * math.pi * 6.0 ** 2 * 8.0, DENS["ss"])
     stand = _mm3_to_kg(4.0 * math.pi * 7.0 ** 2 * 8.0, DENS["ss"])
@@ -437,6 +450,8 @@ def masses(v: Vault) -> dict[str, float]:
         "ptfe": washers,
         "peel-rest": peel,
         "door-pull": pull,
+        "launch-sill": sill,
+        "plate-stops": stops,
         "feet": feet,
         "rack-bosses": rack,
         "stand-bosses": stand,
