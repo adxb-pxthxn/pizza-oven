@@ -1,0 +1,80 @@
+"""Shop numbers for the long-vault prototypes. FreeCAD is not required."""
+
+from __future__ import annotations
+
+import json
+import unittest
+from pathlib import Path
+
+from cad.freecad.stream_physics import Vault, evaluate
+
+ROOT = Path(__file__).resolve().parents[2]
+
+
+def stormcloud() -> Vault:
+    return Vault(
+        name="stormcloud",
+        dragon="Stormcloud",
+        fibre_t=75.0,
+        floor_fibre=50.0,
+        air_gap=8.0,
+        skin_t=1.0,
+        steel_t=6.0,
+        plate_t=1.2,
+        standoff=20.0,
+    )
+
+
+class StormcloudPhysicsTest(unittest.TestCase):
+    def test_shop_stack_holds_the_limits(self):
+        result = evaluate(stormcloud())
+        self.assertLessEqual(result["skin_C"], 60.0)
+        self.assertLess(result["skin_C"], 56.0)
+        self.assertLessEqual(result["under_C"], 60.0)
+        self.assertLessEqual(result["grip_C"], 40.0)
+        self.assertLessEqual(result["floor_C"], 315.0)
+        self.assertGreaterEqual(result["scorch_s"], 110.0)
+        self.assertLessEqual(result["camber_mm"], 0.3)
+        self.assertLessEqual(result["sag_mm"], 0.3)
+        self.assertGreater(result["side_gap_mm"], result["growth_mm"] + 1.0)
+        self.assertGreaterEqual(result["broil_W_m2"], 8000.0)
+        self.assertLessEqual(result["cooldown_ratio"], 1.35)
+        self.assertGreater(result["pizza_clearance"], 25.0)
+        self.assertAlmostEqual(result["mouth_over_crown"], 0.632, places=3)
+        self.assertTrue(result["free_floating"])
+        self.assertGreater(result["outer_length"], 750.0)
+        self.assertGreater(result["body_height"], 320.0)
+        self.assertLess(abs(result["balance_floor"]), 1.0)
+        self.assertNotIn("cordierite", result["parts"])
+        self.assertNotIn("floor-cordierite", result["parts"])
+
+    def test_wood_is_only_on_the_cool_parts(self):
+        parts = evaluate(stormcloud())["parts"]
+        wood = {"grips", "gidgee-ferrules", "peel-rest", "door-pull"}
+        self.assertTrue(wood <= set(parts))
+        self.assertLess(sum(parts[name] for name in wood), 0.5)
+
+    def test_saved_optimizer_matches_the_shop_vault(self):
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        if not path.exists():
+            self.skipTest("optimizer json not written")
+        saved = json.loads(path.read_text(encoding="utf-8"))["stormcloud"]
+        live = evaluate(stormcloud())
+        self.assertTrue(saved["success"])
+        self.assertEqual(saved["design"]["dragon"], "Stormcloud")
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        self.assertAlmostEqual(saved["result"]["floor_C"], live["floor_C"], delta=0.2)
+
+    def test_calculix_matches_the_one_d_sum(self):
+        path = ROOT / "design" / "stream-1" / "thermal-fea.json"
+        if not path.exists():
+            self.skipTest("thermal fea not written")
+        thermal = json.loads(path.read_text(encoding="utf-8"))
+        self.assertAlmostEqual(thermal["slab"]["outer_C"], thermal["slab"]["expected_C"], delta=0.2)
+        self.assertAlmostEqual(thermal["wall"]["outer_C"], thermal["wall"]["oned_C"], delta=1.0)
+        self.assertAlmostEqual(thermal["floor"]["outer_C"], thermal["floor"]["oned_C"], delta=1.0)
+        self.assertEqual(thermal["dragon"], "Stormcloud")
+
+
+if __name__ == "__main__":
+    unittest.main()

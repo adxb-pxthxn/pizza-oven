@@ -1,0 +1,266 @@
+{
+  "stormcloud": {
+    "success": true,
+    "message": "25 mm blanket modules, 1.0 mm skin, 8 mm air gap",
+    "nit": 3,
+    "x": {
+      "steel_t": 6.0,
+      "fibre_t": 75.0,
+      "floor_fibre": 50.0,
+      "skin_t": 1.0,
+      "plate_t": 1.2,
+      "standoff": 20,
+      "air_gap": 8.0
+    },
+    "bounds": {
+      "steel_t": [
+        6.0,
+        10.0
+      ],
+      "fibre_t": [
+        40.0,
+        80.0
+      ],
+      "floor_fibre": [
+        18.0,
+        45.0
+      ],
+      "skin_t": [
+        0.9,
+        1.6
+      ],
+      "plate_t": [
+        0.8,
+        2.0
+      ],
+      "standoff": [
+        16.0,
+        32.0
+      ],
+      "air_gap": [
+        6.0,
+        8.0
+      ]
+    },
+    "design": {
+      "name": "stormcloud",
+      "dragon": "Stormcloud",
+      "radius": 250.0,
+      "length": 680.0,
+      "mouth_w": 430.0,
+      "mouth_h": 158.0,
+      "steel_w": 450.0,
+      "steel_l": 500.0,
+      "steel_t": 6.0,
+      "landing": 40.0,
+      "plate_t": 1.2,
+      "plate_drop": 95.0,
+      "liner_t": 0.8,
+      "fibre_t": 75.0,
+      "air_gap": 8.0,
+      "skin_t": 1.0,
+      "floor_fibre": 50.0,
+      "button_h": 4.0,
+      "base_t": 1.0,
+      "standoff": 20,
+      "handle_phi": 42.0,
+      "broil_gap": 70.0,
+      "pizza_gas": 370.0,
+      "broil_gas": 500.0,
+      "bread_gas": 260.0
+    },
+    "result": {
+      "ready_kg": 34.529,
+      "parts": {
+        "liner": 4.192,
+        "fibre-arch": 7.217,
+        "aluminium-skin": 2.67,
+        "base": 1.525,
+        "floor-fibre": 1.44,
+        "pizza-steel": 10.598,
+        "sky-plate": 1.975,
+        "sky-rails": 0.114,
+        "buttons": 0.015,
+        "door": 1.247,
+        "throat-hood": 0.109,
+        "mouth-frame": 0.213,
+        "burner-box": 0.571,
+        "grips": 0.167,
+        "gidgee-ferrules": 0.008,
+        "posts": 0.018,
+        "ptfe": 0.005,
+        "peel-rest": 0.109,
+        "door-pull": 0.026,
+        "feet": 0.035,
+        "rack-bosses": 0.029,
+        "stand-bosses": 0.039,
+        "broil-rack": 0.357,
+        "burner-allowance": 1.85
+      },
+      "skin_C": 55.072,
+      "skin_in_C": 55.074,
+      "fibre_hot_C": 485.954,
+      "wall_flux": 350.716,
+      "floor_C": 301.622,
+      "plate_C": 337.059,
+      "under_C": 54.134,
+      "bread_floor_C": 209.342,
+      "bread_plate_C": 237.254,
+      "balance_plate": 0.0,
+      "balance_floor": -0.0,
+      "scorch_s": 129.158,
+      "camber_mm": 0.003,
+      "sag_mm": 0.003,
+      "growth_mm": 1.95,
+      "side_gap_mm": 25.0,
+      "gradient_K": 0.046,
+      "broil_W_m2": 10586.95,
+      "cooldown_s": 2500.0,
+      "tread_cooldown_s": 3764.0,
+      "cooldown_ratio": 0.664,
+      "heatup_min": 23.223,
+      "heatup_MJ": 2.926,
+      "steel_kg": 10.598,
+      "grip_C": 23.088,
+      "outer_width": 669.6,
+      "outer_length": 849.6,
+      "body_height": 395.8,
+      "outer_r": 334.8,
+      "mouth_over_crown": 0.632,
+      "pizza_clearance": 34.5,
+      "free_floating": true
+    }
+  },
+  "stormcloud-continuous": {
+    "success": true,
+    "message": "Optimization terminated successfully",
+    "nit": 3,
+    "x": {
+      "steel_t": 6.0,
+      "fibre_t": 75.21,
+      "floor_fibre": 40.452,
+      "skin_t": 1.002,
+      "plate_t": 1.2,
+      "standoff": 20.0,
+      "air_gap": 8.0
+    },
+    "bounds": {
+      "steel_t": [
+        6.0,
+        10.0
+      ],
+      "fibre_t": [
+        40.0,
+        80.0
+      ],
+      "floor_fibre": [
+        18.0,
+        45.0
+      ],
+      "skin_t": [
+        0.9,
+        1.6
+      ],
+      "plate_t": [
+        0.8,
+        2.0
+      ],
+      "standoff": [
+        16.0,
+        32.0
+      ],
+      "air_gap": [
+        6.0,
+        8.0
+      ]
+    },
+    "design": {
+      "name": "stormcloud",
+      "dragon": "Stormcloud",
+      "radius": 250.0,
+      "length": 680.0,
+      "mouth_w": 430.0,
+      "mouth_h": 158.0,
+      "steel_w": 450.0,
+      "steel_l": 500.0,
+      "steel_t": 6.0,
+      "landing": 40.0,
+      "plate_t": 1.2,
+      "plate_drop": 95.0,
+      "liner_t": 0.8,
+      "fibre_t": 75.21006579391063,
+      "air_gap": 8.0,
+      "skin_t": 1.0024724080205059,
+      "floor_fibre": 40.45174755162823,
+      "button_h": 4.0,
+      "base_t": 1.0,
+      "standoff": 20.0,
+      "handle_phi": 42.0,
+      "broil_gap": 70.0,
+      "pizza_gas": 370.0,
+      "broil_gas": 500.0,
+      "bread_gas": 260.0
+    },
+    "result": {
+      "ready_kg": 34.29,
+      "parts": {
+        "liner": 4.192,
+        "fibre-arch": 7.243,
+        "aluminium-skin": 2.679,
+        "base": 1.526,
+        "floor-fibre": 1.165,
+        "pizza-steel": 10.598,
+        "sky-plate": 1.975,
+        "sky-rails": 0.114,
+        "buttons": 0.015,
+        "door": 1.247,
+        "throat-hood": 0.109,
+        "mouth-frame": 0.213,
+        "burner-box": 0.571,
+        "grips": 0.167,
+        "gidgee-ferrules": 0.008,
+        "posts": 0.018,
+        "ptfe": 0.005,
+        "peel-rest": 0.109,
+        "door-pull": 0.026,
+        "feet": 0.035,
+        "rack-bosses": 0.029,
+        "stand-bosses": 0.039,
+        "broil-rack": 0.357,
+        "burner-allowance": 1.85
+      },
+      "skin_C": 55.0,
+      "skin_in_C": 55.002,
+      "fibre_hot_C": 485.982,
+      "wall_flux": 350.0,
+      "floor_C": 299.016,
+      "plate_C": 336.184,
+      "under_C": 59.988,
+      "bread_floor_C": 206.829,
+      "bread_plate_C": 236.441,
+      "balance_plate": 0.0,
+      "balance_floor": 0.0,
+      "scorch_s": 131.773,
+      "camber_mm": 0.004,
+      "sag_mm": 0.003,
+      "growth_mm": 1.95,
+      "side_gap_mm": 25.0,
+      "gradient_K": 0.053,
+      "broil_W_m2": 10586.95,
+      "cooldown_s": 2490.0,
+      "tread_cooldown_s": 3764.0,
+      "cooldown_ratio": 0.662,
+      "heatup_min": 23.115,
+      "heatup_MJ": 2.912,
+      "steel_kg": 10.598,
+      "grip_C": 23.082,
+      "outer_width": 670.025,
+      "outer_length": 850.025,
+      "body_height": 386.464,
+      "outer_r": 335.013,
+      "mouth_over_crown": 0.632,
+      "pizza_clearance": 34.5,
+      "free_floating": true
+    }
+  }
+}
