@@ -34,3 +34,10 @@ MD-210,Moondancer shell,"Aluminium skin 0.8 mm and base 0.9 mm",1,Metal,Sheet dr
 MD-220,Moondancer cinch,304 band 12 × 0.8 mm,1,Metal,Sheet drop,0,AUD,Material in MD-200. Crown lifts here.
 MD-230,Moondancer handles,Jarrah grips on stainless posts and PTFE,1,Timber,Offcut,15,AUD,ESTIMATE AUD. Same placement as Morning. No brass ferrules.
 MD-240,Moondancer rack and stand bosses,"4× M5 on PCD 120, 4× M6 on a 220 mm square",1,Metal,304 bar,0,AUD,Interfaces only. Accessory mass is not included.
+SC-100,Stormcloud microporous board,"k 0.030 W/mK, 250 kg/m3. Hood 26.4 mm, hearth 18 mm, belly 22 mm, door 16 mm",1,Insulation,Industrial microporous panel or kiln offcut,190,AUD,ESTIMATE AUD Adelaide Oct 2026. Stormcloud only. Templates on the CO2 laser. Trim on the WorkBee. Second-hand ceramic fibre needs about 80 mm to match this skin temperature and is heavier.
+SC-110,Stormcloud cooking floor,"Mild steel plate 440 × 520 × 4 mm, normalised, uncoated",1,Metal,Plate offcut,55,AUD,"ESTIMATE AUD. Floating on three pads. Not bolted. No cordierite. Season with oil. Do not galvanise."
+SC-120,Stormcloud pit and liner,"Mild steel. Pit 1.0 mm, liner 0.6 mm, soffit 1.2 mm",1,Metal,Sheet drop,80,AUD,ESTIMATE AUD. University workshop TIG or a brake. Firebox walls are bare and hot. No zinc.
+SC-130,Stormcloud skin and belly,"Aluminium 0.6 mm skin, 0.8 mm belly tray",1,Metal,Sheet drop,40,AUD,ESTIMATE AUD. Cladding on the steel frame with a 12.4 mm air gap. Not a food surface. Skin 54°C.
+SC-140,Stormcloud grips feet and peel rest,"Jarrah grips and four feet. Gidgee peel rest 180 × 20 × 16",1,Timber,Second-hand hardwood,30,AUD,ESTIMATE AUD. Wood is only here. Stainless ferrules are a 0.15 mm radial press. Posts stand off the firebox wall.
+SC-150,Stormcloud door flue rack and latches,"Mild door inner, stainless rack, mild flue and two latches",1,Metal,Sheet and rod offcut,25,AUD,ESTIMATE AUD. Door insulation is in SC-100. Hinge pin is a slip fit.
+SC-160,Stormcloud burner,Same bought burner as TG-100,1,Gas / Certified,See TG-100,0,AUD,Not a second burner. Counted in the pit module at 1.85 kg. Do not drill a jet.
