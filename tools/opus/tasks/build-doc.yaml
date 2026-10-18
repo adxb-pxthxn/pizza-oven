@@ -1,0 +1,31 @@
+id: build-doc
+title: BUILD.md and a cutting template
+max_budget_usd: 4
+max_turns: 10
+expected_turns: 5
+inputs:
+  - design/variants/optimizer.json
+  - design/variants/COMPARISON.md
+  - cad/freecad/masslib.py
+goal: |
+  Write design/variants/BUILD.md and one cutting template for the oven that is already designed. Do not invent a diameter, a mouth, or a mass.
+  Call cad_mass mode evaluate for moondancer before writing numbers. BUILD.md is a shop sequence a makerspace can follow, with headings Tools, Sequence, Safety, and Materials. Quote moondancer's ready mass to two decimal places from that tool result, and the stone diameter the same call reports. The burner, valve, regulator, and hose stay bought and certified. No jet is drawn. No galvanised zinc in the hot path.
+  Put one SVG or DXF under design/variants/templates/. It is a flat template for the peel landing or the base blank, using numbers already in the model. It must contain the CUT mark used by the repo's laser layers and the stone diameter 420. It is not a decorative drawing.
+  Then declare_done. check() reads the files and recomputes the mass.
+acceptance:
+  markdown:
+    path: design/variants/BUILD.md
+    headings:
+      - Tools
+      - Sequence
+      - Safety
+      - Materials
+    contains_mass_of: moondancer
+    require_cad_mass: true
+  template:
+    dir: design/variants/templates
+    min_bytes: 200
+    must_contain: "420"
+    suffixes:
+      - .svg
+      - .dxf

@@ -1,0 +1,38 @@
+id: render-textured
+title: Blender textured finish
+max_budget_usd: 5
+max_turns: 14
+expected_turns: 8
+variant: morning
+finish: jarrah
+inputs:
+  - design/variants/morning/morning.glb
+  - design/variants/morning/morning.stl
+  - design/variants/morning/morning.step
+goal: |
+  Render the existing Morning solid with the jarrah finish. Do not remodel the oven.
+  The geometry is design/variants/morning/morning.glb (or the STL or STEP beside it).
+  Morning and Moondancer are the only solids. The named finishes are surface treatments: jarrah, gidgee, brushed-aluminium, and blued-steel. This task is jarrah. To run another finish, copy this file and change the finish, the output paths, and the manifest checks.
+  Take CC0 PBR maps from Poly Haven or ambientCG. Jarrah is a reddish hardwood, gidgee a darker tighter grain, brushed-aluminium a directional metal, blued-steel a dark oxide metal. Save the maps under design/renders/textures/ and point the manifest at those files. Light the scene with a CC0 studio HDRI and a light backdrop, meaning a light neutral world rather than a black void. The manifest field backdrop must be the string light.
+  Write the Blender script in the repository and run it only through cad_render with kind blender. A PNG saved any other way does not pass. Frame the whole oven. The picture must be at least 1280 by 720.
+  Do not claim the picture looks right. check() measures the file, the manifest, and the cad_render receipt.
+acceptance:
+  png:
+    path: design/renders/morning-jarrah.png
+    min_width: 1280
+    min_height: 720
+    min_bytes: 80000
+  manifest:
+    path: design/renders/morning-jarrah.json
+    equals:
+      variant: morning
+      finish: jarrah
+      backdrop: light
+    path_keys:
+      - hdri
+    path_map_keys:
+      - texture_maps
+  render_receipt:
+    variant: morning
+    finish: jarrah
+    output: design/renders/morning-jarrah.png
