@@ -1,0 +1,26 @@
+---
+description: Code-CAD modeling, sheet metal DFM, laser cutting tolerances, and thermal expansion relief
+globs: "cad/**/*,*.py,*.scad,*.step,*.dxf,*.svg"
+alwaysApply: false
+---
+
+# Code-CAD & Sheet Metal Design for Manufacturing (DFM)
+
+Guidelines for parametric mechanical design, laser cutting, and press brake bending.
+
+## Sheet Metal & Laser Tolerances
+- **Inner Shell:** 1.5 mm AISI 304 stainless steel.
+- **Outer Shell:** 1.2 mm cold-rolled steel or AISI 430.
+- **K-Factor:** 0.42 for air bending stainless steel on standard V-die (bend allowance formula: BA = pi * (R + K * t) * (A / 180)).
+- **Minimum Flange Length:** >= 4 * t (6.0 mm for 1.5 mm sheet).
+- **Minimum Hole Diameter:** >= 1.0 * t (laser pierce rule; prefer >= 1.5 * t for fiber laser life).
+- **Minimum Web Distance:** Distance between cutouts or edges >= 2.0 * t.
+
+## Tab-and-Slot Joinery & Thermal Relief
+- **Fit Clearance:** Tab-and-slot mortise/tenon joints have exactly 0.25 mm clearance per side (tab width W - 0.25 mm, slot width W + 0.25 mm) for clean self-alignment without weld fixtures.
+- **Thermal Expansion Slots:** Inner dome sheet experiences thermal expansion (delta L approx 3.9 mm at 500°C).
+- Hot-to-cold interface mounting slots must have >= 6.5 mm slotted travel along the expansion axis.
+
+## Verification
+Always test CAD output:
+`python3 .agents/skills/code-cad/scripts/cad_validate.py`

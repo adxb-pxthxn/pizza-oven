@@ -1,0 +1,26 @@
+---
+description: Universal engineering standards, commit conventions, safety limits, and multi-agent coordination
+globs: "*"
+alwaysApply: true
+---
+
+# Pizza Oven Project: Universal Engineering & Agent Rules
+
+This is an open-source, certified-grade physical engineering project for a high-performance portable Neapolitan pizza oven (500°C chamber, sub-90s bake).
+
+## Core Physical Constraints
+1. **Operating Temperatures:** Sustained 450°C–500°C floor & dome.
+2. **Exterior Safe Touch:** Outer shell, handles, and control points must remain <= 60°C under steady state (EN 60335-2-6 / ASTM C1055).
+3. **Materials:** AISI 304 food-grade stainless steel for inner hot zone; AISI 304/430 or powder-coated steel for outer shroud.
+4. **Fasteners:** Metric ISO A2/A4 stainless steel (M4/M5/M6). No carbon steel in thermal zones.
+
+## Multi-Agent Commit & Handover Protocol
+1. Commits MUST use conventional commits with agent signature:
+   `<type>(<scope>): <subject> [agent:cursor]` (or `[agent:antigrav]`, `[agent:claude-code]`).
+2. Before committing, run repository validation scripts:
+   - `python3 .agents/skills/code-cad/scripts/cad_validate.py`
+   - `python3 .agents/skills/oshwa-hardware/scripts/validate_oshwa.py`
+   - `python3 .agents/skills/oven-thermodynamics/scripts/thermal_model.py`
+3. Always check `docs/HANDOVER.md` and `.agents/state/TASK_BOARD.md` before starting and after finishing work.
+4. Run situational briefing:
+   `python3 .agents/skills/cross-agent-coordination/scripts/agent_handover.py --summary`

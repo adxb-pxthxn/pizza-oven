@@ -28,3 +28,4 @@ This repository is an open-source, certified-grade physical engineering project 
    - `code-cad`: Parametric CAD generation, tab-slot alignment, STEP/DXF/STL pipeline.
    - `oshwa-hardware`: Open-source hardware audit, BOM validation, OSHWA checklist.
    - `oven-thermodynamics`: High-temp thermal modeling, heat loss, refractory sizing, burner BTU requirements.
+   - `material-sourcing`: Local classifieds scraping (Gumtree, Facebook Marketplace), Google Shopping, surplus/offcut recovery, and industrial supplier pricing.

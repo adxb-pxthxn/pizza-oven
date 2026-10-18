@@ -1,0 +1,28 @@
+---
+description: OSHWA open-source hardware compliance, dual-licensing, and Bill of Materials schema
+globs: "bom/**/*,OSHWA.md,LICENSE*,README.md,docs/assembly*"
+alwaysApply: false
+---
+
+# OSHWA Open-Source Hardware Compliance & Licensing
+
+Rules for maintaining open-source hardware certification standards.
+
+## Dual Licensing
+- **Hardware & CAD Designs:** CERN-OHL-P v2 (Permissive Open Hardware License) in `LICENSE-HARDWARE`.
+- **Documentation & Media:** Creative Commons Attribution 4.0 International (CC-BY-4.0) in `LICENSE-DOCS`.
+
+## Bill of Materials (BOM) Requirements
+Every physical part, fastener, and raw material must be cataloged in `bom/bom.csv`.
+Strict 7-column CSV schema:
+1. `Item`: Numeric index (e.g. 1, 2, 3...)
+2. `Part Number`: Formatted part code (e.g. `PO-001-DOME`, `FAST-M5-12`)
+3. `Description`: Component title and engineering role
+4. `Qty`: Numeric quantity required per oven
+5. `Material`: Specified alloy or material (e.g. `AISI 304 Stainless Steel`, `Cordierite`)
+6. `Supplier / Source`: Vendor, standard part reference, or `Laser Cut Service`
+7. `Estimated Cost (USD)`: Currency formatted estimated unit cost
+
+## Verification
+Run OSHWA compliance audit:
+`python3 .agents/skills/oshwa-hardware/scripts/validate_oshwa.py`

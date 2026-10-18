@@ -55,6 +55,7 @@ pizza-oven/
 │   └── skills/
 │       ├── anatomy/                 # Technical isometric explainer & SVG cutaway figures
 │       ├── code-cad/                # Parametric CAD models & STEP/DXF export pipeline
+│       ├── material-sourcing/       # Scrap offcut discovery, local classifieds scraping & BOM pricing
 │       ├── mechanical-engineering/  # Sheet metal DFM, bend allowance, thermal relief
 │       ├── oshwa-hardware/          # OSHWA compliance guidelines & validation tooling
 │       └── oven-thermodynamics/     # Transient heat transfer, refractory & BTU modeling
@@ -65,7 +66,8 @@ pizza-oven/
 │   ├── exports/                     # Ready-to-cut DXF flat patterns and STEP models
 │   └── parts/                       # Parametric individual part models
 ├── docs/
-│   └── assembly-guide.md            # Builder's DIY step-by-step assembly guide
+│   ├── assembly-guide.md            # Builder's DIY step-by-step assembly guide
+│   └── sourcing-report.md           # Material sourcing & local classifieds intelligence report
 ├── .gitignore                       # Clean ignore rules for CAD temporary files and builds
 ├── AGENTS.md                        # Project engineering guidelines & methodology
 ├── LICENSE-HARDWARE                 # CERN-OHL-P v2 (Permissive Open Hardware License)
@@ -82,6 +84,7 @@ This repository is equipped with specialized Antigravity engineering skills loca
 
 | Skill | Purpose & Capabilities | How to Run / Reference |
 | :--- | :--- | :--- |
+| **`material-sourcing`** | Local classifieds scraping (Gumtree, Facebook), surplus offcuts, Google Shopping, B2B pricing, and automated price-drop alerts. | Run `python3 .agents/skills/material-sourcing/scripts/cli.py compare` |
 | **`oshwa-hardware`** | Open hardware compliance auditing, BOM validation, and licensing verification. | Run `python3 .agents/skills/oshwa-hardware/scripts/validate_oshwa.py` |
 | **`oven-thermodynamics`** | High-temp thermal balance calculations, refractory stone heat retention, gas burner BTU sizing. | See `.agents/skills/oven-thermodynamics/SKILL.md` |
 | **`mechanical-engineering`** | Sheet metal K-factor calculations, thermal expansion joint gaps, GD&T, fastener schedules. | See `.agents/skills/mechanical-engineering/SKILL.md` |
