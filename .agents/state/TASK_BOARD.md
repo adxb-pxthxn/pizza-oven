@@ -7,7 +7,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/stream-2-modular`. Draft PR. Do not merge.
-  - Cannibal is current: 34.0 kg, door spacers on the pintle door, panels, wind-back, rods. Pit 10.8 kg still heaviest. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
+  - Quicksilver is current: 34.0 kg, hinge arms outside the door, pintle welded to the pit. Pit 11.0 kg still heaviest. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
 
 ---
 

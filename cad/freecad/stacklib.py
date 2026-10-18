@@ -155,6 +155,8 @@ class Stack:
     door_hinge: bool = False
     # Cannibal: spacers tie the inner plate to the skin. The hinge holds the whole door.
     door_tie: bool = False
+    # Quicksilver: the arms leave the door's height. The lower arm welds to the pit.
+    door_swing: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -415,14 +417,104 @@ def _append_cowl(items: list, s: Stack, pid: str, material: str, zone: str,
     ))
 
 
+def _swing_hinge(s: Stack, door_x: float, door_front: float) -> list[dict]:
+    """Same pintle, with both arms outside the door.
+
+    The lower arm welds to the pit wall, under the skirt. The pin stands on
+    that arm. A collar sits 0.4 mm under the lower barrel. The upper barrel
+    is on the brow, above the door, and the pin ends inside it, so the brow
+    lifts off. The leaf bolts to the aluminium. It is not a weld.
+    """
+    skin_x = -chamber_w() / 2.0 - (s.ins_t + s.air_gap)
+    pin_r = 3.6
+    barrel_in = 4.2
+    barrel_out = 7.0
+    axis_x = door_x - 16.0
+    axis_y = door_front - 19.0
+    pin_z = 22.0
+    knuckles = ((22.4, 44.0), (112.0, 44.0))
+    door_z0 = 1.5
+    door_z1 = door_z0 + mouth_h(s.front_h) - 3.0
+    # Under the skirt, and 2 mm under the peel rest. The door starts at 1.5.
+    skirt_bottom = -s.deck_t - 0.8 - 24.0
+    peel_top = -32.0
+    arm_z1 = min(peel_top - 2.0, skirt_bottom - 4.0)
+    arm_z0 = arm_z1 - 3.0
+    wall_x = -chamber_w() / 2.0 - s.pit_t
+    collar_z0 = 18.0
+    high_z = door_z1 + 1.0
+    high_len = 24.0
+    arm_t = 3.0
+    y_arm = axis_y - 8.0
+
+    items = [
+        _box(
+            "hinge-arm-low", "pit", "mild", "hot",
+            wall_x, y_arm, arm_z0,
+            (axis_x + 10.0) - wall_x, -s.pit_t - y_arm, arm_z1 - arm_z0,
+        ),
+        _tube(
+            "hinge-pin-low", "pit", "ss", "cool",
+            [axis_x, axis_y, arm_z1], [0, 0, 1],
+            0.0, pin_r, collar_z0 - arm_z1,
+        ),
+        _tube(
+            "hinge-collar", "pit", "ss", "cool",
+            [axis_x, axis_y, collar_z0], [0, 0, 1],
+            0.0, 8.0, pin_z - collar_z0,
+        ),
+        _tube(
+            "hinge-pin", "pit", "ss", "cool",
+            [axis_x, axis_y, pin_z], [0, 0, 1],
+            0.0, pin_r, (high_z + high_len - 0.4) - pin_z,
+        ),
+        _tube(
+            "hinge-barrel-high", "hood", "ss", "cool",
+            [axis_x, axis_y, high_z], [0, 0, 1],
+            barrel_in, barrel_out, high_len,
+        ),
+        _box(
+            "hinge-arm-high", "hood", "mild", "cool",
+            skin_x, y_arm, high_z,
+            (axis_x - barrel_out) - skin_x, 16.0, arm_t,
+        ),
+        _box(
+            "hinge-leaf-high", "hood", "mild", "cool",
+            skin_x - 16.0, y_arm, high_z,
+            16.0, 36.0 - y_arm, arm_t,
+        ),
+    ]
+    for index, (kz, length) in enumerate(knuckles):
+        items.append(_tube(
+            f"hinge-barrel-{index}", "hood", "ss", "cool",
+            [axis_x, axis_y, kz], [0, 0, 1],
+            barrel_in, barrel_out, length,
+        ))
+        strap_y = axis_y + barrel_out
+        strap_t = 2.2
+        items.append(_box(
+            f"hinge-strap-{index}", "hood", "mild", "cool",
+            axis_x - 6.0, strap_y, kz + 8.0,
+            (door_x + 18.0) - (axis_x - 6.0), strap_t, length - 16.0,
+        ))
+        items.append(_box(
+            f"hinge-ear-{index}", "hood", "mild", "cool",
+            door_x, strap_y + strap_t, kz + 8.0,
+            22.0, door_front - (strap_y + strap_t), length - 16.0,
+        ))
+    return items
+
+
 def _door_hinge(s: Stack, door_x: float, door_front: float) -> list[dict]:
     """Port pintle, drawn shut, with running clearance.
 
     The barrels are on the door. The pin is on the skin. Radial gap is 0.6 mm,
     so the door can turn and the solids do not meet. The barrel sits 0.4 mm
     above the arm and 0.8 mm under the head. The leaf bolts to the aluminium
-    skin. It is not a weld.
+    skin. It is not a weld. Quicksilver moves the arms outside the door.
     """
+    if s.door_swing:
+        return _swing_hinge(s, door_x, door_front)
     skin_x = -chamber_w() / 2.0 - (s.ins_t + s.air_gap)
     pin_r = 3.6
     barrel_in = 4.2
@@ -1555,6 +1647,51 @@ def aabb_collisions(items: list[dict]) -> list[tuple[str, str]]:
     return hits
 
 
+def _box_gap(a: tuple[float, ...], b: tuple[float, ...]) -> float:
+    """Euclidean gap between two boxes. Negative when they overlap."""
+    seps = []
+    separated = False
+    for index in range(3):
+        sep = max(a[index] - b[index + 3], b[index] - a[index + 3])
+        if sep > 0.0:
+            separated = True
+            seps.append(sep)
+        else:
+            seps.append(0.0)
+    if not separated:
+        pens = [
+            min(a[index + 3], b[index + 3]) - max(a[index], b[index])
+            for index in range(3)
+        ]
+        return -min(pens)
+    return math.sqrt(sum(sep * sep for sep in seps))
+
+
+def wood_hot_gap(items: list[dict]) -> tuple[float, tuple[str, str] | None]:
+    """Closest jarrah or gidgee to hot mild or stainless. Feet on the belly do not count."""
+    woods = []
+    hots = []
+    for part in items:
+        box = _aabb(part)
+        if box is None:
+            continue
+        if part["material"] in ("jarrah", "gidgee"):
+            woods.append((part["id"], box))
+        elif part["zone"] == "hot" and part["material"] in ("mild", "ss"):
+            hots.append((part["id"], box))
+    if not woods or not hots:
+        return 99.0, None
+    best = 1.0e9
+    pair: tuple[str, str] | None = None
+    for wood_id, wood_box in woods:
+        for hot_id, hot_box in hots:
+            gap = _box_gap(wood_box, hot_box)
+            if gap < best:
+                best = gap
+                pair = (wood_id, hot_id)
+    return best, pair
+
+
 def evaluate(s: Stack) -> dict:
     items = parts(s)
     rows = []
@@ -1610,6 +1747,7 @@ def evaluate(s: Stack) -> dict:
     view = 0.65
     q_steak = 0.85 * SIGMA * ((T_SOFFIT + 273.15) ** 4 - (100.0 + 273.15) ** 4) * view
     collisions = aabb_collisions(items)
+    gap_mm, gap_pair = wood_hot_gap(items)
     mh = mouth_h(s.front_h)
     return {
         "dragon": s.dragon,
@@ -1640,6 +1778,8 @@ def evaluate(s: Stack) -> dict:
         "bbox_mm": _bbox(items),
         "aabb_hits": len(collisions),
         "aabb_pairs": collisions[:12],
+        "wood_hot_gap_mm": round(gap_mm, 2),
+        "wood_hot_pair": list(gap_pair) if gap_pair else [],
         "n_parts": len(items),
         "pizza_clearance_mm": round((min(DECK_W, MOUTH_W) - 381.0) / 2.0, 2),
         "body_height_mm": round(_bbox(items)[5] - _bbox(items)[2], 1),

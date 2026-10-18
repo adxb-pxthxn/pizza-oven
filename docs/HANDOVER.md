@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T19:50:00Z
+**Timestamp:** 2026-10-18T20:10:00Z
 **Current Branch / Commit:** design/stream-2-modular
 **Overall Status:** IN_PROGRESS
 
@@ -24,7 +24,7 @@ Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/an
 ---
 
 ## 2b. Stream 2 (this branch)
-Cannibal is the current stack. Four spacers tie the inner plate to the skin, so Dreamfyre's pintle carries the whole door. The board steps in 8 mm and clears the spacers by 3.2 mm. Door face 53.7°C, grip 23°C. Pit 10.8 kg. Hearth 9.1 kg. Brow 5.8 kg. Tunnel 8.2 kg. Ready 34.0 kg. Mouth 424 × 185. Hood skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Flux stays 13.8 kW/m². Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Quicksilver. See `design/stream-2/README.md`.
+Quicksilver is the current stack. The hinge arms sit outside the door. The lower arm welds to the pit. The upper barrel is on the brow and the pin ends inside it, so the brow lifts off. Cannibal's spacers stay. Door face 53.7°C, grip 23°C. Pit 11.0 kg. Hearth 9.1 kg. Brow 5.7 kg. Tunnel 8.2 kg. Ready 34.0 kg. Mouth 424 × 185. Hood skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Wood stays 3.4 mm off hot steel. Flux stays 13.8 kW/m². The hearth bail and the port panel still share the door's height. The hood grip still stands on the aluminium skin. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Urrax. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.

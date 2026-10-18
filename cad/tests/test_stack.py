@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import unittest
 
 from cad.freecad.stacklib import (
@@ -536,6 +537,80 @@ class CannibalTests(unittest.TestCase):
         self.assertLess(result["body_length_mm"], 880.0)
         self.assertGreaterEqual(result["mouth_h"], 180.0)
         self.assertEqual(items["tie-door-0"]["module"], "brow")
+        self.assertGreaterEqual(result["wood_hot_gap_mm"], 2.0)
+
+
+class QuicksilverTests(unittest.TestCase):
+    def _design(self) -> Stack:
+        return Stack(
+            dragon="Quicksilver",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True, rod_rail=True,
+            wind=True, panel=True, door_air=True, door_hinge=True,
+            door_tie=True, door_swing=True,
+        )
+
+    def test_the_arms_leave_the_door_and_the_brow_lifts_off(self) -> None:
+        design = self._design()
+        items = {part["id"]: part for part in parts(design)}
+        door = items["door-skin"]
+        door_z0 = door["corner"][2]
+        door_z1 = door_z0 + door["size"][2]
+        low = items["hinge-arm-low"]
+        high = items["hinge-arm-high"]
+        self.assertLess(low["corner"][2] + low["size"][2], door_z0)
+        self.assertGreater(high["corner"][2], door_z1)
+        wall = items["pit-wall-front"]
+        self.assertAlmostEqual(low["corner"][1] + low["size"][1], wall["corner"][1], places=2)
+        self.assertEqual(low["module"], "pit")
+        self.assertEqual(low["material"], "mild")
+        skin = items["skin-port-brow"]
+        leaf = items["hinge-leaf-high"]
+        self.assertAlmostEqual(leaf["corner"][0] + leaf["size"][0], skin["corner"][0], places=2)
+        self.assertGreater(leaf["corner"][2], door_z1)
+        pin = items["hinge-pin"]
+        bore = items["hinge-barrel-high"]
+        self.assertLess(pin["r_out"] + 0.4, bore["r_in"])
+        self.assertEqual(pin["origin"][0], bore["origin"][0])
+        self.assertEqual(pin["origin"][1], bore["origin"][1])
+        pin_top = pin["origin"][2] + pin["length"]
+        bore_top = bore["origin"][2] + bore["length"]
+        self.assertGreater(bore_top - pin_top, 0.2)
+        self.assertLess(bore_top - pin_top, 0.6)
+        self.assertNotIn("hinge-head", items)
+        collar = items["hinge-collar"]
+        barrel = items["hinge-barrel-0"]
+        play = barrel["origin"][2] - (collar["origin"][2] + collar["length"])
+        self.assertGreater(play, 0.3)
+        self.assertLess(play, 0.6)
+        # Fixed steel that shares the door's height stays inside the skin's swing.
+        axis_x, axis_y = pin["origin"][0], pin["origin"][1]
+        skin_r = min(
+            math.hypot(x - axis_x, y - axis_y)
+            for x in (door["corner"][0], door["corner"][0] + door["size"][0])
+            for y in (door["corner"][1], door["corner"][1] + door["size"][1])
+        )
+        for pid in ("hinge-pin", "hinge-pin-low", "hinge-collar"):
+            part = items[pid]
+            top = part["origin"][2] + part["length"]
+            if top <= door_z0 or part["origin"][2] >= door_z1:
+                continue
+            reach = part["r_out"] * math.sqrt(2.0)
+            self.assertLess(reach, skin_r - 0.4, pid)
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertGreaterEqual(result["wood_hot_gap_mm"], 2.0)
+        self.assertLess(result["skin_C"], 55.01)
+        self.assertLess(result["body_length_mm"], 880.0)
+        self.assertGreaterEqual(result["mouth_h"], 180.0)
+        self.assertEqual(items["hinge-barrel-high"]["module"], "brow")
+        for part in parts(design):
+            if part["material"] in ("jarrah", "gidgee"):
+                self.assertEqual(part["zone"], "cool", part["id"])
 
 
 if __name__ == "__main__":
