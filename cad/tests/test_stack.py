@@ -613,5 +613,49 @@ class QuicksilverTests(unittest.TestCase):
                 self.assertEqual(part["zone"], "cool", part["id"])
 
 
+class UrraxTests(unittest.TestCase):
+    def test_the_hood_grip_stands_on_steel(self) -> None:
+        design = Stack(
+            dragon="Urrax",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True, rod_rail=True,
+            wind=True, panel=True, door_air=True, door_hinge=True,
+            door_tie=True, door_swing=True, hood_pad=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        skin = items["skin-top-body"]
+        outer = items["hood-pad-outer"]
+        inner = items["hood-pad-inner"]
+        post = items["post-hood-0"]
+        skin_top = skin["corner"][2] + skin["size"][2]
+        skin_inner = skin["corner"][2]
+        self.assertAlmostEqual(outer["corner"][2], skin_top, places=2)
+        self.assertAlmostEqual(inner["corner"][2] + inner["size"][2], skin_inner, places=2)
+        self.assertAlmostEqual(post["origin"][2], outer["corner"][2] + outer["size"][2], places=2)
+        self.assertGreater(post["origin"][2], skin_top)
+        self.assertEqual(outer["material"], "mild")
+        self.assertEqual(outer["module"], "tunnel")
+        # Both posts land inside the pad.
+        for pid in ("post-hood-0", "post-hood-1"):
+            tube = items[pid]
+            self.assertGreater(tube["origin"][0] - tube["r_out"], outer["corner"][0])
+            self.assertLess(tube["origin"][0] + tube["r_out"], outer["corner"][0] + outer["size"][0])
+            self.assertGreater(tube["origin"][1] - tube["r_out"], outer["corner"][1])
+            self.assertLess(tube["origin"][1] + tube["r_out"], outer["corner"][1] + outer["size"][1])
+        # The pad sits on the body skin, not past its edge.
+        self.assertGreaterEqual(outer["corner"][1], skin["corner"][1])
+        self.assertLessEqual(outer["corner"][1] + outer["size"][1], skin["corner"][1] + skin["size"][1])
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertGreaterEqual(result["wood_hot_gap_mm"], 2.0)
+        self.assertLess(result["skin_C"], 55.01)
+        self.assertLess(result["body_length_mm"], 880.0)
+        self.assertGreaterEqual(result["mouth_h"], 180.0)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -157,6 +157,8 @@ class Stack:
     door_tie: bool = False
     # Quicksilver: the arms leave the door's height. The lower arm welds to the pit.
     door_swing: bool = False
+    # Urrax: the hood grip stands on a mild pad. The skin is only the cladding.
+    hood_pad: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -1340,18 +1342,33 @@ def parts(s: Stack) -> list[dict]:
     else:
         items.append(_box("damper", "hood", "mild", "hot", flue_x + flue_w + 4.0, flue_y, flue_z + 10.0, 1.5, flue_d, flue_h - 20.0))
 
-    # Hood lift grip, on the cool top skin. On a stepped hood it sits on the low body.
+    # Hood lift grip. On a stepped hood it sits on the low body.
+    # Urrax: a mild pad takes the lift. The posts do not stand on the skin.
     hood_post = 16.0
     # Behind the step, with the palm radius clear of the vertical skin.
     grip_clear = (y1 if s.sloped else launch) + s.ins_t + s.air_gap + 18.0 + 16.0
     grip_y = grip_clear if s.stepped else cl * 0.45
     grip_crown = bh if s.stepped else s.front_h
     skin_top_z = grip_crown + s.liner_t + s.ins_t + s.air_gap + s.skin_t
-    hood_axis_z = skin_top_z + hood_post + 0.4 + 18.0
+    pad_t = 1.5 if s.hood_pad else 0.0
+    if s.hood_pad:
+        pad_x = -50.0
+        pad_dx = 100.0
+        pad_y = grip_y - 10.0
+        pad_dy = 20.0
+        items.append(_box(
+            "hood-pad-outer", "hood", "mild", "cool",
+            pad_x, pad_y, skin_top_z, pad_dx, pad_dy, pad_t,
+        ))
+        items.append(_box(
+            "hood-pad-inner", "hood", "mild", "cool",
+            pad_x, pad_y, skin_top_z - s.skin_t - pad_t, pad_dx, pad_dy, pad_t,
+        ))
+    hood_axis_z = skin_top_z + pad_t + hood_post + 0.4 + 18.0
     for step, xoff in enumerate((-40.0, 40.0)):
         items.append(_tube(
             f"post-hood-{step}", "hood", "ss", "cool",
-            [xoff, grip_y, skin_top_z], [0, 0, 1],
+            [xoff, grip_y, skin_top_z + pad_t], [0, 0, 1],
             0.0, POST_D / 2.0, hood_post,
         ))
     items.append(_part(

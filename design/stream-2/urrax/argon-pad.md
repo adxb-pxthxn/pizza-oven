@@ -1,0 +1,1 @@
+Argon checked the hood pads. Each shares a face with the tunnel skin and does not enter it. The posts meet the outer pad at z=198.70 and stay 1.5 mm clear of the skin. Both posts sit inside the pad, 7.5 mm from the nearest edge. No pair shares volume.

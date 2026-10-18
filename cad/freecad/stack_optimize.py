@@ -45,6 +45,7 @@ def _from(x: np.ndarray, proto: Stack) -> Stack:
         door_hinge=proto.door_hinge,
         door_tie=proto.door_tie,
         door_swing=proto.door_swing,
+        hood_pad=proto.hood_pad,
         **values,
     )
 
@@ -103,17 +104,17 @@ def solve(proto: Stack, bounds: list[tuple[float, float]], x0: list[float]) -> d
 
 
 def _proto(name: str) -> Stack:
-    if name in ("vermithor", "silverwing", "vhagar", "balerion", "meraxes", "dreamfyre", "cannibal", "quicksilver"):
+    if name in ("vermithor", "silverwing", "vhagar", "balerion", "meraxes", "dreamfyre", "cannibal", "quicksilver", "urrax"):
         dragon = {
             "vermithor": "Vermithor", "silverwing": "Silverwing", "vhagar": "Vhagar",
             "balerion": "Balerion", "meraxes": "Meraxes", "dreamfyre": "Dreamfyre",
-            "cannibal": "Cannibal", "quicksilver": "Quicksilver",
+            "cannibal": "Cannibal", "quicksilver": "Quicksilver", "urrax": "Urrax",
         }[name]
-        carried = ("silverwing", "vhagar", "balerion", "meraxes", "dreamfyre", "cannibal", "quicksilver")
-        wind = ("vhagar", "balerion", "meraxes", "dreamfyre", "cannibal", "quicksilver")
-        panel = ("balerion", "meraxes", "dreamfyre", "cannibal", "quicksilver")
-        aired = ("meraxes", "dreamfyre", "cannibal", "quicksilver")
-        hinged = ("dreamfyre", "cannibal", "quicksilver")
+        carried = ("silverwing", "vhagar", "balerion", "meraxes", "dreamfyre", "cannibal", "quicksilver", "urrax")
+        wind = ("vhagar", "balerion", "meraxes", "dreamfyre", "cannibal", "quicksilver", "urrax")
+        panel = ("balerion", "meraxes", "dreamfyre", "cannibal", "quicksilver", "urrax")
+        aired = ("meraxes", "dreamfyre", "cannibal", "quicksilver", "urrax")
+        hinged = ("dreamfyre", "cannibal", "quicksilver", "urrax")
         return Stack(
             dragon=dragon,
             deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
@@ -127,8 +128,9 @@ def _proto(name: str) -> Stack:
             panel=(name in panel),
             door_air=(name in aired),
             door_hinge=(name in hinged),
-            door_tie=(name in ("cannibal", "quicksilver")),
-            door_swing=(name == "quicksilver"),
+            door_tie=(name in ("cannibal", "quicksilver", "urrax")),
+            door_swing=(name in ("quicksilver", "urrax")),
+            hood_pad=(name == "urrax"),
         )
     if name == "sheepstealer":
         return Stack(
@@ -188,7 +190,7 @@ def main() -> None:
     import os
     name = os.environ.get("DRAGON", "vermax")
     proto = _proto(name)
-    hi_names = ("seasmoke", "caraxes", "meleys", "syrax", "sheepstealer", "vermithor", "silverwing", "vhagar", "balerion", "meraxes", "dreamfyre", "cannibal", "quicksilver")
+    hi_names = ("seasmoke", "caraxes", "meleys", "syrax", "sheepstealer", "vermithor", "silverwing", "vhagar", "balerion", "meraxes", "dreamfyre", "cannibal", "quicksilver", "urrax")
     hi_front = 310.0 if name in hi_names else 290.0
     hi_air = 20.0 if name in hi_names else 16.0
     soffit_bounds = (148.0, 165.0) if name in hi_names and name != "seasmoke" else (105.0, 140.0)

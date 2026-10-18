@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T20:10:00Z
+**Timestamp:** 2026-10-18T20:25:00Z
 **Current Branch / Commit:** design/stream-2-modular
 **Overall Status:** IN_PROGRESS
 
@@ -24,7 +24,7 @@ Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/an
 ---
 
 ## 2b. Stream 2 (this branch)
-Quicksilver is the current stack. The hinge arms sit outside the door. The lower arm welds to the pit. The upper barrel is on the brow and the pin ends inside it, so the brow lifts off. Cannibal's spacers stay. Door face 53.7°C, grip 23°C. Pit 11.0 kg. Hearth 9.1 kg. Brow 5.7 kg. Tunnel 8.2 kg. Ready 34.0 kg. Mouth 424 × 185. Hood skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Wood stays 3.4 mm off hot steel. Flux stays 13.8 kW/m². The hearth bail and the port panel still share the door's height. The hood grip still stands on the aluminium skin. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Urrax. See `design/stream-2/README.md`.
+Urrax is the current stack. The hood grip stands on a mild pad. Two 1.5 mm plates sandwich the tunnel skin, and the posts clear that skin by 1.5 mm. Quicksilver's pintle stays: the lower arm welds to the pit, and the brow lifts off the pin. Door face 53.7°C, grip 23°C. Pit 11.0 kg. Hearth 9.1 kg. Brow 5.7 kg. Tunnel 8.3 kg. Ready 34.0 kg. Mouth 424 × 185. Hood skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Wood stays 3.4 mm off hot steel. Flux stays 13.8 kW/m². The brow grip still stands on the skin. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Terrax. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.
