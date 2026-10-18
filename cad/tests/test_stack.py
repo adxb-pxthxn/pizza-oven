@@ -20,7 +20,7 @@ from cad.freecad.stacklib import (
 
 def _sample() -> Stack:
     return Stack(
-        dragon="Stormcloud",
+        dragon="Vermax",
         deck_t=5.0, ins_t=26.0, floor_ins=18.0, belly_ins=22.0,
         liner_t=0.7, skin_t=0.7, pit_t=1.1, front_h=256.0,
         soffit_h=118.0, air_gap=12.0, standoff=55.0,

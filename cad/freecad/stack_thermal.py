@@ -1,4 +1,4 @@
-"""CalculiX check of the Stormcloud wall and the floor stack.
+"""CalculiX check of the Vermax wall and the floor stack.
 
 The slab is the same homogeneous board the dome variants used, so a miss
 here is a film or a unit error and not a design result. Geometry is metres.
@@ -16,9 +16,9 @@ fea.CCX = Path("/usr/bin/ccx")
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def _stormcloud() -> Stack:
+def _vermax() -> Stack:
     return Stack(
-        dragon="Stormcloud",
+        dragon="Vermax",
         deck_t=4.0, ins_t=26.4, floor_ins=18.0, belly_ins=22.0,
         liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=256.0,
         soffit_h=118.0, air_gap=12.4, standoff=55.0,
@@ -36,9 +36,9 @@ def _solve(layers: list[tuple[str, float, float]], films: list[tuple[str, float,
 
 
 def main() -> None:
-    design = _stormcloud()
+    design = _vermax()
     report = evaluate(design)
-    out = ROOT / "design" / "stream-2" / "stormcloud" / "thermal"
+    out = ROOT / "design" / "stream-2" / "vermax" / "thermal"
     slab = fea.slab_check(out / "slab")
     print("SLAB", json.dumps(slab))
     if abs(slab["error_C"]) > 2.0:
@@ -67,7 +67,7 @@ def main() -> None:
         out / "floor",
     )
     payload = {
-        "dragon": "Stormcloud",
+        "dragon": "Vermax",
         "slab": slab,
         "wall_outer_C": round(wall_outer, 2),
         "wall_oned_C": report["skin_C"],
@@ -76,7 +76,7 @@ def main() -> None:
         "under_oned_C": report["under_C"],
         "under_error_C": round(floor_outer - report["under_C"], 2),
     }
-    dest = ROOT / "design" / "stream-2" / "stormcloud" / "thermal.json"
+    dest = ROOT / "design" / "stream-2" / "vermax" / "thermal.json"
     dest.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     print("WROTE", json.dumps(payload))
     if abs(payload["wall_error_C"]) > 2.0 or abs(payload["under_error_C"]) > 3.0:

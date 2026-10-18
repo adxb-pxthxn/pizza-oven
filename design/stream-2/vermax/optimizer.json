@@ -3,7 +3,7 @@
   "message": "Optimization terminated successfully",
   "ready_kg": 36.086,
   "design": {
-    "dragon": "Stormcloud",
+    "dragon": "Vermax",
     "deck_t": 4.0,
     "ins_t": 26.315999999999676,
     "floor_ins": 18.0,
@@ -17,7 +17,7 @@
     "standoff": 55.0
   },
   "metrics": {
-    "dragon": "Stormcloud",
+    "dragon": "Vermax",
     "ready_kg": 36.086,
     "modules_kg": {
       "pit": 10.902,

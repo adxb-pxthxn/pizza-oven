@@ -8,7 +8,7 @@ The flame rises in the rear gutter, washes a soffit 118 mm above the deck, and l
 
 Masses are the analytical solid plus the 1.85 kg burner in the pit. Skin and underside are the CalculiX result, which matched the resistance sum. Costs are ESTIMATE, AUD, Adelaide, October 2026, bottle excluded.
 
-| | Tread | Morning | Moondancer | Stormcloud |
+| | Tread | Morning | Moondancer | Vermax |
 |---|---|---|---|---|
 | Ready mass | 13.5 kg | 19.2 kg | 15.8 kg | **36.1 kg** |
 | Heaviest piece | the oven | the oven | the oven | **hood 15.9 kg** |

@@ -5,9 +5,9 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ---
 
 ## IN_PROGRESS
-- [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Stormcloud onward *(Priority: HIGH, Assigned: cursor)*
+- [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/stream-2-modular`. Draft PR. Do not merge.
-  - Stormcloud sized: 36.1 kg ready, hood 15.9 kg. Floating mild deck. CAD in progress.
+  - Vermax sized: 36.1 kg ready, hood 15.9 kg. Floating mild deck. CAD in progress.
 
 ---
 

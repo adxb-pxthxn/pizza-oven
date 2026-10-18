@@ -81,7 +81,7 @@ def solve(proto: Stack, bounds: list[tuple[float, float]], x0: list[float]) -> d
 
 def main() -> None:
     proto = Stack(
-        dragon="Stormcloud",
+        dragon="Vermax",
         deck_t=5.0, ins_t=26.0, floor_ins=18.0, belly_ins=22.0,
         liner_t=0.7, skin_t=0.7, pit_t=1.1, front_h=256.0,
         soffit_h=118.0, air_gap=12.0, standoff=55.0,
@@ -101,7 +101,7 @@ def main() -> None:
     ]
     x0 = [getattr(proto, key) for key in vector_keys()]
     solved = solve(proto, bounds, x0)
-    out = ROOT / "design" / "stream-2" / "stormcloud" / "optimizer.json"
+    out = ROOT / "design" / "stream-2" / "vermax" / "optimizer.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(solved, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"success": solved["success"], "message": solved["message"], "ready_kg": solved["ready_kg"], "modules": solved["metrics"]["modules_kg"], "skin_C": solved["metrics"]["skin_C"], "penalties": solved["penalties"]}, indent=2))

@@ -1,7 +1,7 @@
 {
-  "dragon": "Stormcloud",
+  "dragon": "Vermax",
   "design": {
-    "dragon": "Stormcloud",
+    "dragon": "Vermax",
     "deck_t": 4.0,
     "ins_t": 26.4,
     "floor_ins": 18.0,
@@ -29,7 +29,7 @@
     ]
   ],
   "metrics": {
-    "dragon": "Stormcloud",
+    "dragon": "Vermax",
     "ready_kg": 36.108,
     "modules_kg": {
       "pit": 10.902,
@@ -169,5 +169,6 @@
     "skirt-rear",
     "latch-port",
     "latch-starboard"
-  ]
+  ],
+  "note": "Named Vermax. Stream 1 already used Stormcloud."
 }
