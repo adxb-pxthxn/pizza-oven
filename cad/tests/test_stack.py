@@ -228,5 +228,28 @@ class MeleysTests(unittest.TestCase):
         self.assertLessEqual(result["skin_C"], 55.0)
 
 
+class SyraxTests(unittest.TestCase):
+    def test_the_damper_shuts_the_flue(self) -> None:
+        design = Stack(
+            dragon="Syrax",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True, damper_shut=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        damper = items["damper"]
+        front = items["flue-front"]
+        rear = items["flue-rear"]
+        self.assertGreater(damper["corner"][1], front["corner"][1] + front["size"][1])
+        self.assertLess(damper["corner"][1] + damper["size"][1], rear["corner"][1])
+        tang = items["damper-tang"]
+        self.assertGreater(tang["corner"][2] + tang["size"][2], front["corner"][2] + front["size"][2])
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertGreaterEqual(result["bread_window_min"], 25.0)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -136,6 +136,8 @@ class Stack:
     broiler: bool = False
     # Meleys: a jarrah bail on the sill, so the hot hearth lifts by wood.
     bail: bool = False
+    # Syrax: the damper is shut across the flue. Bread, not the parked pizza pose.
+    damper_shut: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -973,7 +975,22 @@ def parts(s: Stack) -> list[dict]:
     items.append(_box("flue-starboard", "hood", "mild", "hot", flue_x + flue_w - ft, flue_y, flue_z, ft, flue_d, flue_h))
     items.append(_box("flue-front", "hood", "mild", "hot", flue_x + ft + 0.4, flue_y, flue_z, flue_w - 2 * ft - 0.8, ft, flue_h))
     items.append(_box("flue-rear", "hood", "mild", "hot", flue_x + ft + 0.4, flue_y + flue_d - ft, flue_z, flue_w - 2 * ft - 0.8, ft, flue_h))
-    items.append(_box("damper", "hood", "mild", "hot", flue_x + flue_w + 4.0, flue_y, flue_z + 10.0, 1.5, flue_d, flue_h - 20.0))
+    if s.damper_shut:
+        # Across the bore, clear of the four walls. The tang stands out the top
+        # so the plate can be lifted. Bread pose.
+        damper_z = flue_z + 4.0
+        damper_h = flue_h - 8.0
+        items.append(_box(
+            "damper", "hood", "mild", "hot",
+            flue_x + ft + 2.5, flue_y + 16.5, damper_z,
+            flue_w - 2 * ft - 5.0, 1.5, damper_h,
+        ))
+        items.append(_box(
+            "damper-tang", "hood", "mild", "hot",
+            -12.0, flue_y + 16.5, damper_z + damper_h, 24.0, 1.5, 22.0,
+        ))
+    else:
+        items.append(_box("damper", "hood", "mild", "hot", flue_x + flue_w + 4.0, flue_y, flue_z + 10.0, 1.5, flue_d, flue_h - 20.0))
 
     # Hood lift grip, on the cool top skin. On a stepped hood it sits on the low body.
     hood_post = 16.0
