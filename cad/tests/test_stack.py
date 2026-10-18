@@ -410,5 +410,37 @@ class BalerionTests(unittest.TestCase):
         self.assertAlmostEqual(face, 20.9, delta=0.2)
 
 
+class MeraxesTests(unittest.TestCase):
+    def test_the_door_face_is_cool_enough_to_hold(self) -> None:
+        design = Stack(
+            dragon="Meraxes",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True, rod_rail=True,
+            wind=True, panel=True, door_air=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        skin = items["door-skin"]
+        board = items["door-ins"]
+        gap = board["corner"][1] - (skin["corner"][1] + skin["size"][1])
+        self.assertAlmostEqual(gap, 24.0, places=2)
+        grip = items["grip-door"]
+        self.assertEqual(grip["material"], "jarrah")
+        self.assertEqual(grip["zone"], "cool")
+        self.assertEqual(grip["module"], "brow")
+        self.assertLess(items["ferrule-door"]["r_in"], grip["profile"][0][1])
+        resist = 1.0 / 25.0 + 0.0012 / 45.0 + 0.016 / 0.030 + 0.024 / 0.032 + 0.0008 / 160.0 + 0.1
+        face = 20.0 + 480.0 / (resist * 10.0)
+        self.assertLessEqual(face, 55.0)
+        from cad.freecad.stacklib import grip_temperature
+        self.assertLess(grip_temperature(face, 18.0), 40.0)
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertLess(result["body_length_mm"], 880.0)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,7 @@
+{
+  "dragon": "Meraxes",
+  "door": "24 mm of air between the 16 mm board and the outer skin. The skin face is 53.7°C. A jarrah grip stands 18 mm off it and is 23°C. The ferrule is the press. The grip clears the hearth bail.",
+  "ready_kg": 33.625,
+  "modules_kg": {"pit": 10.839, "hearth": 9.094, "brow": 5.463, "tunnel": 8.228},
+  "note": "Without the air the door face is near 90°C. Balerion's panels and Vhagar's wind-back stay."
+}

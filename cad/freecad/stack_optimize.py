@@ -41,6 +41,7 @@ def _from(x: np.ndarray, proto: Stack) -> Stack:
         rod_rail=proto.rod_rail,
         wind=proto.wind,
         panel=proto.panel,
+        door_air=proto.door_air,
         **values,
     )
 
@@ -99,8 +100,11 @@ def solve(proto: Stack, bounds: list[tuple[float, float]], x0: list[float]) -> d
 
 
 def _proto(name: str) -> Stack:
-    if name in ("vermithor", "silverwing", "vhagar", "balerion"):
-        dragon = {"vermithor": "Vermithor", "silverwing": "Silverwing", "vhagar": "Vhagar", "balerion": "Balerion"}[name]
+    if name in ("vermithor", "silverwing", "vhagar", "balerion", "meraxes"):
+        dragon = {
+            "vermithor": "Vermithor", "silverwing": "Silverwing", "vhagar": "Vhagar",
+            "balerion": "Balerion", "meraxes": "Meraxes",
+        }[name]
         return Stack(
             dragon=dragon,
             deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
@@ -109,9 +113,10 @@ def _proto(name: str) -> Stack:
             launch_y=150.0, stepped=True, sloped=True, split=True,
             seated=True, grill=True, broiler=True, bail=True,
             damper_shut=True, gasket=True, slide=True,
-            rod_rail=(name in ("silverwing", "vhagar", "balerion")),
-            wind=(name in ("vhagar", "balerion")),
-            panel=(name == "balerion"),
+            rod_rail=(name in ("silverwing", "vhagar", "balerion", "meraxes")),
+            wind=(name in ("vhagar", "balerion", "meraxes")),
+            panel=(name in ("balerion", "meraxes")),
+            door_air=(name == "meraxes"),
         )
     if name == "sheepstealer":
         return Stack(
@@ -171,7 +176,7 @@ def main() -> None:
     import os
     name = os.environ.get("DRAGON", "vermax")
     proto = _proto(name)
-    hi_names = ("seasmoke", "caraxes", "meleys", "syrax", "sheepstealer", "vermithor", "silverwing", "vhagar", "balerion")
+    hi_names = ("seasmoke", "caraxes", "meleys", "syrax", "sheepstealer", "vermithor", "silverwing", "vhagar", "balerion", "meraxes")
     hi_front = 310.0 if name in hi_names else 290.0
     hi_air = 20.0 if name in hi_names else 16.0
     soffit_bounds = (148.0, 165.0) if name in hi_names and name != "seasmoke" else (105.0, 140.0)

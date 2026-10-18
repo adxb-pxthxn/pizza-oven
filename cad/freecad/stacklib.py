@@ -149,6 +149,8 @@ class Stack:
     wind: bool = False
     # Balerion: jarrah panels stood off the brow skin. The aluminium stays the skin.
     panel: bool = False
+    # Meraxes: 24 mm of air in the door, and a jarrah grip on the outer skin.
+    door_air: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -1053,13 +1055,48 @@ def parts(s: Stack) -> list[dict]:
     door_back = -(skin_off + 1.0) - (8.0 if s.gasket else 0.0)
     items.append(_box("door-inner", "hood", "mild", "hot", door_x, door_back - 1.2, 1.5, door_w, 1.2, door_h))
     items.append(_box("door-ins", "hood", "micro", "cool", door_x, door_back - 1.2 - door_t_ins, 1.5, door_w, door_t_ins, door_h))
-    items.append(_box("door-skin", "hood", "al", "cool", door_x, door_back - 1.2 - door_t_ins - 0.8, 1.5, door_w, 0.8, door_h))
-    door_front = door_back - 1.2 - door_t_ins - 0.8
+    # Sixteen millimetres of board alone leaves the outer face near 90°C.
+    door_air = 24.0 if s.door_air else 0.0
+    items.append(_box(
+        "door-skin", "hood", "al", "cool",
+        door_x, door_back - 1.2 - door_t_ins - door_air - 0.8, 1.5, door_w, 0.8, door_h,
+    ))
+    door_front = door_back - 1.2 - door_t_ins - door_air - 0.8
     items.append(_tube(
         "hinge-pin", "hood", "ss", "cool",
         [door_x + 8.0, door_front - 8.0, 10.0], [0, 0, 1],
         0.0, 3.0, door_h - 16.0,
     ))
+    if s.door_air:
+        # The outer skin is the face you meet. Wood, not the aluminium.
+        post_len = 18.0
+        grip_z = 110.0
+        axis_y = door_front - post_len - 3.0 - 0.6 - 18.0
+        for step, xoff in enumerate((-40.0, 40.0)):
+            items.append(_tube(
+                f"post-door-{step}", "hood", "ss", "cool",
+                [xoff, door_front - post_len, grip_z], [0, 1, 0],
+                0.0, POST_D / 2.0, post_len,
+            ))
+            items.append(_tube(
+                f"washer-door-{step}", "hood", "ptfe", "cool",
+                [xoff, door_front - post_len - 3.0, grip_z], [0, 1, 0],
+                0.0, 8.0, 3.0,
+            ))
+        items.append(_part(
+            "grip-door", "hood", "jarrah", "cool", "revolve",
+            origin=[-GRIP_LEN / 2.0, axis_y, grip_z],
+            axis=[1, 0, 0],
+            profile=[list(pair) for pair in GRIP_PROFILE],
+        ))
+        items.append(_tube(
+            "ferrule-door", "hood", "ss", "cool",
+            [-GRIP_LEN / 2.0, axis_y, grip_z],
+            [1, 0, 0],
+            GRIP_PROFILE[0][1] - FERRULE_PRESS,
+            GRIP_PROFILE[0][1] + 3.0,
+            FERRULE_LEN,
+        ))
     if s.gasket:
         # Uncompressed rope in the gap the door opened. Off the door face,
         # still short of the skin, so the seal is a part and not a press.
@@ -1222,6 +1259,7 @@ PRESS_FITS = (
 # Present only when the brow has its own grip. A rebuild of an older dragon
 # must not fail the press gate for a pair that dragon does not have.
 OPTIONAL_PRESS = (
+    ("ferrule-door", "grip-door"),
     ("ferrule-brow", "grip-brow"),
     ("ferrule-hearth", "grip-hearth"),
 )
