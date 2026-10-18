@@ -8,7 +8,7 @@
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-Best oven is Caraxes: Vermithor's door and skin, with a finger hollow in the grip. 38.7 kg, pizza floor 305°C, cool-down 42 min, 0.67× the Tread. Shop sheet is `design/stream-1/caraxes/BUILD.md`. Inspiration was re-read at 2026-10-18T22:37Z (five Wright lessons, then Klättermusen). Caraxes stands. Do not merge to main.
+Best oven is Caraxes: Grey Ghost's door and skin, with a finger hollow in the grip. 38.7 kg, pizza floor 305°C, cool-down 42 min, 0.67× the Tread. Shop sheet is `design/stream-1/caraxes/BUILD.md`. Inspiration was re-read at 2026-10-18T22:37Z (five Wright lessons, then Klättermusen). Caraxes stands. Do not merge to main.
 
 ## 2. Completed in This Session
 - [x] Shop stack and heat model in `cad/freecad/stream_physics.py`.

@@ -1,4 +1,4 @@
-Seasmoke is the next long-vault oven after Grey Ghost. Do not use tools. Reply in plain text.
+Seasmoke is the next long-vault oven after Vermithor. Do not use tools. Reply in plain text.
 
 Three changes, and one refusal. The skin stays bare aluminium. Timber battens on that skin were considered and rejected: the skin is about 55 C, and wood stays on the grips, the ferrules, the peel rest, and the door pull.
 

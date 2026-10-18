@@ -4,7 +4,7 @@ Long-vault prototypes after Morning and Moondancer. Gas, 15 inch pizza, no cordi
 
 Cool-down is the open door, sky plate lifted out, steel from its pizza equilibrium down to 60°C. The Tread figure is a 2.8 kg cordierite deck from 400°C through a lower mouth. Heat-up is a 6 kW burner with 35% of the fuel staying in the metal and the hot third of the blanket.
 
-| | Tread | Morning | Moondancer | Stormcloud | Tyraxes | Arrax | Grey Ghost |
+| | Tread | Morning | Moondancer | Stormcloud | Tyraxes | Arrax | Vermithor |
 |---|---|---|---|---|---|---|---|
 | Ready mass | 13.5 kg | 19.2 kg | 15.8 kg | 34.2 kg | 34.1 kg | 35.4 kg | **38.0 kg** |
 | Plan | — | Ø572 × ~260 tall | Ø547 × ~250 tall | 973 × 670 × 410 | 928 × 714 × 410 | 990 × 714 × 410 | **1090 × 714 × 435** |
@@ -35,17 +35,17 @@ Tessarion is that barrel with the plate forward and the door shut. The door bott
 
 Sunfyre is the bread gas, 230°C, on this barrel.
 
-Seasmoke is that oven with the handle load taken off the skin. A 2 mm stainless strap on each cheek, 0.4 mm clear of the aluminium, runs from the base wall up past the grip. The posts land on the strap. A 20 mm module is scribed on the sill and not on the cooking steel. A 160 × 120 mm steel tray sits in the broil bay, 44 mm under the grate. Parked, it sits outside the port skin, ahead of the grip. Timber battens on the skin were rejected: the skin is 55°C, and the wood stays on the grips. Ready mass is 38.9 kg. The heat figures are Grey Ghost's.
+Seasmoke is that oven with the handle load taken off the skin. A 2 mm stainless strap on each cheek, 0.4 mm clear of the aluminium, runs from the base wall up past the grip. The posts land on the strap. A 20 mm module is scribed on the sill and not on the cooking steel. A 160 × 120 mm steel tray sits in the broil bay, 44 mm under the grate. Parked, it sits outside the port skin, ahead of the grip. Timber battens on the skin were rejected: the skin is 55°C, and the wood stays on the grips. Ready mass is 38.9 kg. The heat figures are Vermithor's.
 
 Sheepstealer is that oven with the skin cut flat. The barrel blank is the mid-thickness arc, 1050 mm, with 12 mm spring-line tabs and 4.2 mm rivets on a 40 mm pitch. The ends are half-rings, 2 mm clear of the liner, 8 mm clear of the fibre, so the blanket is covered and the liner is not bridged to the skin. Earlier masses counted a solid aluminium end the shop never cut; this one is 38.5 kg. A 4 mm K-type gland sits beside the arch, 0.4 mm clear of the liner and 5 mm clear of the fibre. The line under the base reads "be vigilant. don't die." A kick-stand was refused: a tilt walks the free plate onto the stops. One hinge cannot be the grip, the peel ledge, and the door.
 
 Silverwing is that oven with a door that hinges. The arch stays mouth-sized. Two 2 mm straps reach a 8 mm pin at the port front corner, outboard of the skin, so a wing is not doing the reaching. Parked, the door lies along the port side, 31 mm clear of the skin. Shut, the same solid covers the arch and sits 3 mm above the sill and 103 mm clear of the skin. The post is welded to the base. The pin is a clearance fit. Ready mass is 38.7 kg. The heat figures are unchanged.
 
-Vermithor is that hinge with a land. Silverwing's post bit the base wall by 90 mm³, a tack in 1 mm sheet. The post now comes down to the floor and laps 40 × 25 mm inside the front corner. The weld is 2173 mm³. The door numbers are unchanged. Ready mass is 38.7 kg.
+Grey Ghost is that hinge with a land. Silverwing's post bit the base wall by 90 mm³, a tack in 1 mm sheet. The post now comes down to the floor and laps 40 × 25 mm inside the front corner. The weld is 2173 mm³. The door numbers are unchanged. Ready mass is 38.7 kg.
 
 Caraxes is that oven with a grip the hand can hook. An 11 mm hollow runs the middle 120 mm of each jarrah bar, where the fingers take the load. The top stays full, with a 3 mm arris so the corner does not dig, and the thumb stays off the skin. The end 8 mm is still a rectangle, so the gidgee ferrules press. Ready mass is 38.7 kg. The build now fails if a shell is open, a part is left invalid, or the steel bbox is not 480 × 500 × 6 mm. The shop sheet is `design/stream-1/caraxes/BUILD.md`.
 
-Grey Ghost is the same heat without the straps or the tray. The floor blanket is 75 mm everywhere, because a step would tilt the plate. A bare broil bay under a 500°C crown runs near 436°C, and 50 mm of fibre let the underside there reach about 70°C. At 75 mm that underside is 56°C. Pizza floor is 305°C, scorch 126 s, pizza underside 45°C. Ready mass is 38.0 kg. Open cool-down is 0.67× the Tread from the pizza floor, and 0.77× even if the whole plate started at bay temperature. Bread gas 230°C, door shut, holds 216°C. Overall 1090 × 714 × 435 mm. Two people, high side handles.
+Vermithor is the same heat without the straps or the tray. The floor blanket is 75 mm everywhere, because a step would tilt the plate. A bare broil bay under a 500°C crown runs near 436°C, and 50 mm of fibre let the underside there reach about 70°C. At 75 mm that underside is 56°C. Pizza floor is 305°C, scorch 126 s, pizza underside 45°C. Ready mass is 38.0 kg. Open cool-down is 0.67× the Tread from the pizza floor, and 0.77× even if the whole plate started at bay temperature. Bread gas 230°C, door shut, holds 216°C. Overall 1090 × 714 × 435 mm. Two people, high side handles.
 
 Blanket is 25 mm ceramic fibre (3 on the arch, 2 under the floor). Skin is 1.0 mm aluminium. Air gap is 8 mm so it stays laminar. The plate is AS/NZS 3678-250, normalised, seasoned, not fastened. Stormcloud keeps 25 mm beside the liner. Arrax keeps 10 mm, with stops at 4 mm. Growth at 320°C is 2.0 mm. No zinc. No paint. No cordierite.
 

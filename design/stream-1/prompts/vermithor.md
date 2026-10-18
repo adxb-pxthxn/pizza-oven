@@ -1,4 +1,4 @@
-Grey Ghost is the long-vault oven with a thicker floor blanket. Do not use tools. Reply in plain text.
+Vermithor is the long-vault oven with a thicker floor blanket. Do not use tools. Reply in plain text.
 
 A bare broil bay under a 500 C crown equilibrates near 436 C. With 50 mm of ceramic fibre under the steel, the underside there is about 70 C, over the 60 C touch limit. The plate has to stay flat, so the blanket cannot be thicker only under the bay or the buttons would tilt the steel.
 

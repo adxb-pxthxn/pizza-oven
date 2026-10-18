@@ -180,12 +180,12 @@ class SunfyrePhysicsTest(unittest.TestCase):
         self.assertAlmostEqual(live["floor_C"], 305.1, delta=1.0)
 
 
-class GreyGhostPhysicsTest(unittest.TestCase):
+class VermithorPhysicsTest(unittest.TestCase):
     def test_broil_bay_underside_stays_touchable(self):
         from cad.freecad.stream_physics import bay_underside
 
         path = ROOT / "design" / "stream-1" / "optimizer.json"
-        saved = json.loads(path.read_text(encoding="utf-8"))["grey-ghost"]
+        saved = json.loads(path.read_text(encoding="utf-8"))["vermithor"]
         self.assertEqual(saved["design"]["floor_fibre"], 75.0)
         self.assertEqual(saved["design"]["length"], 780.0)
         self.assertEqual(saved["design"]["plate_pose"], "rear")
@@ -269,14 +269,14 @@ class SilverwingPhysicsTest(unittest.TestCase):
         self.assertEqual(gate["welds"], [{"a": "base-tub", "b": "hinge-post", "mm3": 90.0}])
 
 
-class VermithorPhysicsTest(unittest.TestCase):
+class GreyGhostPhysicsTest(unittest.TestCase):
     def test_the_hinge_post_laps_the_floor(self):
         path = ROOT / "design" / "stream-1" / "optimizer.json"
-        saved = json.loads(path.read_text(encoding="utf-8"))["vermithor"]
+        saved = json.loads(path.read_text(encoding="utf-8"))["grey-ghost"]
         self.assertEqual(saved["design"]["hinge_sole"], 40.0)
         live = evaluate(Vault(**saved["design"]))
         self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
-        gate = json.loads((ROOT / "design" / "stream-1" / "vermithor" / "gate.json").read_text(encoding="utf-8"))
+        gate = json.loads((ROOT / "design" / "stream-1" / "grey-ghost" / "gate.json").read_text(encoding="utf-8"))
         self.assertEqual(gate["interference"], [])
         self.assertGreaterEqual(gate["weld_mm3"], 400.0)
         self.assertLess(gate["door_xmax"], gate["skin_xmin"] - 1.0)
