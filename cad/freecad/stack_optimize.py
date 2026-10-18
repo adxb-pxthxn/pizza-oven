@@ -47,6 +47,7 @@ def _from(x: np.ndarray, proto: Stack) -> Stack:
         door_swing=proto.door_swing,
         hood_pad=proto.hood_pad,
         brow_pad=proto.brow_pad,
+        door_pad=proto.door_pad,
         **values,
     )
 
@@ -134,6 +135,7 @@ def _proto(name: str) -> Stack:
             door_swing=(name in ("quicksilver", "urrax", "terrax")),
             hood_pad=(name in ("urrax", "terrax")),
             brow_pad=(name == "terrax"),
+            door_pad=(name == "terrax"),
         )
     if name == "sheepstealer":
         return Stack(

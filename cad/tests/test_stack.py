@@ -655,6 +655,7 @@ class UrraxTests(unittest.TestCase):
         self.assertLess(result["skin_C"], 55.01)
         self.assertLess(result["body_length_mm"], 880.0)
         self.assertGreaterEqual(result["mouth_h"], 180.0)
+        self.assertNotIn("door-pad-outer", items)
 
 
 class TerraxTests(unittest.TestCase):
@@ -669,6 +670,7 @@ class TerraxTests(unittest.TestCase):
             damper_shut=True, gasket=True, slide=True, rod_rail=True,
             wind=True, panel=True, door_air=True, door_hinge=True,
             door_tie=True, door_swing=True, hood_pad=True, brow_pad=True,
+            door_pad=True,
         )
         items = {part["id"]: part for part in parts(design)}
         skin = items["skin-top-brow"]
@@ -685,6 +687,26 @@ class TerraxTests(unittest.TestCase):
         self.assertLessEqual(outer["corner"][1] + outer["size"][1], skin["corner"][1] + skin["size"][1])
         # The tunnel pad from Urrax is still there.
         self.assertIn("hood-pad-outer", items)
+        door = items["door-skin"]
+        outer_pad = items["door-pad-outer"]
+        inner_pad = items["door-pad-inner"]
+        door_post = items["post-door-0"]
+        skin_outer = door["corner"][1]
+        skin_inner = door["corner"][1] + door["size"][1]
+        self.assertAlmostEqual(outer_pad["corner"][1] + outer_pad["size"][1], skin_outer, places=2)
+        self.assertAlmostEqual(inner_pad["corner"][1], skin_inner, places=2)
+        self.assertAlmostEqual(door_post["origin"][1] + door_post["length"], outer_pad["corner"][1], places=2)
+        self.assertLess(door_post["origin"][1] + door_post["length"], skin_outer)
+        self.assertEqual(outer_pad["material"], "mild")
+        self.assertEqual(outer_pad["module"], "brow")
+        board = items["door-ins"]
+        self.assertLess(inner_pad["corner"][1] + inner_pad["size"][1], board["corner"][1])
+        for pid in ("post-door-0", "post-door-1"):
+            tube = items[pid]
+            self.assertGreater(tube["origin"][0] - tube["r_out"], outer_pad["corner"][0])
+            self.assertLess(tube["origin"][0] + tube["r_out"], outer_pad["corner"][0] + outer_pad["size"][0])
+            self.assertGreater(tube["origin"][2] - tube["r_out"], outer_pad["corner"][2])
+            self.assertLess(tube["origin"][2] + tube["r_out"], outer_pad["corner"][2] + outer_pad["size"][2])
         result = evaluate(design)
         self.assertEqual(result["aabb_hits"], 0)
         self.assertGreaterEqual(result["wood_hot_gap_mm"], 2.0)

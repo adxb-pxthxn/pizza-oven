@@ -522,6 +522,7 @@ TERRAX = Stack(
     door_swing=True,
     hood_pad=True,
     brow_pad=True,
+    door_pad=True,
 )
 
 DRAGONS = {

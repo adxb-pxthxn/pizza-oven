@@ -41,7 +41,7 @@ The brow is the tall front. Liner is 0.6 mm mild. Skin is 0.6 mm aluminium. Boar
 2. University TIG the liner corners. The mouth stays 424 × 185. Check it on the MDF buck before the skin goes on.
 3. Door inner: 1.2 mm mild, 421 × 182. Board: 16 mm, inset 8 mm on the edges, WorkBee. Skin: 0.8 mm aluminium. Four stainless spacers, Ø5 × 40, sit in that 8 mm border and butt the skin and the inner plate. They are not a press and they do not pierce the plate.
 4. Pintle. Lathe: pin Ø7.2. Mill or lathe: barrel bore Ø8.4, so the radial gap is 0.6 mm. Collar Ø16 sits 0.4 mm under the lower barrel. The upper barrel is on the brow, 1 mm above the door, and the pin ends inside it. The brow lifts off. The leaf is 3 mm mild and bolts to the aluminium. It is not a weld. Use M5, coarse clearance in the aluminium, anti-seize on the stainless threads.
-5. Grip pads: 1.5 mm mild, 100 × 20, one each side of the brow skin and the same on the tunnel skin. Clamp pad, skin, pad, and drill through as one stack. Posts are Ø5 stainless and stand on the outer pad, 1.5 mm clear of the skin, 7.5 mm inside the pad edge. Weld the posts to the pad, not to the skin.
+5. Grip pads: 1.5 mm mild, 100 × 20, one each side of the brow skin, the tunnel skin, and the door skin. Clamp pad, skin, pad, and drill through as one stack. Rivet the stack. Do not weld the mild to the aluminium. Posts are Ø5 stainless and stand on the outer pad, 1.5 mm clear of the skin, 7.5 mm inside the pad edge. Weld the posts to the pad, not to the skin. On the door the inner pad sits in the 24 mm air gap and stops 22 mm short of the board.
 6. Jarrah panels: 6 mm, 110 × 130, table saw. Stand them 8 mm off the skin on stainless posts and PTFE washers. Do not glue wood to metal.
 7. Rope: four strips in the door gap, clear of the skin. Damper: a plate across the flue with a tang out the top.
 
@@ -58,7 +58,7 @@ The brow is the tall front. Liner is 0.6 mm mild. Skin is 0.6 mm aluminium. Boar
 1. Wood to hot steel stays at least 2 mm. The measured closest pair is the port grip to its post, 3.4 mm. Do not close that gap to make the handle stiffer.
 2. Ferrules: 0.15 mm radial press. Everything else that touches is a butt, a bolt, or a running fit.
 3. Put the door on the pintle last. Confirm it swings past the arms. The hearth bail and the port panel still share the door's height, so do not force a full turn.
-4. The door grip still stands on the door skin. Do not hang the tunnel or the brow from that grip.
+4. The door grip stands on its pad. It pulls the door. Do not hang the tunnel or the brow from it.
 
 ## 7. Safety
 

@@ -161,6 +161,8 @@ class Stack:
     hood_pad: bool = False
     # Terrax: the brow grip stands on the same kind of pad.
     brow_pad: bool = False
+    # Terrax: the door grip stands on the same kind of pad. The skin is the cladding.
+    door_pad: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -1282,18 +1284,30 @@ def parts(s: Stack) -> list[dict]:
         ))
     if s.door_air:
         # The outer skin is the face you meet. Wood, not the aluminium.
+        # Terrax puts a mild pad under the posts. They do not stand on the skin.
         post_len = 18.0
         grip_z = 110.0
-        axis_y = door_front - post_len - 3.0 - 0.6 - 18.0
+        pad_t = 1.5 if s.door_pad else 0.0
+        if s.door_pad:
+            items.append(_box(
+                "door-pad-outer", "hood", "mild", "cool",
+                -50.0, door_front - pad_t, grip_z - 10.0, 100.0, pad_t, 20.0,
+            ))
+            items.append(_box(
+                "door-pad-inner", "hood", "mild", "cool",
+                -50.0, door_front + 0.8, grip_z - 10.0, 100.0, pad_t, 20.0,
+            ))
+        face = door_front - pad_t
+        axis_y = face - post_len - 3.0 - 0.6 - 18.0
         for step, xoff in enumerate((-40.0, 40.0)):
             items.append(_tube(
                 f"post-door-{step}", "hood", "ss", "cool",
-                [xoff, door_front - post_len, grip_z], [0, 1, 0],
+                [xoff, face - post_len, grip_z], [0, 1, 0],
                 0.0, POST_D / 2.0, post_len,
             ))
             items.append(_tube(
                 f"washer-door-{step}", "hood", "ptfe", "cool",
-                [xoff, door_front - post_len - 3.0, grip_z], [0, 1, 0],
+                [xoff, face - post_len - 3.0, grip_z], [0, 1, 0],
                 0.0, 8.0, 3.0,
             ))
         items.append(_part(

@@ -1,0 +1,1 @@
+Argon checked the door pads. Each shares a face with the door skin and does not enter it. The posts meet the outer pad at y=-90.50 and stay 1.5 mm clear of the skin. The nearest pad edge is 7.5 mm from a post wall. The inner pad stops 22.5 mm short of the board. No pair shares volume.

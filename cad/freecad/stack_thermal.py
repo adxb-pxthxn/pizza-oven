@@ -109,6 +109,7 @@ def _terrax() -> Stack:
         damper_shut=True, gasket=True, slide=True, rod_rail=True,
         wind=True, panel=True, door_air=True, door_hinge=True,
         door_tie=True, door_swing=True, hood_pad=True, brow_pad=True,
+        door_pad=True,
     )
 
 

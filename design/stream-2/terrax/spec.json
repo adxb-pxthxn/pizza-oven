@@ -1,8 +1,8 @@
 {
   "dragon": "Terrax",
-  "grip": "The brow grip stands on a 1.5 mm mild pad, the same arrangement as the tunnel grip. Posts clear the skin by 1.5 mm and the pad edge by 7.5 mm.",
-  "ready_kg": 34.088,
-  "modules_kg": {"pit": 10.967, "hearth": 9.094, "brow": 5.752, "tunnel": 8.275},
+  "grip": "The brow, tunnel, and door grips each stand on a 1.5 mm mild pad. Door posts clear the skin by 1.5 mm and the pad edge by 7.5 mm. The inner door pad stops 22.5 mm short of the board.",
+  "ready_kg": 34.135,
+  "modules_kg": {"pit": 10.967, "hearth": 9.094, "brow": 5.799, "tunnel": 8.275},
   "wood_hot_gap_mm": 3.4,
-  "note": "Both pads show in plan. The door grip still stands on the door skin. Quicksilver's pintle is unchanged."
+  "note": "The 1.5 mm pad sits behind the grip, so the front sheet does not show it as its own line. Quicksilver's pintle is unchanged. The door grip pulls the door. It is not a lift."
 }
