@@ -41,6 +41,8 @@ Sheepstealer is that oven with the skin cut flat. The barrel blank is the mid-th
 
 Silverwing is that oven with a door that hinges. The arch stays mouth-sized. Two 2 mm straps reach a 8 mm pin at the port front corner, outboard of the skin, so a wing is not doing the reaching. Parked, the door lies along the port side, 31 mm clear of the skin. Shut, the same solid covers the arch and sits 3 mm above the sill and 103 mm clear of the skin. The post is welded to the base. The pin is a clearance fit. Ready mass is 38.7 kg. The heat figures are unchanged.
 
+Vermithor is that hinge with a land. Silverwing's post bit the base wall by 90 mm³, a tack in 1 mm sheet. The post now comes down to the floor and laps 40 × 25 mm inside the front corner. The weld is 2173 mm³. The door numbers are unchanged. Ready mass is 38.7 kg.
+
 Grey Ghost is the same heat without the straps or the tray. The floor blanket is 75 mm everywhere, because a step would tilt the plate. A bare broil bay under a 500°C crown runs near 436°C, and 50 mm of fibre let the underside there reach about 70°C. At 75 mm that underside is 56°C. Pizza floor is 305°C, scorch 126 s, pizza underside 45°C. Ready mass is 38.0 kg. Open cool-down is 0.67× the Tread from the pizza floor, and 0.77× even if the whole plate started at bay temperature. Bread gas 230°C, door shut, holds 216°C. Overall 1090 × 714 × 435 mm. Two people, high side handles.
 
 Blanket is 25 mm ceramic fibre (3 on the arch, 2 under the floor). Skin is 1.0 mm aluminium. Air gap is 8 mm so it stays laminar. The plate is AS/NZS 3678-250, normalised, seasoned, not fastened. Stormcloud keeps 25 mm beside the liner. Arrax keeps 10 mm, with stops at 4 mm. Growth at 320°C is 2.0 mm. No zinc. No paint. No cordierite.

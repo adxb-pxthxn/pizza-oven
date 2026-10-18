@@ -202,8 +202,14 @@ def _hinged_door(design, hw, deck: float, skin_r: float, y_front: float):
     # Stile inboard of the parked door, foot welded into the base wall, eyes on the pin.
     stile_x = ax + door_t + 2.0
     stile = _box(stile_x, ay + 6.0, z0 - 16.0, 10.0, (y_front + 6.0) - (ay + 6.0), door_rise + 28.0)
-    foot = _box(stile_x, ay + 4.0, z0 - 16.0, (-(skin_r) + 2.0) - stile_x, (y_front + 8.0) - (ay + 4.0), 10.0)
-    post = stile.fuse(foot)
+    if design.hinge_sole > 0.0:
+        # Column down to the floor, plus a lap inside the front corner.
+        foot = _box(stile_x, ay + 4.0, 0.0, (-(skin_r) + 4.0) - stile_x, (y_front + 8.0) - (ay + 4.0), z0 - 6.0)
+        sole = _box(-(skin_r) + 1.0, y_front, 0.0, design.hinge_sole, 25.0, 8.0)
+        post = stile.fuse(foot).fuse(sole)
+    else:
+        foot = _box(stile_x, ay + 4.0, z0 - 16.0, (-(skin_r) + 2.0) - stile_x, (y_front + 8.0) - (ay + 4.0), 10.0)
+        post = stile.fuse(foot)
     for lz in (z0 - 16.0, z0 + door_rise - 4.0):
         eye = _box(ax - 10.0, ay - 10.0, lz, (stile_x + 10.0) - (ax - 10.0), 20.0, 12.0)
         bore = Part.makeCylinder(bore_r, 16.0, App.Vector(ax, ay, lz - 2.0), App.Vector(0.0, 0.0, 1.0))
@@ -748,6 +754,7 @@ def build(name: str = "stormcloud") -> dict:
         "interference": stray,
         "press_fits": press,
         "welds": weld,
+        "weld_mm3": round(sum(hit["mm3"] for hit in weld), 1),
         "analytical_ready_kg": round(report["ready_kg"], 3),
         "door_pose": design.door_pose,
         "box_d": design.box_d,
@@ -807,6 +814,8 @@ def build(name: str = "stormcloud") -> dict:
             if swing_park is not None:
                 swing_park["xmax"] = round(door_bb.XMin - 4.0, 1)
                 gate["swing_park"] = swing_park
+            if design.hinge_sole > 0.0 and gate["weld_mm3"] < 400.0:
+                stray.append({"a": "hinge-post", "b": "weld-land", "mm3": -1})
     if design.sill_d > 0.0:
         sill_bb = by_name["launch-sill"].BoundBox
         steel_bb = by_name["pizza-steel"].BoundBox

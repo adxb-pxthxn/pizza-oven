@@ -97,6 +97,7 @@ class Vault:
     probe: float = 0.0
     base_mark: float = 0.0
     hinge: float = 0.0
+    hinge_sole: float = 0.0
 
 
 def stack_thickness(v: Vault) -> float:
@@ -486,6 +487,8 @@ def masses(v: Vault) -> dict[str, float]:
         hinge_kg = _mm3_to_kg(2.0 * strap_l * 16.0 * 2.0, DENS["ss"])
         hinge_kg += _mm3_to_kg(math.pi * (v.hinge / 2.0) ** 2 * (v.mouth_h + 50.0), DENS["ss"])
         hinge_kg += _mm3_to_kg(2.0 * 20.0 * 16.0 * 14.0, DENS["al"])
+        if v.hinge_sole > 0.0:
+            hinge_kg += _mm3_to_kg(v.hinge_sole * 25.0 * 8.0, DENS["al"])
     else:
         hinge_kg = 0.0
     feet = _mm3_to_kg(4.0 * math.pi * 16.0 ** 2 * 10.0, DENS["rubber"])

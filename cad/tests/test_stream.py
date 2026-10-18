@@ -269,5 +269,19 @@ class SilverwingPhysicsTest(unittest.TestCase):
         self.assertEqual(gate["welds"], [{"a": "base-tub", "b": "hinge-post", "mm3": 90.0}])
 
 
+class VermithorPhysicsTest(unittest.TestCase):
+    def test_the_hinge_post_laps_the_floor(self):
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["vermithor"]
+        self.assertEqual(saved["design"]["hinge_sole"], 40.0)
+        live = evaluate(Vault(**saved["design"]))
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        gate = json.loads((ROOT / "design" / "stream-1" / "vermithor" / "gate.json").read_text(encoding="utf-8"))
+        self.assertEqual(gate["interference"], [])
+        self.assertGreaterEqual(gate["weld_mm3"], 400.0)
+        self.assertLess(gate["door_xmax"], gate["skin_xmin"] - 1.0)
+        self.assertGreaterEqual(gate["shut_sill_mm"], 1.0)
+
+
 if __name__ == "__main__":
     unittest.main()
