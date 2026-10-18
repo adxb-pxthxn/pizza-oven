@@ -24,6 +24,12 @@ This repository is an open-source physical engineering and mechanical developmen
    - Keep `docs/HANDOVER.md` and `.agents/state/TASK_BOARD.md` updated between agent sessions.
    - Practice atomic commits with agent signatures (e.g. `[agent:antigrav]` or `[agent:cursor]`).
 
+## Cursor Cloud specific instructions
+
+- There is no package manifest and no dev server. The default image already has Python 3.12 (standard library only), Node.js 22, and Google Chrome. Do not add a requirements file or start a web process for routine work.
+- Product commands are listed in `README.md`. The automated test is `python3 .agents/skills/material-sourcing/tests/test_material_sourcing.py` (stdlib `unittest`, offline).
+- Anatomy figures are plain Node ESM. `node .agents/skills/anatomy/examples/dial-indicator/build.mjs` rewrites the HTML next to that script; a correct rebuild leaves git clean. Anatomy's own `scripts/*.test.mjs` need a temporary `NODE_PATH` with `react`, `react-dom`, `typescript`, and `esbuild`, as in `.agents/skills/anatomy/.github/workflows/ci.yml`.
+
 ## Available Skills
 - `anatomy`: Isometric technical figures, cutaways, and interactive visual explainers.
 - `mechanical-engineering`: General sheet metal DFM, bend allowance calculator, thermal expansion calculator, GD&T, food safety standards.
