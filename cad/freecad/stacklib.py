@@ -147,6 +147,8 @@ class Stack:
     rod_rail: bool = False
     # Vhagar: a mild wind-back stored under the rear overhang. It stands on the rim when the hood is off.
     wind: bool = False
+    # Balerion: jarrah panels stood off the brow skin. The aluminium stays the skin.
+    panel: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -1173,6 +1175,40 @@ def parts(s: Stack) -> list[dict]:
         items.extend(_brow_grip(s))
     if s.bail:
         items.extend(_hearth_bail(s))
+    if s.panel:
+        # After the retag, so these stay on the brow. 8 mm of air, then a washer, then jarrah.
+        skin_off = s.ins_t + s.air_gap
+        outer = chamber_w() / 2.0 + skin_off
+        panel_t = 6.0
+        gap = 8.0
+        panel_y = 20.0
+        panel_z = 40.0
+        panel_dy = 110.0
+        panel_dz = 130.0
+        for end, sign in (("port", -1.0), ("starboard", 1.0)):
+            if sign < 0:
+                panel_x = -(outer + gap + panel_t)
+                post_x = -(outer + gap - 3.0)
+                washer_x = -(outer + gap)
+            else:
+                panel_x = outer + gap
+                post_x = outer
+                washer_x = outer + gap - 3.0
+            items.append(_box(
+                f"brow-panel-{end}", "brow", "jarrah", "cool",
+                panel_x, panel_y, panel_z, panel_t, panel_dy, panel_dz,
+            ))
+            for step, (py, pz) in enumerate(((50.0, 80.0), (100.0, 140.0))):
+                items.append(_tube(
+                    f"brow-post-{end}-{step}", "brow", "ss", "cool",
+                    [post_x, py, pz], [1, 0, 0],
+                    0.0, 2.5, 5.0,
+                ))
+                items.append(_tube(
+                    f"brow-washer-{end}-{step}", "brow", "ptfe", "cool",
+                    [washer_x, py, pz], [1, 0, 0],
+                    0.0, 4.0, 3.0,
+                ))
 
     return items
 

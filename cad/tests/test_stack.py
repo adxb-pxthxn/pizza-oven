@@ -371,5 +371,44 @@ class VhagarTests(unittest.TestCase):
         self.assertLess(result["body_length_mm"], 880.0)
 
 
+class BalerionTests(unittest.TestCase):
+    def test_jarrah_stands_off_the_brow(self) -> None:
+        design = Stack(
+            dragon="Balerion",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True, rod_rail=True,
+            wind=True, panel=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        panel = items["brow-panel-port"]
+        skin = items["skin-port-brow"]
+        self.assertEqual(panel["material"], "jarrah")
+        self.assertEqual(panel["zone"], "cool")
+        self.assertEqual(panel["module"], "brow")
+        skin_outer = skin["corner"][0]
+        panel_inner = panel["corner"][0] + panel["size"][0]
+        self.assertLess(panel_inner, skin_outer - 7.0)
+        washer = items["brow-washer-port-0"]
+        self.assertEqual(washer["material"], "ptfe")
+        self.assertAlmostEqual(washer["origin"][0], panel_inner, places=2)
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertLessEqual(result["skin_C"], 55.0)
+        self.assertLess(result["modules_kg"]["brow"], 8.0)
+        # Two posts and two washers, panel faces 110 by 130 mm, skin at 55°C.
+        import math
+        r_post = 0.005 / (16.0 * math.pi * 0.0025 ** 2)
+        r_washer = 0.003 / (0.25 * math.pi * 0.004 ** 2)
+        r_path = (r_post + r_washer) / 2.0
+        r_conv = 1.0 / (10.0 * 2.0 * 0.110 * 0.130)
+        face = 20.0 + (55.0 - 20.0) * r_conv / (r_path + r_conv)
+        self.assertLess(face, 30.0)
+        self.assertAlmostEqual(face, 20.9, delta=0.2)
+
+
 if __name__ == "__main__":
     unittest.main()

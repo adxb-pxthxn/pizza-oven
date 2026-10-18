@@ -7,7 +7,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/stream-2-modular`. Draft PR. Do not merge.
-  - Vhagar is current: 33.4 kg, wind-back on the pit, rods, rope, slide. Pit 10.8 kg still heaviest. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
+  - Balerion is current: 33.5 kg, jarrah stood off the brow, wind-back, rods, rope, slide. Pit 10.8 kg still heaviest. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
 
 ---
 
