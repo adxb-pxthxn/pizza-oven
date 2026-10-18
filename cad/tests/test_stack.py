@@ -145,5 +145,40 @@ class MorghulTests(unittest.TestCase):
         self.assertLessEqual(result["skin_C"], 55.0)
 
 
+class SeasmokeTests(unittest.TestCase):
+    def test_the_brow_sits_on_a_shelf(self) -> None:
+        design = Stack(
+            dragon="Seasmoke",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=110.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        foot = items["seat-foot"]
+        shelf = items["seat-shelf"]
+        gap = foot["corner"][2] - (shelf["corner"][2] + shelf["size"][2])
+        self.assertGreater(gap, 0.4)
+        self.assertLess(gap, 1.0)
+        self.assertIn("seat-leg", items)
+        self.assertEqual(items["seat-leg"]["module"], "tunnel")
+        self.assertEqual(foot["module"], "brow")
+        self.assertEqual(shelf["module"], "tunnel")
+        self.assertIn("grate-rail-high-port", items)
+        self.assertIn("grip-brow", items)
+        self.assertEqual(items["grip-brow"]["zone"], "cool")
+        # Rods moved up onto the cooking rails. The low rails stay empty.
+        self.assertGreater(items["grate-rod-0"]["origin"][2], items["grate-rail-port"]["corner"][2] + 20.0)
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertLess(result["modules_kg"]["brow"], 8.0)
+        self.assertLess(result["modules_kg"]["tunnel"], 8.0)
+        self.assertLess(result["modules_kg"]["pit"], 12.0)
+        self.assertGreaterEqual(result["mouth_h"], 180.0)
+        self.assertLessEqual(result["skin_C"], 55.0)
+        self.assertLess(items["ferrule-brow"]["r_in"], items["grip-brow"]["profile"][0][1])
+
+
 if __name__ == "__main__":
     unittest.main()

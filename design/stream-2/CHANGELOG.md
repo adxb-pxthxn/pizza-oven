@@ -4,3 +4,4 @@
 - Arrax: the crown follows the soffit. Tall brow only for a 260 mm launch, mouth 424 × 185, body ceiling 110 mm. Grate stays in the pit. Ready 32.2 kg (pit 10.4, hearth 9.0, hood 12.8). Skin 55.0°C. Heat-up 10 min. Bread window 59 min. Pack cool-down 27 min door open.
 - Shrykos: the Arrax step becomes a 45° brake fold. Mouth still 424 × 185. Ready 30.6 kg, hood 11.2 kg. Skin 55.0°C. Heat-up 10 min. Bread window 60 min. Pack cool-down 27 min door open.
 - Morghul: the fold is the joint. Brow 5.1 kg, tunnel 6.1 kg, hearth 9.0 kg, pit 10.4 kg. Ready 30.6 kg. Mouth 424 × 185. Skin 55.0°C. Heat-up 10 min. Bread window 60 min. Pack cool-down 27 min door open.
+- Seasmoke: the brow foot butts the skin corner and sits 0.6 mm above a tunnel shelf. The brow has its own jarrah grip. Grate rods move up 32 mm. Ready 31.0 kg (pit 10.5, hearth 9.0, brow 5.3, tunnel 6.2). Mouth 424 × 185. Skin 55.0°C. Heat-up 10 min. Bread window 60 min. Pack cool-down 27 min door open.

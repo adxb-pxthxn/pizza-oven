@@ -25,11 +25,11 @@ from cad.freecad.stacklib import (
     DENS,
     GUTTER_L,
     MOUTH_W,
-    PRESS_FITS,
-    SOFFIT_Y0,
+    active_press_fits,
     SOFFIT_Y1,
     Stack,
     evaluate,
+    soffit_y0,
     parts,
 )
 
@@ -104,7 +104,34 @@ MORGHUL = Stack(
     split=True,
 )
 
-DRAGONS = {"vermax": VERMAX, "arrax": ARRAX, "shrykos": SHRYKOS, "morghul": MORGHUL}
+SEASMOKE = Stack(
+    dragon="Seasmoke",
+    deck_t=4.0,
+    ins_t=22.0,
+    floor_ins=12.0,
+    belly_ins=12.0,
+    liner_t=0.6,
+    skin_t=0.6,
+    pit_t=1.0,
+    front_h=294.0,
+    soffit_h=110.0,
+    air_gap=16.0,
+    standoff=54.0,
+    launch_y=150.0,
+    stepped=True,
+    sloped=True,
+    split=True,
+    seated=True,
+    grill=True,
+)
+
+DRAGONS = {
+    "vermax": VERMAX,
+    "arrax": ARRAX,
+    "shrykos": SHRYKOS,
+    "morghul": MORGHUL,
+    "seasmoke": SEASMOKE,
+}
 
 FORBIDDEN_CONSOLE_TOKENS = ("Error", "Recompute failed", "subshape")
 
@@ -455,7 +482,7 @@ def _render_png(fragment: str, title: str, subtitle: str, out_path: Path, width:
     indexed.save(str(out_path), "PNG", 0)
 
 
-def _sheet(title: str, sheet_name: str, views: dict[str, str], note: str, scale: float) -> str:
+def _sheet(title: str, sheet_name: str, views: dict[str, str], note: str, modules_line: str, scale: float) -> str:
     del scale
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="420mm" height="297mm" viewBox="0 0 420 297">
 <rect width="420" height="297" fill="#f7f4ee"/>
@@ -473,7 +500,7 @@ def _sheet(title: str, sheet_name: str, views: dict[str, str], note: str, scale:
 <rect x="8" y="232" width="404" height="57" fill="#f7f4ee" stroke="#1c1a17" stroke-width="0.4"/>
 <text x="14" y="248" font-family="Georgia, serif" font-size="3.0" fill="#1c1a17">{note}</text>
 <text x="14" y="260" font-family="Georgia, serif" font-size="2.8" fill="#5c5348">Dimensions in mm. Origin on the mouth plane at the deck centreline (+X right, +Y into the oven, +Z up, deck top at Z = 0).</text>
-<text x="14" y="272" font-family="Georgia, serif" font-size="2.8" fill="#5c5348">Three modules (pit, hearth, hood): bare-steel pit with insulated belly, hearth frame with floating mild-steel deck, and insulated rectangular hood.</text>
+<text x="14" y="272" font-family="Georgia, serif" font-size="2.8" fill="#5c5348">{modules_line}</text>
 <text x="14" y="282" font-family="Georgia, serif" font-size="2.8" fill="#5c5348">Rear gutter behind the floating deck admits the burner flame; overhead soffit and riser form the radiant ceiling inside the hood.</text>
 </svg>
 '''
@@ -488,16 +515,32 @@ def _write_sheets(out_dir: Path, design: Stack, report: dict, compound: Part.Sha
     }
     title = f"{design.dragon} — modular stack"
     mods = report["modules_kg"]
+    split = mods.get("brow", 0.0) > 0.05
+    if split:
+        module_note = (
+            f"Pit {mods['pit']:.2f} kg, hearth {mods['hearth']:.2f} kg, "
+            f"brow {mods['brow']:.2f} kg, tunnel {mods['tunnel']:.2f} kg"
+        )
+        modules_line = (
+            "Four modules (pit, hearth, brow, tunnel). The brow sits on a shelf at the fold. "
+            "Etched inside the brow: 300 is the deck. 550 is the ceiling."
+        )
+    else:
+        module_note = f"Three modules: pit {mods['pit']:.2f} kg, hearth {mods['hearth']:.2f} kg, hood {mods['hood']:.2f} kg"
+        modules_line = (
+            "Three modules (pit, hearth, hood): bare-steel pit with insulated belly, "
+            "hearth frame with floating mild-steel deck, and insulated rectangular hood."
+        )
     note = (
-        f"Three modules: pit {mods['pit']:.2f} kg, hearth {mods['hearth']:.2f} kg, hood {mods['hood']:.2f} kg · "
+        f"{module_note} · "
         f"floating deck {DECK_W:.0f}×{DECK_L:.0f}×{design.deck_t:.1f} mm · "
         f"rear gutter {GUTTER_L:.0f} mm · "
-        f"soffit {design.soffit_h:.0f} mm (Y {SOFFIT_Y0:.0f}..{SOFFIT_Y1:.0f} mm) · "
+        f"soffit {design.soffit_h:.0f} mm (Y {soffit_y0(design):.0f}..{SOFFIT_Y1:.0f} mm) · "
         f"mouth {MOUTH_W:.0f}×{report['mouth_h']:.0f} mm · "
         f"overall {report['body_width_mm']:.1f}×{report['body_length_mm']:.1f}×{report['body_height_mm']:.1f} mm · "
         f"ready {report['ready_kg']:.2f} kg"
     )
-    sheet = _sheet(title, "General arrangement — front, side, section, top", views, note, scale=0.35)
+    sheet = _sheet(title, "General arrangement — front, side, section, top", views, note, modules_line, scale=0.35)
     (out_dir / "ga-arrangement.svg").write_text(sheet, encoding="utf-8")
 
     subtitles = {
@@ -506,8 +549,8 @@ def _write_sheets(out_dir: Path, design: Stack, report: dict, compound: Part.Sha
             f"front height {design.front_h:.0f} mm, dimensions in mm)"
         ),
         "side": (
-            f"Side view from -X (three modules: pit, hearth, hood; "
-            f"length {report['body_length_mm']:.1f} mm, height {report['body_height_mm']:.1f} mm)"
+            f"Side view from -X "
+            f"(length {report['body_length_mm']:.1f} mm, height {report['body_height_mm']:.1f} mm)"
         ),
         "top": (
             f"Top view from +Z (width {report['body_width_mm']:.1f} mm, "
@@ -630,8 +673,9 @@ def build(name: str = "vermax") -> dict:
             )
 
         # Pairwise common() volume check across all built solids (including keepout).
-        press_lookup = {frozenset(pair): (str(pair[0]), str(pair[1])) for pair in PRESS_FITS}
-        press_volumes_mm3: dict[str, float] = {f"{a}|{b}": 0.0 for a, b in PRESS_FITS}
+        press_pairs = active_press_fits([item for _obj, item in made])
+        press_lookup = {frozenset(pair): (str(pair[0]), str(pair[1])) for pair in press_pairs}
+        press_volumes_mm3: dict[str, float] = {f"{a}|{b}": 0.0 for a, b in press_pairs}
         press_pair_rows: list[dict] = []
         interferences: list[dict] = []
         max_non_press_common_mm3 = 0.0
@@ -671,7 +715,7 @@ def build(name: str = "vermax") -> dict:
                         )
 
         press_fits_ok = True
-        for pa, pb in PRESS_FITS:
+        for pa, pb in press_pairs:
             key = f"{pa}|{pb}"
             vol = press_volumes_mm3.get(key, 0.0)
             press_pair_rows.append({"ids": [pa, pb], "volume_mm3": vol, "ok": vol > 1.0})
@@ -792,6 +836,8 @@ def build(name: str = "vermax") -> dict:
                 "pit": round(modules_kg["pit"] + float(BURNER_KG), 3),
                 "hearth": round(modules_kg["hearth"], 3),
                 "hood": round(modules_kg["hood"], 3),
+                "brow": round(modules_kg.get("brow", 0.0), 3),
+                "tunnel": round(modules_kg.get("tunnel", 0.0), 3),
             },
             "solid_modules_kg": {k: round(v, 3) for k, v in modules_kg.items()},
             "parts": part_masses_map,

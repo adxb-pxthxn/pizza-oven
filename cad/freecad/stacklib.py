@@ -128,6 +128,10 @@ class Stack:
     sloped: bool = False
     # Morghul: the fold is the joint. Brow and tunnel lift separately.
     split: bool = False
+    # Seasmoke: the skin opens into a pocket and the brow sits on a shelf.
+    seated: bool = False
+    # Seasmoke: a second grate, up at cooking height. The low rails stay for the fire.
+    grill: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -366,7 +370,7 @@ def _slope_plate(pid: str, module: str, material: str, zone: str,
 
 def _append_cowl(items: list, s: Stack, pid: str, material: str, zone: str,
                  x: float, dx: float, y0: float, z_hi: float, y1: float, z_lo: float,
-                 start: float, thick: float) -> None:
+                 start: float, thick: float, gap: float = 2.0) -> None:
     """One plate, or two plates with a gap at the fold when the hood splits."""
     if not s.split:
         items.append(_slope_plate(pid, "hood", material, zone, x, dx, y0, z_hi, y1, z_lo, start, thick))
@@ -376,7 +380,6 @@ def _append_cowl(items: list, s: Stack, pid: str, material: str, zone: str,
     run = y1 - y0
     rise = z_hi - z_lo
     length = math.hypot(run, rise)
-    gap = 2.0
     dy = (run / length) * (gap * 0.5)
     dz = ((z_lo - z_hi) / length) * (gap * 0.5)
     items.append(_slope_plate(
@@ -408,6 +411,102 @@ def _tube(pid: str, module: str, material: str, zone: str, origin: list[float], 
         r_out=r_out,
         length=length,
     )
+
+
+def _skin_joint_corners(s: Stack, gap: float) -> tuple[float, float, float, float]:
+    """Outer corners of the split skin at the fold: brow end, then tunnel start."""
+    bh = body_crown(s)
+    launch = s.launch_y
+    y1 = launch + (s.front_h - bh)
+    mid_y = (launch + y1) * 0.5
+    mid_z = (s.front_h + bh) * 0.5
+    run = y1 - launch
+    rise = s.front_h - bh
+    length = math.hypot(run, rise)
+    ny = rise / length
+    nz = run / length
+    half = gap * 0.5
+    dy = (run / length) * half
+    dz = ((bh - s.front_h) / length) * half
+    outer = s.liner_t + s.ins_t + s.air_gap + s.skin_t
+    y_brow = (mid_y - dy) + ny * outer
+    z_brow = (mid_z - dz) + nz * outer
+    y_tun = (mid_y + dy) + ny * outer
+    z_tun = (mid_z + dz) + nz * outer
+    return y_brow, z_brow, y_tun, z_tun
+
+
+def _seat(s: Stack) -> list[dict]:
+    """Butt a horizontal foot to the brow corner and an angle to the tunnel corner.
+
+    The plates meet outside the cowl, where the brake flanges can be seen.
+    Top of the foot is the brow's outer corner. The angle includes the
+    tunnel's outer corner and rises to 0.6 mm under the foot. Solids touch
+    the skins at a corner and do not overlap them. Nothing here is a press.
+    """
+    cw = chamber_w()
+    hx0 = -cw / 2.0
+    skin_off = s.ins_t + s.air_gap
+    skin_x = hx0 - skin_off
+    skin_dx = cw + 2.0 * skin_off
+    y_brow, z_brow, y_tun, z_tun = _skin_joint_corners(s, 16.0)
+    clear = 0.6
+    foot_t = 1.5
+    span = y_tun - y_brow
+    if span < 8.0:
+        raise ValueError("skin pocket is shorter than the seat")
+    foot_dy = span - 3.0
+    foot_z = z_brow - foot_t
+    shelf_top = foot_z - clear
+    shelf_z = shelf_top - foot_t
+    if shelf_z < z_tun + clear:
+        raise ValueError("shelf has no room above the tunnel corner")
+    # Two convex plates. The leg shares a face with the shelf and includes
+    # the tunnel corner. An L would be concave, and the overlap test assumes convex.
+    return [
+        _box(
+            "seat-foot", "brow", "mild", "cool",
+            skin_x + 8.0, y_brow, foot_z, skin_dx - 16.0, foot_dy, foot_t,
+        ),
+        _box(
+            "seat-shelf", "tunnel", "mild", "cool",
+            skin_x + 2.0, y_brow, shelf_z, skin_dx - 4.0, span, foot_t,
+        ),
+        _box(
+            "seat-leg", "tunnel", "mild", "cool",
+            skin_x + 2.0, y_tun - foot_t, z_tun, skin_dx - 4.0, foot_t, shelf_z - z_tun,
+        ),
+    ]
+
+
+def _brow_grip(s: Stack) -> list[dict]:
+    """Jarrah grip on the tall brow, so that module has its own handle."""
+    skin_top_z = s.front_h + s.liner_t + s.ins_t + s.air_gap + s.skin_t
+    post = 16.0
+    grip_y = 72.0
+    axis_z = skin_top_z + post + 0.4 + 18.0
+    items = []
+    for step, xoff in enumerate((-40.0, 40.0)):
+        items.append(_tube(
+            f"post-brow-{step}", "brow", "ss", "cool",
+            [xoff, grip_y, skin_top_z], [0, 0, 1],
+            0.0, POST_D / 2.0, post,
+        ))
+    items.append(_part(
+        "grip-brow", "brow", "jarrah", "cool", "revolve",
+        origin=[-GRIP_LEN / 2.0, grip_y, axis_z],
+        axis=[1, 0, 0],
+        profile=[list(pair) for pair in GRIP_PROFILE],
+    ))
+    items.append(_tube(
+        "ferrule-brow", "brow", "ss", "cool",
+        [-GRIP_LEN / 2.0, grip_y, axis_z],
+        [1, 0, 0],
+        GRIP_PROFILE[0][1] - FERRULE_PRESS,
+        GRIP_PROFILE[0][1] + 3.0,
+        FERRULE_LEN,
+    ))
+    return items
 
 
 def parts(s: Stack) -> list[dict]:
@@ -509,12 +608,24 @@ def parts(s: Stack) -> list[dict]:
             "grate-rail-starboard", "pit", "ss", "hot",
             grate_x1 - 4.0, grate_y0, grate_z, 4.0, grate_y1 - grate_y0, 4.0,
         ))
+        rod_z = grate_z
+        if s.grill:
+            # Cooking height. The hearth still clears it. The low rails are the deep fire.
+            rod_z = grate_z + 32.0
+            items.append(_box(
+                "grate-rail-high-port", "pit", "ss", "hot",
+                grate_x0, grate_y0, rod_z, 4.0, grate_y1 - grate_y0, 4.0,
+            ))
+            items.append(_box(
+                "grate-rail-high-starboard", "pit", "ss", "hot",
+                grate_x1 - 4.0, grate_y0, rod_z, 4.0, grate_y1 - grate_y0, 4.0,
+            ))
         grate_span = grate_x1 - grate_x0
         for index in range(6):
             gy = grate_y0 + (grate_y1 - grate_y0) * (index + 0.5) / 6.0
             items.append(_tube(
                 f"grate-rod-{index}", "pit", "ss", "hot",
-                [grate_x0 + 4.4, gy, grate_z + 2.0], [1, 0, 0],
+                [grate_x0 + 4.4, gy, rod_z + 2.0], [1, 0, 0],
                 0.0, 2.0, grate_span - 8.8,
             ))
 
@@ -749,6 +860,7 @@ def parts(s: Stack) -> list[dict]:
                 items, s, "skin-cowl", "al", "cool",
                 skin_x, cw + 2.0 * skin_off,
                 launch, z_top, y1, bh, t + s.ins_t + s.air_gap, s.skin_t,
+                gap=16.0 if s.seated else 2.0,
             )
         else:
             step_ins_h = s.front_h - bh - s.ins_t
@@ -865,6 +977,10 @@ def parts(s: Stack) -> list[dict]:
             pid = item["id"]
             item["module"] = "brow" if any(token in pid for token in brow_names) else "tunnel"
 
+    if s.seated:
+        items.extend(_seat(s))
+        items.extend(_brow_grip(s))
+
     return items
 
 
@@ -873,6 +989,20 @@ PRESS_FITS = (
     ("ferrule-starboard", "grip-starboard"),
     ("ferrule-hood", "grip-hood"),
 )
+
+# Present only when the brow has its own grip. A rebuild of an older dragon
+# must not fail the press gate for a pair that dragon does not have.
+OPTIONAL_PRESS = (
+    ("ferrule-brow", "grip-brow"),
+)
+
+
+def active_press_fits(items: list[dict]) -> tuple[tuple[str, str], ...]:
+    ids = {part["id"] for part in items}
+    return tuple(
+        pair for pair in PRESS_FITS + OPTIONAL_PRESS
+        if pair[0] in ids and pair[1] in ids
+    )
 
 
 def part_volume_mm3(part: dict) -> float:
@@ -986,7 +1116,7 @@ def aabb_collisions(items: list[dict]) -> list[tuple[str, str]]:
     """Overlaps. Boxes use their bounds. A folded plate uses the real polygon, so a
     parallel cowl is not a hit just because the bounds cross. Press fits are excluded.
     """
-    allowed = {frozenset(pair) for pair in PRESS_FITS}
+    allowed = {frozenset(pair) for pair in PRESS_FITS + OPTIONAL_PRESS}
     solids = []
     for part in items:
         box = _aabb(part)

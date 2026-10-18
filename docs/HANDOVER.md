@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T18:30:00Z
+**Timestamp:** 2026-10-18T18:40:00Z
 **Current Branch / Commit:** design/stream-2-modular
 **Overall Status:** IN_PROGRESS
 
@@ -24,7 +24,7 @@ Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/an
 ---
 
 ## 2b. Stream 2 (this branch)
-Morghul is the current stack. The 45° fold is a 2 mm joint, so the brow (5.1 kg) and the tunnel (6.1 kg) lift separately. Pit 10.4 kg with the burner and the grate. Hearth 9.0 kg. Ready 30.6 kg. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 10 min. Bread window 60 min. Pack cool-down 27 min with the door open. Shrykos is the one-piece cowl. Arrax is the square step. Vermax is the empty box. Stream 1 now also uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, and Sunfyre. Do not reuse those. Next free names start at Seasmoke. See `design/stream-2/README.md`.
+Seasmoke is the current stack. The brow foot butts the skin corner and sits 0.6 mm above the tunnel shelf. Brow 5.3 kg, with its own jarrah grip. Tunnel 6.2 kg. Pit 10.5 kg, with grate rods 32 mm above the deep-fire rails. Hearth 9.0 kg. Ready 31.0 kg. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 10 min. Bread window 60 min. Pack cool-down 27 min with the door open. Morghul is the bare split. Shrykos is the one-piece cowl. Arrax is the square step. Vermax is the empty box. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Caraxes. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.
