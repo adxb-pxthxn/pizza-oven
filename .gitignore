@@ -30,6 +30,7 @@ Thumbs.db
 *.dxf.bak
 
 # FreeCAD / Solvespace / OpenSCAD temporary exports
+cad/output/
 cad/exports/*.tmp
 cad/exports/*_temp.*
 
