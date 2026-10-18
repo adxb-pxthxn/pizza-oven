@@ -1,1 +1,22 @@
-Part Number,Component Name,Material / Spec,Qty,Category,Vendor / Standard Reference,Estimated Unit Cost (USD),Sourcing Notes
+Part Number,Component Name,Material / Spec,Qty,Category,Vendor / Standard Reference,Estimated Unit Cost (USD),Currency,Sourcing Notes
+TG-100,Certified oven burner assembly,"Bought 5.5–6.5 kW LPG burner with factory injector, thermocouple, piezo, flame-failure valve",1,Gas / Certified,AS/NZS gas appliance spare or commercial salamander pull,95,AUD,"ESTIMATE AUD Adelaide Oct 2026. The column header says USD because the BOM schema requires that name. These figures are Australian dollars. Do not convert. Bought certified. Do not drill a jet. Do not delete the flame-failure valve."
+TG-101,LCC27 regulator,2.75 kPa LPG regulator,1,Gas / Certified,LCC27,40,AUD,ESTIMATE AUD. Bought new. Not fabricated.
+TG-102,Appliance hose,AS/NZS 1869 hose,1,Gas / Certified,AS/NZS 1869,25,AUD,ESTIMATE AUD. Bought new. Class is whatever the certified assembly calls for. Do not invent a class.
+TG-110,Cooking floor,Cordierite kiln shelf trimmed to Ø430 × 20 mm,1,Refractory,Pottery supply or second-hand kiln shelf,45,AUD,ESTIMATE AUD. Trim on the WorkBee with a diamond wheel and an MDF jig. Does not pass the mouth. Enters from above when the crown is off.
+TG-120,AES blanket,Alkaline earth silicate blanket 25 mm layers,1,Insulation,Trade offcut or industrial insulation supplier,110,AUD,"ESTIMATE AUD. Crown uses 100 mm. Wall uses 75 mm. Floor uses 25 mm. Knife from MDF templates. Trotec or Thunder laser cuts the templates only, not the blanket."
+TG-121,Calcium silicate board,25 mm insulating board,1,Insulation,Industrial insulation offcut,40,AUD,ESTIMATE AUD. Wall backing and the floor disc. Bevel the wall staves on the table saw. Trim the disc on the WorkBee.
+TG-200,304 stainless sheet,"1.2 mm skin and liner, 1.5 mm base pan and peel landing",1,Metal,Sheet drop or metal merchant,110,AUD,"ESTIMATE AUD. Covers every fabricated steel sheet part below. University workshop: slip roll and TIG. Makerspace does not publish a roll, a brake, or a fibre laser."
+TG-201,Tripod tubes,304 tube Ø25.4 × 1.6 × 750 mm,3,Metal,Metal merchant,8,AUD,ESTIMATE AUD about 8 each, 24 for the set of three. Cold saw at the makerspace. Optional if the camp table is the usual stand.
+TG-210,Brass cinch and ferrules,C26000 flat 35 × 3 mm and round bar for ferrules,1,Metal,Metal merchant,45,AUD,ESTIMATE AUD. Band rolled at the university shop. Ferrules and the badge on the makerspace metal lathe. Two Ø5 dowels are the road lock.
+TG-220,Jarrah handles and stub feet,"Quarter-sawn jarrah, handles Ø32 × 220, three feet 65 mm",1,Timber,Second-hand or the shed,15,AUD,ESTIMATE AUD. Blanks on the table saw and thicknesser. Turn on the metal lathe. Tung oil. Wood is only at the hands and the feet.
+TG-230,Stainless fasteners,A2 or A4 machine screws,1,Hardware,Fastener merchant,20,AUD,ESTIMATE AUD. No zinc and no galvanised hardware in the hot path.
+TG-300,Shop consumables,"Argon share, 308L filler, abrasive, MDF bucks",1,Consumable,Makerspace and university shop,40,AUD,ESTIMATE AUD.
+TG-401,Base pan,304 × 1.5 mm disc,1,Fabricated,University workshop,0,AUD,Material in TG-200. The pan is the heavy steel part, about 4.2 kg in the model.
+TG-402,Inner liner skirt and dome,304 × 1.2 mm,1,Fabricated,University workshop slip roll and TIG,0,AUD,Material in TG-200. Mouth tunnel slips. Do not weld the liner hard to the outer crown.
+TG-403,Outer skirt,304 × 1.2 mm cylinder,1,Fabricated,University workshop slip roll and TIG,0,AUD,Material in TG-200.
+TG-404,Outer crown,304 × 1.2 mm dome,1,Fabricated,University workshop gore roll or dish and TIG,0,AUD,Material in TG-200. Lifts off the joggle with the blanket.
+TG-405,Mouth frame and peel landing,304 frame and 420 × 45 mm sill,1,Fabricated,University workshop,0,AUD,Material in TG-200. Landing mass in the model is 0.22 kg.
+TG-406,Cinch band,Brass 35 × 3 mm,1,Fabricated,University roll and makerspace lathe for the bolt ears,0,AUD,Material in TG-210.
+TG-407,Handles,Jarrah with brass ferrules,2,Fabricated,Makerspace metal lathe,0,AUD,Material in TG-220 and TG-210. Leave the timber free to move. Do not clamp it solid between metal faces.
+TG-408,Stub feet,Jarrah,3,Fabricated,Makerspace metal lathe,0,AUD,Material in TG-220. Camp-table stance.
+TG-409,Badge,Brass plate,1,Fabricated,Makerspace metal lathe and a laser etch mask,0,AUD,Material in TG-210. The CO2 lasers engrave a mask or a thin plate. They do not cut the stainless.
