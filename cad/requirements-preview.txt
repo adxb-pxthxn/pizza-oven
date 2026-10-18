@@ -1,0 +1,4 @@
+# Optional Cursor / VS Code preview. Install after cad/requirements.txt.
+# Does not replace cadquery-ocp-novtk with the VTK build of OCP.
+-r requirements.txt
+ocp-vscode==4.2.0
