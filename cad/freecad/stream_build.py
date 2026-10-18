@@ -91,6 +91,28 @@ def _half_disc(radius: float, thick: float, y0: float, z_axis: float) -> Part.Sh
     return disc.common(upper)
 
 
+def _cheek_strap(sign: float, skin_r: float, deck: float, y_mid: float, thick: float) -> Part.Shape:
+    """Stainless strap on the outside of the skin, from the spring line past the grip.
+
+    It stops 0.4 mm clear of the skin and continues down the base wall.
+    The posts land on it, so the 1 mm skin is not the handle.
+    """
+    gap = 0.4
+    outer = Part.makeCylinder(skin_r + gap + thick, 40.0, App.Vector(0.0, y_mid - 20.0, deck), App.Vector(0, 1, 0))
+    inner = Part.makeCylinder(skin_r + gap, 44.0, App.Vector(0.0, y_mid - 22.0, deck), App.Vector(0, 1, 0))
+    band = outer.cut(inner)
+    band = band.common(_box(-(skin_r + thick + 2.0), y_mid - 22.0, deck - 1.0, 2.0 * (skin_r + thick + 2.0), 44.0, skin_r + thick + 4.0))
+    # Keep the sector from the spring line up to 55 degrees on this cheek.
+    wedge = _box(0.0, y_mid - 22.0, deck - 1.0, skin_r + thick + 4.0, 44.0, skin_r + thick + 4.0)
+    wedge.rotate(App.Vector(0.0, y_mid, deck), App.Vector(0, 1, 0), 35.0)
+    if sign < 0.0:
+        wedge.rotate(App.Vector(0.0, y_mid, deck), App.Vector(0, 0, 1), 180.0)
+    band = band.common(wedge)
+    tab_x = sign * (skin_r + gap)
+    tab = _box(tab_x if sign > 0.0 else tab_x - thick, y_mid - 20.0, 0.0, thick, 40.0, deck)
+    return band.fuse(tab)
+
+
 def _arch_slab_x(width: float, rise: float, x0: float, depth: float, z_sill: float, y_c: float) -> Part.Shape:
     """Half-ellipse in the YZ plane, extruded along +X. Used for the parked door."""
     points = []
@@ -479,11 +501,12 @@ def build(name: str = "stormcloud") -> dict:
             outer = _box(-wall, y0, -hw["grip_height"] / 2.0 - wall, hw["grip_depth"] + 2.0 * wall, hw["ferrule_len"], hw["grip_height"] + 2.0 * wall)
             inner = _box(press, y0 - 1.0, -hw["grip_height"] / 2.0 + press, hw["grip_depth"] - 2.0 * press, hw["ferrule_len"] + 2.0, hw["grip_height"] - 2.0 * press)
             add(f"ferrule-{label}-{end}", place(outer.cut(inner)), "gidgee")
+        post_lift = (design.frame_strap + 0.4) if design.frame_strap > 0.0 else 0.0
         for end, yoff in (("a", -hw["grip_len"] / 2.0 + hw["post_inset"]), ("b", hw["grip_len"] / 2.0 - hw["post_inset"])):
             post = Part.makeCylinder(
                 hw["post_d"] / 2.0,
-                design.standoff - seam,
-                App.Vector(-(design.standoff + hw["washer_t"]), yoff, 0.0),
+                design.standoff - seam - post_lift,
+                App.Vector(-(design.standoff + hw["washer_t"]) + post_lift, yoff, 0.0),
                 App.Vector(1, 0, 0),
             )
             add(f"post-{label}-{end}", place(post), "ss")
@@ -512,18 +535,53 @@ def build(name: str = "stormcloud") -> dict:
 
     if design.sill_d > 0.0 and design.sill_w > 0.0:
         # Forward of the front wall, 1 mm under the deck, not touching the free plate.
-        add(
-            "launch-sill",
-            _box(
-                -design.sill_w / 2.0,
-                y_front - 2.0 - design.sill_d,
-                deck - 1.0 - design.sill_t,
-                design.sill_w,
-                design.sill_d,
-                design.sill_t,
-            ),
-            "ss",
+        sill = _box(
+            -design.sill_w / 2.0,
+            y_front - 2.0 - design.sill_d,
+            deck - 1.0 - design.sill_t,
+            design.sill_w,
+            design.sill_d,
+            design.sill_t,
         )
+        if design.module > 0.0:
+            # Scribed on the landing. The cooking steel is not marked.
+            score_n = int(design.sill_d // design.module)
+            for index in range(1, score_n):
+                sill = sill.cut(
+                    _box(
+                        -design.sill_w / 2.0 - 1.0,
+                        y_front - 2.0 - design.sill_d + index * design.module,
+                        deck - 1.0 - 0.3,
+                        design.sill_w + 2.0,
+                        0.6,
+                        0.5,
+                    )
+                )
+        add("launch-sill", sill, "ss")
+
+    if design.frame_strap > 0.0:
+        for sign, label in ((-1.0, "port"), (1.0, "starboard")):
+            add(
+                f"strap-{label}",
+                _cheek_strap(sign, skin_r, deck, length / 2.0, design.frame_strap),
+                "ss",
+            )
+
+    swing_park = None
+    if design.swing_arm > 0.0:
+        # Working pose, in the broil bay. Steel only. The park pose is checked below.
+        tray_z = deck + 90.0
+        tray = _box(-80.0, 100.0, tray_z, 160.0, 120.0, 1.5)
+        lug = _box(-200.0, 48.0, tray_z - 6.0, 16.0, 16.0, 14.0)
+        arm = Part.makeCylinder(5.0, 140.0, App.Vector(-170.0, 72.0, tray_z + 14.0), App.Vector(0.72, 0.69, 0.0))
+        add("swing-lug", lug, "ss")
+        add("swing-arm", arm, "ss")
+        add("swing-tray", tray, "ss")
+        swing_park = {
+            "xmax": round(-(skin_r + 16.0), 1),
+            "ymin": 40.0,
+            "ymax": 160.0,
+        }
 
     doc.recompute()
     solids = [(part, shape) for part, shape, _kind in made]
@@ -567,6 +625,16 @@ def build(name: str = "stormcloud") -> dict:
         ),
     }
     by_name = {part: shape for part, shape, _kind in made}
+    if swing_park is not None:
+        gate["swing_park"] = swing_park
+        tray_bb = by_name["swing-tray"].BoundBox
+        rod_bb = by_name["broil-rod-2"].BoundBox
+        gate["tray_zmax"] = round(tray_bb.ZMax, 1)
+        gate["rod_zmin"] = round(rod_bb.ZMin, 1)
+        if tray_bb.ZMax > rod_bb.ZMin - 5.0:
+            stray.append({"a": "swing-tray", "b": "broil-rod", "mm3": -1})
+        if swing_park["ymax"] > length / 2.0 - 70.0:
+            stray.append({"a": "swing-park", "b": "grip", "mm3": -1})
     if design.door_pose == "open":
         door_bb = by_name["door"].BoundBox
         skin_bb = by_name["skin"].BoundBox

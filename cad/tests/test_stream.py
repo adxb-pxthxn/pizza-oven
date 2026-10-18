@@ -202,5 +202,22 @@ class GreyGhostPhysicsTest(unittest.TestCase):
         self.assertLessEqual(live["cooldown_ratio"], 0.8)
 
 
+class SeasmokePhysicsTest(unittest.TestCase):
+    def test_handles_land_on_straps_and_the_tray_clears_the_grate(self):
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["seasmoke"]
+        self.assertEqual(saved["design"]["module"], 20.0)
+        self.assertEqual(saved["design"]["frame_strap"], 2.0)
+        self.assertEqual(saved["design"]["swing_arm"], 1.0)
+        live = evaluate(Vault(**saved["design"]))
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        self.assertGreater(live["parts"]["cheek-straps"], 0.3)
+        self.assertGreater(live["parts"]["swing-tray"], 0.2)
+        gate = json.loads((ROOT / "design" / "stream-1" / "seasmoke" / "gate.json").read_text(encoding="utf-8"))
+        self.assertEqual(gate["interference"], [])
+        self.assertGreater(gate["rod_zmin"], gate["tray_zmax"] + 20.0)
+        self.assertLess(gate["swing_park"]["xmax"], gate["skin_xmin"])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -8,7 +8,7 @@
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-Stream 1 best oven is Grey Ghost: 38.0 kg, 75 mm floor blanket, bay underside 56°C, pizza floor 305°C, cool-down 0.67× the Tread. Bread gas 230°C holds 216°C. Do not merge to main.
+Stream 1 best oven is Seasmoke: Grey Ghost's heat, plus cheek straps and a steel tray in the bay. 38.9 kg, pizza floor 305°C, bay underside 56°C, cool-down 0.67× the Tread. No timber on the skin. Do not merge to main.
 
 ## 2. Completed in This Session
 - [x] Shop stack and heat model in `cad/freecad/stream_physics.py`.

@@ -88,6 +88,9 @@ class Vault:
     sill_t: float = 1.2
     stop_gap: float = 0.0
     plate_pose: str = "in"
+    frame_strap: float = 0.0
+    swing_arm: float = 0.0
+    module: float = 0.0
 
 
 def stack_thickness(v: Vault) -> float:
@@ -449,6 +452,17 @@ def masses(v: Vault) -> dict[str, float]:
         stops = _mm3_to_kg(end_mm3 + side_mm3, DENS["ss"])
     else:
         stops = 0.0
+    if v.frame_strap > 0.0:
+        # Two cheek straps, 40 mm wide, from the spring line up past the grip.
+        arc = outer_radius(v) * math.radians(55.0)
+        strap = _mm3_to_kg(2.0 * arc * 40.0 * v.frame_strap, DENS["ss"])
+        strap += _mm3_to_kg(2.0 * 40.0 * (v.base_t + v.floor_fibre) * v.frame_strap, DENS["ss"])
+    else:
+        strap = 0.0
+    if v.swing_arm > 0.0:
+        tray = _mm3_to_kg(160.0 * 120.0 * 1.5 + 220.0 * math.pi * 5.0 ** 2, DENS["ss"])
+    else:
+        tray = 0.0
     feet = _mm3_to_kg(4.0 * math.pi * 16.0 ** 2 * 10.0, DENS["rubber"])
     rack = _mm3_to_kg(4.0 * math.pi * 6.0 ** 2 * 8.0, DENS["ss"])
     stand = _mm3_to_kg(4.0 * math.pi * 7.0 ** 2 * 8.0, DENS["ss"])
@@ -476,6 +490,8 @@ def masses(v: Vault) -> dict[str, float]:
         "door-pull": pull,
         "launch-sill": sill,
         "plate-stops": stops,
+        "cheek-straps": strap,
+        "swing-tray": tray,
         "feet": feet,
         "rack-bosses": rack,
         "stand-bosses": stand,
