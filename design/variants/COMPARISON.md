@@ -39,7 +39,9 @@ Morning, analytical parts, 19.10 kg:
 
 Against Angas that is about 13.8 kg less steel (thinner gauges and a smaller plan), 3.3 kg less insulation (30 mm-class microporous board at k = 0.030 and 250 kg/m³, instead of 100 mm of AES plus calcium silicate), 1.7 kg less stone, 1.8 kg less brass, and 0.4 kg less handle and foot timber, then 2.4 kg added back as the wood shell.
 
-Moondancer drops the wood shell and the stainless pan. Aluminium skin 0.8 mm and aluminium base 0.9 mm, stainless cinch 12 × 0.8, wall board 37.0 mm. Analytical total 15.58 kg. The FreeCAD solid is 13.92 kg before the burner allowance, 15.77 kg ready. The 0.15 kg gap is the mouth boolean against the rectangular area the solver subtracted.
+Moondancer drops the wood shell and the stainless pan. Aluminium skin 0.8 mm and aluminium base 0.9 mm, stainless cinch 12 × 0.8, wall board 37.0 mm. Analytical total 15.58 kg.
+
+The seated FreeCAD solids, after the interference round, are 17.268 kg for Morning and 13.717 kg for Moondancer before the burner allowance. Ready mass is 19.12 kg and 15.57 kg. The earlier mouth-boolean gap against the solver is gone. Pairwise common volume is in `design/variants/interference-report.md`.
 
 The extra mass over the Tread is the 15 inch stone and the cool skin. A 12 inch, 12 mm stone plus a hot single layer is how 13.5 kg is reached. This oven does not take that trade.
 

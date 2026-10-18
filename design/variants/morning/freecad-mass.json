@@ -1,13 +1,13 @@
 {
   "name": "morning",
   "dragon": "Morning",
-  "freecad_kg": 17.389,
+  "freecad_kg": 17.268,
   "analytical_kg": 17.256,
-  "ready_with_burner_kg": 19.239,
+  "ready_with_burner_kg": 19.118,
   "outer_diameter": 571.8,
   "body_height": 260.1,
-  "handle_r": 274.9,
-  "handle_z": 198.9,
+  "handle_r": 275.1,
+  "handle_z": 198.7,
   "skin_C": 50.0,
   "grip_C": 25.33,
   "parts": [
@@ -44,38 +44,20 @@
     {
       "name": "liner_skirt",
       "kind": "ss",
-      "kg": 0.772,
+      "kg": 0.607,
       "crown": false
     },
     {
       "name": "wall_insulation",
       "kind": "micro",
-      "kg": 1.783,
+      "kg": 1.551,
       "crown": false
     },
     {
       "name": "outer_skirt",
       "kind": "blackwood",
-      "kg": 0.908,
+      "kg": 0.858,
       "crown": false
-    },
-    {
-      "name": "liner_dome",
-      "kind": "ss",
-      "kg": 0.897,
-      "crown": true
-    },
-    {
-      "name": "crown_insulation",
-      "kind": "micro",
-      "kg": 2.544,
-      "crown": true
-    },
-    {
-      "name": "outer_dome",
-      "kind": "blackwood",
-      "kg": 1.565,
-      "crown": true
     },
     {
       "name": "cinch_band",
@@ -86,26 +68,44 @@
     {
       "name": "dowel_a",
       "kind": "ss",
-      "kg": 0.001,
+      "kg": 0.002,
       "crown": false
     },
     {
       "name": "dowel_b",
       "kind": "ss",
-      "kg": 0.001,
+      "kg": 0.002,
       "crown": false
     },
     {
       "name": "mouth_frame",
       "kind": "ss",
-      "kg": 0.181,
+      "kg": 0.418,
       "crown": false
     },
     {
       "name": "peel_landing",
       "kind": "ss",
-      "kg": 0.106,
+      "kg": 0.181,
       "crown": false
+    },
+    {
+      "name": "liner_dome",
+      "kind": "ss",
+      "kg": 0.898,
+      "crown": true
+    },
+    {
+      "name": "crown_insulation",
+      "kind": "micro",
+      "kg": 2.546,
+      "crown": true
+    },
+    {
+      "name": "outer_dome",
+      "kind": "blackwood",
+      "kg": 1.566,
+      "crown": true
     },
     {
       "name": "handle_port",
@@ -140,13 +140,13 @@
     {
       "name": "ferrule_port_a",
       "kind": "brass",
-      "kg": 0.009,
+      "kg": 0.011,
       "crown": false
     },
     {
       "name": "ferrule_port_b",
       "kind": "brass",
-      "kg": 0.009,
+      "kg": 0.011,
       "crown": false
     },
     {
@@ -182,13 +182,13 @@
     {
       "name": "ferrule_starboard_a",
       "kind": "brass",
-      "kg": 0.009,
+      "kg": 0.011,
       "crown": false
     },
     {
       "name": "ferrule_starboard_b",
       "kind": "brass",
-      "kg": 0.009,
+      "kg": 0.011,
       "crown": false
     },
     {

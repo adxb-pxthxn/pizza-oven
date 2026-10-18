@@ -19,8 +19,8 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ## UNDER_REVIEW
 - [ ] **[TASK-005]** `DESIGN`: Morning and Moondancer, the early Angas prototypes *(Priority: HIGH, Assigned: cursor)*
   - Branch `cursor/angas-dragon-variants-d981`, draft PR against `design/tailgate-oven`.
-  - Morning 19.2 kg wood body. Moondancer 15.8 kg aluminium shell. Stone in. Cap was 20 kg.
-  - Comparison in `design/variants/COMPARISON.md`.
+  - Morning 19.12 kg wood body. Moondancer 15.57 kg aluminium shell. Stone in. Cap was 20 kg.
+  - Comparison in `design/variants/COMPARISON.md`. Interference in `design/variants/interference-report.md`.
 - [ ] **[TASK-003]** `DESIGN`: Angas 430 tailgate oven *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/tailgate-oven`. Draft PR against `research/argon-anatomy`.
   - Modelled envelope Ø675 × 340 mm, 31.5 kg without the stone.
