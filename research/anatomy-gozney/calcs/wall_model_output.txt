@@ -1,0 +1,90 @@
+Steel shrouds, fibre k=0.10
+fibre 30 mm direct to steel                          flux 1187.3  skin 104.1  | fibre cold 104.2
+fibre 40 mm direct to steel                          flux  943.6  skin  91.0  | fibre cold 91.0
+fibre 50 mm direct to steel                          flux  784.1  skin  81.7  | fibre cold 81.8
+fibre 60 mm direct to steel                          flux  671.2  skin  74.8  | fibre cold 74.8
+fibre 75 mm direct to steel                          flux  552.5  skin  67.1  | fibre cold 67.1
+fibre 90 mm direct to steel                          flux  469.8  skin  61.5  | fibre cold 61.5
+
+Steel + 12 mm foil gap (0.80/0.15) then steel
+fibre 40 + foil gap                                  flux  679.2  skin  75.3  | after fibre 205.6  steel inner 75.3
+fibre 50 + foil gap                                  flux  587.0  skin  69.4  | after fibre 186.9  steel inner 69.4
+fibre 60 + foil gap                                  flux  518.0  skin  64.8  | after fibre 171.9  steel inner 64.8
+fibre 75 + foil gap                                  flux  441.4  skin  59.5  | after fibre 154.2  steel inner 59.5
+
+Same but unlined gap 0.85/0.85
+fibre 50 + bare gap                                  flux  687.2  skin  75.8  | after fibre 133.5  steel inner 75.8
+fibre 75 + bare gap                                  flux  497.8  skin  63.4  | after fibre 110.0  steel inner 63.4
+
+Skill-comparable k=0.08, no radiation model, direct
+k0.08 fibre 40                                       flux  784.1  skin  81.7  | fibre cold 81.8
+k0.08 fibre 75                                       flux  452.9  skin  60.3  | fibre cold 60.3
+
+WOOD IN CONTACT behind fibre, 12 mm clay liner, 18 mm hardwood, k_fibre=0.10
+fibre 40                                             flux  761.3  skin  80.4  | wood inner 161.0  wood outer 80.4
+fibre 60                                             flux  574.3  skin  68.6  | wood inner 129.4  wood outer 68.6
+fibre 80                                             flux  461.6  skin  60.9  | wood inner 109.8  wood outer 60.9
+fibre 100                                            flux  386.1  skin  55.5  | wood inner 96.4  wood outer 55.5
+fibre 120                                            flux  332.0  skin  51.4  | wood inner 86.6  wood outer 51.4
+fibre 150                                            flux  274.4  skin  46.9  | wood inner 75.9  wood outer 46.9
+fibre 180                                            flux  233.9  skin  43.6  | wood inner 68.3  wood outer 43.6
+fibre 220                                            flux  195.5  skin  40.3  | wood inner 61.0  wood outer 40.3
+fibre 260                                            flux  168.0  skin  37.7  | wood inner 55.5  wood outer 37.7
+
+Wood contact k sensitivity, 150 mm fibre
+k=0.08                                               flux  225.6  skin  42.9  | wood inner 66.8  wood outer 42.9
+k=0.09                                               flux  250.3  skin  44.9  | wood inner 71.4  wood outer 44.9
+k=0.1                                                flux  274.4  skin  46.9  | wood inner 75.9  wood outer 46.9
+k=0.12                                               flux  320.8  skin  50.5  | wood inner 84.5  wood outer 50.5
+k=0.16                                               flux  406.9  skin  57.0  | wood inner 100.1  wood outer 57.0
+
+WOOD after foil gap 15 mm, fibre then gap then 18 mm wood
+fibre 50 foil                                        flux  522.4  skin  65.1  | after fibre 221.4  wood inner 120.4  wood outer 65.1
+fibre 75 foil                                        flux  401.4  skin  56.6  | after fibre 185.5  wood inner 99.1  wood outer 56.6
+fibre 100 foil                                       flux  327.7  skin  51.1  | after fibre 161.4  wood inner 85.8  wood outer 51.1
+fibre 125 foil                                       flux  277.6  skin  47.1  | after fibre 143.8  wood inner 76.5  wood outer 47.1
+
+Summer 35 C, wood contact, find thickness for wood inner <= 60
+amb35 fibre 150                                      flux  266.8  skin  59.5  | wood inner 87.8  wood outer 59.5
+amb35 fibre 200                                      flux  206.9  skin  54.8  | wood inner 76.7  wood outer 54.8
+amb35 fibre 250                                      flux  169.2  skin  51.4  | wood inner 69.3  wood outer 51.4
+amb35 fibre 300                                      flux  143.1  skin  49.0  | wood inner 64.1  wood outer 49.0
+
+Perlite 80/100/150 mm then wood
+perlite 80                                           flux  776.5  skin  81.3  | wood inner 163.5  wood outer 81.3
+perlite 100                                          flux  665.7  skin  74.5  | wood inner 145.0  wood outer 74.5
+perlite 150                                          flux  491.5  skin  63.0  | wood inner 115.0  wood outer 63.0
+perlite 200                                          flux  390.0  skin  55.7  | wood inner 97.0  wood outer 55.7
+
+Microporous 20 and 30 mm + foil gap 10 + wood
+micro 20                                             flux  447.2  skin  59.9  | wood inner 107.2  wood outer 59.9
+micro 30                                             flux  336.7  skin  51.8  | wood inner 87.4  wood outer 51.8
+micro 40                                             flux  270.9  skin  46.6  | wood inner 75.3  wood outer 46.6
+
+Recommended: 304 1.2 + fibre 75 k0.10 + foil gap 12 + steel 1.2, amb 20 and 35
+amb 20                                               flux  441.4  skin  59.5  | after fibre 154.2  steel inner 59.5
+amb 35                                               flux  432.1  skin  71.4  | after fibre 161.5  steel inner 71.4
+
+Optional wood sleeve OUTSIDE a 60 C steel shroud, 20 mm ventilated gap, eps wood 0.9, steel outer eps 0.88
+steel skin 59.5
+SEALED sleeve on 75 mm stack (worst)                 flux  386.1  skin  55.5  | steel 128.2  wood inner 128.2  wood outer 96.3
+
+== GEOMETRY AND STONE ==
+Arc Lite: side 52.5 mm  mouth/apex 0.567  mouth/width 1.000  floor 0.115 m2  stone 2.91 kg  E 1.33 MJ  stone-only @3.4kW*0.4 = 16 min
+Tread: side 54.0 mm  mouth/apex 0.567  mouth/width 1.000  floor 0.118 m2  stone 2.97 kg  E 1.35 MJ  stone-only @3.7kW*0.4 = 15 min
+Dome XL: side 111.0 mm  mouth/apex 0.588  mouth/width 0.649  floor 0.393 m2  stone 24.77 kg  E 11.29 MJ  stone-only @10.6kW*0.4 = 44 min
+
+GAS CALORIFIC
+Arc plate: 252 g/h -> LHV 3.25 kW  HHV 3.52 kW  plate 3.4
+Tread: 274 g/h -> LHV 3.53 kW  HHV 3.83 kW  plate 3.7
+XL UK: 784 g/h -> LHV 10.10 kW  HHV 10.97 kW  plate 10.6
+compare XL: 750 g/h -> LHV 9.67 kW  HHV 10.49 kW  plate 10.6
+Arc compare: 274 g/h -> LHV 3.53 kW  HHV 3.83 kW  plate 3.4
+AU XL 36.1 MJ/h 10.027777777777779
+AU Dome 31.3 8.694444444444445
+BTU Arc 3.425120777
+BTU Tread 3.6633875
+
+RECOMMENDED STONE 0.40*0.40*0.020*2100
+mass 6.720000000000001 MJ 3.0643200000000004
+wood cord 2 kg/h * 16 MJ * 0.35 eff 11.2 kW useful
