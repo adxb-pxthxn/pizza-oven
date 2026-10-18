@@ -1,0 +1,44 @@
+{
+  "dragon": "Tyraxes",
+  "solids": 38,
+  "invalid": [],
+  "bbox": {
+    "x": 714.2,
+    "y": 927.6,
+    "z": 410.1
+  },
+  "interference": [],
+  "press_fits": [
+    {
+      "a": "grip-port",
+      "b": "ferrule-port-a",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-port",
+      "b": "ferrule-port-b",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-starboard",
+      "b": "ferrule-starboard-a",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-starboard",
+      "b": "ferrule-starboard-b",
+      "mm3": 176.34
+    }
+  ],
+  "analytical_ready_kg": 34.149,
+  "door_pose": "open",
+  "box_d": 48.0,
+  "png": {
+    "front": "Mouth arch open. Door is the thin fin on the port cheek.",
+    "side": "Long barrel. Parked door is the arch along the port side. Short cowl at the rear.",
+    "top": "Long plan. Door is a strip outside the port skin. Not a circular plan.",
+    "section": "Centreline. Sky plate is the horizontal line. The parked door is off this cut."
+  },
+  "door_xmax": -337.8,
+  "skin_xmin": -334.8
+}

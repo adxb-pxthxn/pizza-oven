@@ -1,0 +1,48 @@
+{
+  "dragon": "Arrax",
+  "solids": 43,
+  "invalid": [],
+  "bbox": {
+    "x": 714.2,
+    "y": 989.6,
+    "z": 410.1
+  },
+  "interference": [],
+  "press_fits": [
+    {
+      "a": "grip-port",
+      "b": "ferrule-port-a",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-port",
+      "b": "ferrule-port-b",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-starboard",
+      "b": "ferrule-starboard-a",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-starboard",
+      "b": "ferrule-starboard-b",
+      "mm3": 176.34
+    }
+  ],
+  "analytical_ready_kg": 35.408,
+  "door_pose": "open",
+  "box_d": 48.0,
+  "png": {
+    "front": "Mouth arch open. Launch sill is the lip under the opening.",
+    "side": "Long barrel. Sill projects under the mouth. Parked door on the port cheek.",
+    "top": "Long plan. Door is a strip outside the port skin. Not a circular plan.",
+    "section": "Centreline. Sky plate is the horizontal line. The parked door is off this cut."
+  },
+  "door_xmax": -337.8,
+  "skin_xmin": -334.8,
+  "sill_ymax": -86.8,
+  "steel_ymin": 40.0,
+  "sill_zmax": 60.4,
+  "side_gap_mm": 10.0
+}

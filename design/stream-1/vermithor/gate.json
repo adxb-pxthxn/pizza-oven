@@ -1,0 +1,50 @@
+{
+  "dragon": "Vermithor",
+  "solids": 48,
+  "invalid": [],
+  "bbox": {
+    "x": 714.2,
+    "y": 1089.6,
+    "z": 435.1
+  },
+  "interference": [],
+  "press_fits": [
+    {
+      "a": "grip-port",
+      "b": "ferrule-port-a",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-port",
+      "b": "ferrule-port-b",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-starboard",
+      "b": "ferrule-starboard-a",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-starboard",
+      "b": "ferrule-starboard-b",
+      "mm3": 176.34
+    }
+  ],
+  "analytical_ready_kg": 38.025,
+  "door_pose": "open",
+  "box_d": 48.0,
+  "png": {
+    "front": "Mouth open. Five grate bars in the arch. Door fin on the port cheek.",
+    "side": "Long barrel. Sill projects under the mouth. Parked door on the port cheek.",
+    "top": "Long plan. Door is a strip outside the port skin. Not a circular plan.",
+    "section": "Centreline. Plate is the rear half. Grate bars cross the front bay."
+  },
+  "door_xmax": -337.8,
+  "skin_xmin": -334.8,
+  "sill_ymax": -86.8,
+  "steel_ymin": 40.0,
+  "sill_zmax": 85.4,
+  "side_gap_mm": 10.0,
+  "plate_ymin": 280.0,
+  "broil_bay_mm": 240.0
+}

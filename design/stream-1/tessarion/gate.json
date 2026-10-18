@@ -1,0 +1,47 @@
+{
+  "dragon": "Tessarion",
+  "solids": 48,
+  "invalid": [],
+  "bbox": {
+    "x": 669.6,
+    "y": 1089.6,
+    "z": 435.1
+  },
+  "interference": [],
+  "press_fits": [
+    {
+      "a": "grip-port",
+      "b": "ferrule-port-a",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-port",
+      "b": "ferrule-port-b",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-starboard",
+      "b": "ferrule-starboard-a",
+      "mm3": 176.34
+    },
+    {
+      "a": "grip-starboard",
+      "b": "ferrule-starboard-b",
+      "mm3": 176.34
+    }
+  ],
+  "analytical_ready_kg": 38.025,
+  "door_pose": "shut",
+  "box_d": 48.0,
+  "png": {
+    "front": "Door shut above the sill. Bread pose. The arch is the door, not a dome.",
+    "side": "Long barrel. Sill and shut door at the mouth. Cowl at the rear.",
+    "top": "Long plan, grips on both sides, four rack bosses. Not a circular plan.",
+    "section": "Centreline. Sky plate covers the deck. Door is shut at the mouth."
+  },
+  "sill_ymax": -86.8,
+  "steel_ymin": 40.0,
+  "sill_zmax": 85.4,
+  "side_gap_mm": 10.0,
+  "door_zmin": 88.4
+}

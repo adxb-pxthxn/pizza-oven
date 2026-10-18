@@ -1,0 +1,97 @@
+{
+  "dragon": "Caraxes",
+  "solids": 58,
+  "invalid": [],
+  "bbox": {
+    "x": 726.8,
+    "y": 1079.6,
+    "z": 435.1
+  },
+  "interference": [],
+  "press_fits": [
+    {
+      "a": "grip-port",
+      "b": "ferrule-port-a",
+      "mm3": 203.52
+    },
+    {
+      "a": "grip-port",
+      "b": "ferrule-port-b",
+      "mm3": 203.52
+    },
+    {
+      "a": "grip-starboard",
+      "b": "ferrule-starboard-a",
+      "mm3": 203.52
+    },
+    {
+      "a": "grip-starboard",
+      "b": "ferrule-starboard-b",
+      "mm3": 203.52
+    }
+  ],
+  "welds": [
+    {
+      "a": "base-tub",
+      "b": "hinge-post",
+      "mm3": 2173.4
+    }
+  ],
+  "weld_mm3": 2173.4,
+  "analytical_ready_kg": 38.692,
+  "door_pose": "open",
+  "box_d": 48.0,
+  "png": {
+    "front": "Mouth open. Aluminium half-rings close the fibre. Door fin on the port cheek.",
+    "side": "Long barrel. Sill projects under the mouth. Parked door on the port cheek.",
+    "top": "Long plan. Door is a strip outside the port skin. Not a circular plan.",
+    "section": "Centreline. Plate is the rear half. Grate bars cross the front bay."
+  },
+  "swing_park": {
+    "xmax": -383.6,
+    "ymin": 40.0,
+    "ymax": 160.0
+  },
+  "tray_zmax": 177.9,
+  "rod_zmin": 222.4,
+  "door_xmax": -366.0,
+  "skin_xmin": -334.8,
+  "shut_xmin": -387.6,
+  "shut_xmax": 233.0,
+  "shut_zmin": 88.4,
+  "hinge_d": 8.0,
+  "shut_sill_mm": 3.0,
+  "shut_skin_mm": 102.7,
+  "sill_ymax": -86.8,
+  "steel_ymin": 40.0,
+  "sill_zmax": 85.4,
+  "side_gap_mm": 10.0,
+  "plate_ymin": 280.0,
+  "broil_bay_mm": 240.0,
+  "flat_arc_mm": 1050.23,
+  "fascia_inner_r": 252.8,
+  "fascia_fibre_mm": 8.0,
+  "fascia_liner_mm": 82.22,
+  "dxf": "skin.dxf",
+  "gland_liner_mm": 0.4,
+  "gland_fibre_mm": 5.36,
+  "probe_bore": 4.0,
+  "base_mark": "be vigilant. don't die.",
+  "mark_depth": 0.3,
+  "measured": {
+    "volume_mm3": 87023982.4,
+    "com_mm": [
+      -4.2,
+      368.7,
+      215.3
+    ],
+    "open_shells": []
+  },
+  "console_errors": [],
+  "console_warnings": 0,
+  "steel_mm": [
+    480.0,
+    500.0,
+    6.0
+  ]
+}

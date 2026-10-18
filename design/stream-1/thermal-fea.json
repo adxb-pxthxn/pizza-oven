@@ -1,0 +1,20 @@
+{
+  "dragon": "Stormcloud",
+  "slab": {
+    "outer_C": 62.11,
+    "expected_C": 62.11,
+    "error_C": 0.0
+  },
+  "wall": {
+    "outer_C": 55.07,
+    "oned_C": 55.07,
+    "error_C": -0.0,
+    "elements": 47838
+  },
+  "floor": {
+    "outer_C": 55.08,
+    "oned_C": 55.08,
+    "error_C": -0.01,
+    "elements": 47530
+  }
+}
