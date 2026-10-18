@@ -1,0 +1,39 @@
+id: mass-under-20kg
+title: One mass iteration under 20 kg
+max_budget_usd: 6
+max_turns: 12
+expected_turns: 6
+inputs:
+  - design/variants/optimizer.json
+  - design/variants/morning/freecad-mass.json
+  - design/variants/moondancer/freecad-mass.json
+  - cad/freecad/masslib.py
+goal: |
+  Keep both early Angas variants at or under 20 kg ready, stone in, burner allowance included. This is one iteration on the design that already exists, not a new oven.
+  Call cad_mass mode evaluate for moondancer and for morning. Consider one parameter on moondancer, a gauge or the standoff. Keep the current value unless a change still passes every limit in the acceptance block. Do not edit optimizer.json unless cad_build can run, because the FreeCAD solid would then disagree with the analytical mass.
+  Write design/variants/opus-mass-iteration.json with variant moondancer, parameter, decision (kept, changed, or rejected), and ready_kg copied from the cad_mass result.
+  Call cad_interference for moondancer. If freecadcmd is missing the tool records that. Do not invent an overlap volume.
+  The numeric limits match cad/tests/test_variants.py. check() recomputes them from cad/freecad/masslib.evaluate.
+acceptance:
+  mass_gate:
+    variants:
+      - morning
+      - moondancer
+    max_ready_kg: 20
+    min_ready_kg: 12
+    max_under_C: 60.05
+    max_grip_C: 40
+    max_wood_outer_C: 50.05
+    max_wood_inner_C: 75
+    max_metal_outer_C: 55.05
+    min_pizza_clearance: 19
+    min_outer_diameter: 480
+    max_outer_diameter: 1224
+    max_body_height: 460
+    freecad_tolerance_kg: 0.25
+    record: design/variants/opus-mass-iteration.json
+    record_variant: moondancer
+    record_tolerance_kg: 0.05
+  interference:
+    variant: moondancer
+  unittest: cad.tests.test_variants
