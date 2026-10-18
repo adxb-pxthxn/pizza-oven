@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T20:27:00Z
+**Timestamp:** 2026-10-18T20:40:00Z
 **Current Branch / Commit:** design/stream-2-modular
 **Overall Status:** IN_PROGRESS
 
@@ -24,7 +24,7 @@ Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/an
 ---
 
 ## 2b. Stream 2 (this branch)
-Terrax is the current stack. The brow grip, the tunnel grip, and the door grip each stand on a 1.5 mm mild pad. The posts clear the skin by 1.5 mm. Quicksilver's pintle stays: the lower arm welds to the pit, and the brow lifts off the pin. Door face 53.7°C, door grip 23°C. Pit 11.0 kg. Hearth 9.1 kg. Brow 5.8 kg. Tunnel 8.3 kg. Ready 34.1 kg. Mouth 424 × 185. Hood skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Wood stays 3.4 mm off hot steel. Flux stays 13.8 kW/m². The door grip pulls the door. It is not a lift. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, Grey Ghost, and Seasmoke. Do not reuse those. The book dragons are now used on one stream or the other. Do not take a show name. Recheck stream 1 before any new name. Shop sequence is `design/stream-2/terrax/BUILD.md`. See `design/stream-2/README.md`.
+Terrax is the current stack. The brow grip, the tunnel grip, and the door grip each stand on a 1.5 mm mild pad. The posts clear the skin by 1.5 mm. Quicksilver's pintle stays: the lower arm welds to the pit, and the brow lifts off the pin. Door face 53.7°C, door grip 23°C. Pit 11.0 kg. Hearth 9.1 kg. Brow 5.8 kg. Tunnel 8.3 kg. Ready 34.1 kg. Mouth 424 × 185. Hood skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Wood stays 3.4 mm off hot steel. Flux stays 13.8 kW/m². The door grip pulls the door. It is not a lift. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, Grey Ghost, and Seasmoke. Do not reuse those. The book dragons are now used on one stream or the other. Do not take a show name. Recheck stream 1 before any new name. The sheet module is 20 mm for the pads, the wind-back, and the rivet pitch. The mouth and the deck stay off it. Aluminium is flat blanks. The cowl is two plates with a gap at the joint. The bail lifts the hearth. The tailgate is the stand. Shop sequence is `design/stream-2/terrax/BUILD.md`. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.
