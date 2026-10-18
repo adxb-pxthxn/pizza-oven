@@ -16,7 +16,7 @@ Cool-down is the open door, sky plate lifted out, steel from its pizza equilibri
 | Pizza floor | — | stone ~430°C | stone ~430°C | 309°C, gas 370°C | 301°C, gas 360°C | 301°C | **301°C, plate forward** |
 | Scorch time | — | — | — | 122 s | 130 s | 130 s | **130 s** |
 | Broil | — | — | — | 10.6 kW/m² | 10.6 kW/m² | 10.6 kW/m² | **10.6 kW/m², 240 mm bay** |
-| Bread floor | — | — | — | 214°C | 214°C | 214°C | **214°C, door shut** |
+| Bread floor | — | — | — | 240°C shut | 240°C shut | 240°C shut | **240°C at gas 260°C** |
 | Camber | — | — | — | 0.003 mm | 0.003 mm | 0.003 mm | **0.003 mm** |
 | Open cool-down | benchmark | — | — | 42 min, 0.67× | 42 min, 0.66× | 42 min, 0.66× | **42 min, 0.66× Tread** |
 | Heat-up | — | — | — | 23 min open | 22 / 14 min | 23 / 15 min | **24 min open, 15 min shut** |
@@ -31,7 +31,9 @@ Arrax widens the plate to 480 mm inside the 500 mm barrel. The side gap is 10 mm
 
 Vermax lengthens the barrel to 780 mm so the same plate can slide back and leave a 240 mm bay. Five 4 mm rods sit in that bay, 20 mm below the mouth crown, so the front view shows the grate. Pizza numbers are with the plate slid forward. A 10 kW/m² crown on the bare bay still cambers a 6 mm plate by about 0.02 mm. The extra mass is shell, not deck. Cool-down stays 0.66× the Tread. Shut heat-up is 15 min.
 
-Tessarion is that barrel with the plate forward and the door shut. The door bottom is at 63.4 mm and the sill top is at 60.4 mm, so the shop gap is 3 mm. Bread floor is 214°C at gas 260°C. Ready mass is 37.2 kg.
+Tessarion is that barrel with the plate forward and the door shut. The door bottom is at 63.4 mm and the sill top is at 60.4 mm, so the shop gap is 3 mm. Ready mass is 37.2 kg. The earlier 214°C bread figure treated the mouth as open. Shut, gas at 260°C holds the floor at 240°C.
+
+Sunfyre is the Tessarion body with the bread gas at 230°C. The shut door then holds the floor at 211°C and the plate at 223°C. That is the loaf. Pizza stays at gas 360°C and 301°C. Same solid as Tessarion.
 
 Blanket is 25 mm ceramic fibre (3 on the arch, 2 under the floor). Skin is 1.0 mm aluminium. Air gap is 8 mm so it stays laminar. The plate is AS/NZS 3678-250, normalised, seasoned, not fastened. Stormcloud keeps 25 mm beside the liner. Arrax keeps 10 mm, with stops at 4 mm. Growth at 320°C is 2.0 mm. No zinc. No paint. No cordierite.
 

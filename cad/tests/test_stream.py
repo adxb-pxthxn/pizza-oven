@@ -146,9 +146,25 @@ class TessarionPhysicsTest(unittest.TestCase):
         self.assertEqual(saved["design"]["length"], 780.0)
         live = evaluate(Vault(**saved["design"]))
         self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
-        self.assertAlmostEqual(live["bread_floor_C"], 214.0, delta=1.0)
+        # Door shut. The old 214 C figure was an open mouth.
+        self.assertAlmostEqual(live["bread_floor_C"], 240.0, delta=2.0)
+        self.assertLess(live["bread_floor_C"], 250.0)
         self.assertLessEqual(live["floor_C"], 305.0)
         self.assertGreaterEqual(live["scorch_s"], 125.0)
+
+
+class SunfyrePhysicsTest(unittest.TestCase):
+    def test_bread_gas_holds_a_hearth_not_a_scorch(self):
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["sunfyre"]
+        self.assertEqual(saved["design"]["bread_gas"], 230.0)
+        self.assertEqual(saved["design"]["door_pose"], "shut")
+        live = evaluate(Vault(**saved["design"]))
+        self.assertAlmostEqual(saved["result"]["bread_floor_C"], live["bread_floor_C"], delta=0.5)
+        self.assertAlmostEqual(live["bread_floor_C"], 211.0, delta=2.0)
+        self.assertLess(live["bread_floor_C"], 230.0)
+        self.assertGreater(live["scorch_s"], 120.0)
+        self.assertAlmostEqual(live["floor_C"], 300.8, delta=1.0)
 
 
 if __name__ == "__main__":

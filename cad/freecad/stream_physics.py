@@ -194,7 +194,7 @@ def grip_temperature(skin_c: float, standoff_mm: float) -> float:
     return T_AMB + (skin_c - T_AMB) * r_conv / (r_path + r_conv)
 
 
-def _exchange(v: Vault, t_gas: float, t_plate: float, t_floor: float) -> dict[str, float]:
+def _exchange(v: Vault, t_gas: float, t_plate: float, t_floor: float, leak: float = 1.0) -> dict[str, float]:
     """Fluxes in W/m2 on the steel plan. Plate area is taken equal to the floor."""
     tg = t_gas + 273.15
     tp = t_plate + 273.15
@@ -205,17 +205,18 @@ def _exchange(v: Vault, t_gas: float, t_plate: float, t_floor: float) -> dict[st
     q_up = 18.0 * (t_gas - t_plate) + eps_up * SIGMA * 0.85 * (tg**4 - tp**4)
     q_pf = 6.0 * (t_plate - t_floor) + eps_pf * SIGMA * 0.82 * (tp**4 - tf**4)
     # Half-ellipse mouth, about four fifths of the rectangular opening.
-    q_pm = 0.75 * SIGMA * 0.08 * (tp**4 - ta**4)
-    q_fm = 0.79 * SIGMA * 0.13 * (tf**4 - ta**4)
+    # leak is 1 with the door open. A shut door leaves a slot, not the whole mouth.
+    q_pm = 0.75 * SIGMA * 0.08 * leak * (tp**4 - ta**4)
+    q_fm = 0.79 * SIGMA * 0.13 * leak * (tf**4 - ta**4)
     q_down = (t_floor - T_AMB) / floor_resistance(v)
     return {"q_up": q_up, "q_pf": q_pf, "q_pm": q_pm, "q_fm": q_fm, "q_down": q_down}
 
 
-def equilibrium(v: Vault, t_gas: float) -> dict[str, float]:
+def equilibrium(v: Vault, t_gas: float, leak: float = 1.0) -> dict[str, float]:
     """Sky plate in. Plate and floor float. Vault gas is the burner setpoint."""
 
     def mismatch(tp: float, tf: float) -> tuple[float, float]:
-        q = _exchange(v, t_gas, tp, tf)
+        q = _exchange(v, t_gas, tp, tf, leak)
         return q["q_up"] - q["q_pf"] - q["q_pm"], q["q_pf"] - q["q_fm"] - q["q_down"]
 
     tp, tf = t_gas - 30.0, min(300.0, t_gas - 50.0)
@@ -236,7 +237,7 @@ def equilibrium(v: Vault, t_gas: float) -> dict[str, float]:
         tf -= (j00 * f_f - f_p * j10) / det
         tp = min(max(tp, T_AMB + 5.0), t_gas)
         tf = min(max(tf, T_AMB + 5.0), t_gas)
-    q = _exchange(v, t_gas, tp, tf)
+    q = _exchange(v, t_gas, tp, tf, leak)
     under = underside_temperature(v, tf)
     return {
         "plate_C": tp,
@@ -469,7 +470,7 @@ def masses(v: Vault) -> dict[str, float]:
 def evaluate(v: Vault) -> dict:
     skin = wall_temperature(v, v.broil_gas)
     hold = equilibrium(v, v.pizza_gas)
-    bread = equilibrium(v, v.bread_gas)
+    bread = equilibrium(v, v.bread_gas, leak=0.03)
     bent = warp(v, hold["q_down"])
     parts = masses(v)
     ready = sum(parts.values())
