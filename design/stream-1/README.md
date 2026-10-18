@@ -6,19 +6,19 @@ Cool-down is the open door, sky plate lifted out, steel from its pizza equilibri
 
 | | Tread | Morning | Moondancer | Stormcloud |
 |---|---|---|---|---|
-| Ready mass | 13.5 kg | 19.2 kg | 15.8 kg | **34.5 kg** |
-| Plan | — | Ø572 × ~260 tall | Ø547 × ~250 tall | **850 × 670 × 396** |
+| Ready mass | 13.5 kg | 19.2 kg | 15.8 kg | **34.2 kg** |
+| Plan | — | Ø572 × ~260 tall | Ø547 × ~250 tall | **shell 850 × 670 × 396, overall 973 × 670 × 410** |
 | Floor | stone | cordierite Ø420 × 15 | cordierite Ø420 × 15 | **mild steel 450 × 500 × 6, free** |
-| Mouth | low | 420 × 95 | 420 × 95 | **430 × 158** |
+| Mouth | low | 420 × 95 | 420 × 95 | **arch 430 × 158** |
 | Crown | — | apex 165 | apex 165 | **radius 250, length 680** |
 | Skin | hot | 50°C wood | 55°C aluminium | **55.1°C aluminium** |
 | Underside | — | 60°C | 60°C | **54°C** |
-| Pizza floor | — | stone ~430°C | stone ~430°C | **302°C, plate 337°C** |
-| Scorch time | — | stone, not this model | stone | **129 s to 230°C on a 1 mm face** |
+| Pizza floor | — | stone ~430°C | stone ~430°C | **309°C, plate 341°C** |
+| Scorch time | — | stone, not this model | stone | **122 s to 230°C on a 1 mm face** |
 | Broil | — | — | — | **10.6 kW/m², plate out** |
-| Bread floor | — | — | — | **209°C, door shut, gas 260°C** |
+| Bread floor | — | — | — | **214°C, door shut, gas 260°C** |
 | Camber | — | — | — | **0.003 mm** |
-| Open cool-down | benchmark | — | — | **42 min, 0.66× Tread** |
+| Open cool-down | benchmark | — | — | **42 min, 0.67× Tread** |
 | Heat-up | — | — | — | **23 min** |
 | Carry | one person | tub, not the tailgate | tub | **two people, high side handles** |
 

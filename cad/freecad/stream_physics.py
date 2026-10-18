@@ -108,6 +108,15 @@ def outer_length(v: Vault) -> float:
     return v.length + 2.0 * stack_thickness(v)
 
 
+def plate_span(v: Vault) -> tuple[float, float]:
+    """Sky plate must sit inside the arch at its height, with clearance to the liner."""
+    height = v.radius - v.plate_drop
+    half = math.sqrt(max(v.radius * v.radius - height * height, 0.0)) - 12.0
+    width = min(v.steel_w - 16.0, 2.0 * max(half, 0.0))
+    length = min(v.steel_l - 20.0, v.length - v.landing - 80.0)
+    return width, length
+
+
 def areas_m2(v: Vault) -> dict[str, float]:
     r = v.radius / 1000.0
     length = v.length / 1000.0
@@ -188,8 +197,9 @@ def _exchange(v: Vault, t_gas: float, t_plate: float, t_floor: float) -> dict[st
     eps_pf = _eps_pair(0.75, 0.79)
     q_up = 18.0 * (t_gas - t_plate) + eps_up * SIGMA * 0.85 * (tg**4 - tp**4)
     q_pf = 6.0 * (t_plate - t_floor) + eps_pf * SIGMA * 0.82 * (tp**4 - tf**4)
-    q_pm = 0.75 * SIGMA * 0.10 * (tp**4 - ta**4)
-    q_fm = 0.79 * SIGMA * 0.16 * (tf**4 - ta**4)
+    # Half-ellipse mouth, about four fifths of the rectangular opening.
+    q_pm = 0.75 * SIGMA * 0.08 * (tp**4 - ta**4)
+    q_fm = 0.79 * SIGMA * 0.13 * (tf**4 - ta**4)
     q_down = (t_floor - T_AMB) / floor_resistance(v)
     return {"q_up": q_up, "q_pf": q_pf, "q_pm": q_pm, "q_fm": q_fm, "q_down": q_down}
 
@@ -322,7 +332,8 @@ def cooldown_open_s(v: Vault, t_floor: float) -> float:
 def heatup_minutes(v: Vault, floor_c: float, plate_c: float, t_gas: float) -> dict[str, float]:
     """Energy to the setpoints, and the minutes a 6 kW burner takes at 35% hold-in."""
     steel_kg = (v.steel_w * v.steel_l * v.steel_t) * 1e-9 * DENS["mild"]
-    plate_kg = (v.steel_w * v.steel_l * v.plate_t) * 1e-9 * DENS["ss"]
+    plate_w, plate_l = plate_span(v)
+    plate_kg = (plate_w * plate_l * v.plate_t) * 1e-9 * DENS["ss"]
     liner_m2 = areas_m2(v)["wall"]
     liner_kg = liner_m2 * (v.liner_t / 1000.0) * DENS["ss"]
     # The hot third of the blanket, not the cold face.
@@ -371,7 +382,8 @@ def masses(v: Vault) -> dict[str, float]:
     base = _mm3_to_kg(plan_w * plan_l * v.base_t, DENS["al"])
     floor_ins = _mm3_to_kg(v.steel_w * v.steel_l * v.floor_fibre, DENS["fibre"])
     steel = _mm3_to_kg(v.steel_w * v.steel_l * v.steel_t, DENS["mild"])
-    plate = _mm3_to_kg((v.steel_w - 16.0) * (v.steel_l - 20.0) * v.plate_t, DENS["ss"])
+    plate_w, plate_l = plate_span(v)
+    plate = _mm3_to_kg(plate_w * plate_l * v.plate_t, DENS["ss"])
     rails = _mm3_to_kg(2.0 * v.steel_l * 12.0 * 1.2, DENS["ss"])
     buttons = _mm3_to_kg(6.0 * math.pi * 5.0 ** 2 * v.button_h, DENS["ss"])
 
