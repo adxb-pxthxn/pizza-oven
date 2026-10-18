@@ -1,0 +1,254 @@
+{
+  "morning": {
+    "success": true,
+    "message": "Optimization terminated successfully",
+    "nit": 14,
+    "x": {
+      "liner_t": 0.6,
+      "skin_t": 8.0,
+      "base_t": 0.8,
+      "pan_t": 0.6,
+      "ins_t": 42.299,
+      "floor_ins": 27.747,
+      "stone_t": 15.0,
+      "stone_d": 420.0,
+      "band_t": 1.2,
+      "band_w": 14.0,
+      "standoff": 16.0
+    },
+    "bounds": {
+      "liner_t": [
+        0.6,
+        1.0
+      ],
+      "skin_t": [
+        8.0,
+        12.0
+      ],
+      "base_t": [
+        0.8,
+        1.2
+      ],
+      "pan_t": [
+        0.6,
+        1.0
+      ],
+      "ins_t": [
+        24.0,
+        55.0
+      ],
+      "floor_ins": [
+        18.0,
+        45.0
+      ],
+      "stone_t": [
+        15.0,
+        20.0
+      ],
+      "stone_d": [
+        420.0,
+        430.0
+      ],
+      "band_t": [
+        1.2,
+        2.0
+      ],
+      "band_w": [
+        14.0,
+        22.0
+      ],
+      "standoff": [
+        16.0,
+        40.0
+      ]
+    },
+    "design": {
+      "name": "morning",
+      "dragon": "Morning",
+      "skin": "blackwood",
+      "base": "ss",
+      "band": "brass",
+      "liner_t": 0.6000000000000086,
+      "skin_t": 8.000000000000002,
+      "base_t": 0.8000000000000034,
+      "pan_t": 0.6000000000000045,
+      "ins_t": 42.298875,
+      "floor_ins": 27.747374999999984,
+      "stone_t": 15.000000000000002,
+      "stone_d": 420.0,
+      "band_t": 1.2000000000000006,
+      "band_w": 14.0,
+      "standoff": 16.00000000000001,
+      "ferrules": true
+    },
+    "result": {
+      "ready_kg": 19.104,
+      "stone_kg": 4.364,
+      "parts": {
+        "base-pan": 1.623,
+        "base-lip": 0.136,
+        "floor-insulation": 1.21,
+        "stone-pan": 0.822,
+        "floor-cordierite": 4.364,
+        "liner-skirt": 0.652,
+        "liner-dome": 0.897,
+        "wall-insulation": 1.625,
+        "crown-insulation": 2.544,
+        "outer-skirt": 0.884,
+        "outer-dome": 1.565,
+        "cinch-band": 0.258,
+        "mouth-frame": 0.095,
+        "mouth-throat": 0.248,
+        "peel-landing": 0.106,
+        "handle-grips": 0.081,
+        "handle-posts": 0.014,
+        "ptfe-washers": 0.005,
+        "handle-ferrules": 0.041,
+        "jarrah-feet": 0.018,
+        "rack-bosses": 0.021,
+        "stand-bosses": 0.039,
+        "road-dowels": 0.004,
+        "burner-allowance": 1.85
+      },
+      "wall_outer_C": 50.0,
+      "wall_inner_face_C": 65.0,
+      "wall_flux": 300.0,
+      "under_C": 60.0,
+      "grip_C": 25.327,
+      "outer_diameter": 571.798,
+      "body_height": 260.046,
+      "hearth_z": 44.147,
+      "spring_z": 164.147,
+      "outer_r": 285.899,
+      "stack": 50.899,
+      "pizza_clearance": 19.5,
+      "mouth_over_apex": 0.5757575757575758
+    }
+  },
+  "moondancer": {
+    "success": true,
+    "message": "Optimization terminated successfully",
+    "nit": 10,
+    "x": {
+      "liner_t": 0.6,
+      "skin_t": 0.8,
+      "base_t": 0.9,
+      "pan_t": 0.6,
+      "ins_t": 36.942,
+      "floor_ins": 27.749,
+      "stone_t": 15.0,
+      "stone_d": 420.0,
+      "band_t": 0.8,
+      "band_w": 12.0,
+      "standoff": 16.0
+    },
+    "bounds": {
+      "liner_t": [
+        0.6,
+        1.0
+      ],
+      "skin_t": [
+        0.8,
+        1.2
+      ],
+      "base_t": [
+        0.9,
+        1.4
+      ],
+      "pan_t": [
+        0.6,
+        1.0
+      ],
+      "ins_t": [
+        24.0,
+        55.0
+      ],
+      "floor_ins": [
+        18.0,
+        45.0
+      ],
+      "stone_t": [
+        15.0,
+        20.0
+      ],
+      "stone_d": [
+        420.0,
+        430.0
+      ],
+      "band_t": [
+        0.8,
+        1.6
+      ],
+      "band_w": [
+        12.0,
+        18.0
+      ],
+      "standoff": [
+        16.0,
+        40.0
+      ]
+    },
+    "design": {
+      "name": "moondancer",
+      "dragon": "Moondancer",
+      "skin": "al",
+      "base": "al",
+      "band": "ss",
+      "liner_t": 0.6000000000000009,
+      "skin_t": 0.8,
+      "base_t": 0.9,
+      "pan_t": 0.6,
+      "ins_t": 36.94158214285716,
+      "floor_ins": 27.74870625,
+      "stone_t": 15.0,
+      "stone_d": 420.0,
+      "band_t": 0.8,
+      "band_w": 12.0,
+      "standoff": 16.0,
+      "ferrules": false
+    },
+    "result": {
+      "ready_kg": 15.578,
+      "stone_kg": 4.364,
+      "parts": {
+        "base-pan": 0.57,
+        "base-lip": 0.05,
+        "floor-insulation": 1.21,
+        "stone-pan": 0.822,
+        "floor-cordierite": 4.364,
+        "liner-skirt": 0.652,
+        "liner-dome": 0.897,
+        "wall-insulation": 1.401,
+        "crown-insulation": 2.159,
+        "outer-skirt": 0.358,
+        "outer-dome": 0.608,
+        "cinch-band": 0.13,
+        "mouth-frame": 0.095,
+        "mouth-throat": 0.187,
+        "peel-landing": 0.041,
+        "handle-grips": 0.081,
+        "handle-posts": 0.014,
+        "ptfe-washers": 0.005,
+        "handle-ferrules": 0.0,
+        "rubber-feet": 0.019,
+        "rack-bosses": 0.021,
+        "stand-bosses": 0.039,
+        "road-dowels": 0.004,
+        "burner-allowance": 1.85
+      },
+      "wall_outer_C": 55.0,
+      "wall_inner_face_C": 55.002,
+      "wall_flux": 350.0,
+      "under_C": 60.0,
+      "grip_C": 26.215,
+      "outer_diameter": 546.683,
+      "body_height": 247.59,
+      "hearth_z": 44.249,
+      "spring_z": 164.249,
+      "outer_r": 273.342,
+      "stack": 38.342,
+      "pizza_clearance": 19.5,
+      "mouth_over_apex": 0.5757575757575758
+    }
+  }
+}

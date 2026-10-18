@@ -1,47 +1,46 @@
 # Agent Handover Protocol & Session Status
 
-**Active Agent:** antigrav
-**Current Branch / Commit:** main
-**Overall Status:** READY_FOR_USER_INPUT
+**Active Agent:** cursor
+**Timestamp:** 2026-10-18T17:07:12Z
+**Current Branch / Commit:** design/morning-moondancer
+**Overall Status:** UNDER_REVIEW
 
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-The repository has been thoroughly cleansed of all premature design assumptions and hardcoded specifications. The foundational open-source engineering stack is fully prepared:
-- Upstream Anatomy visual explanation skill
-- Mechanical engineering DFM, bend allowance, and thermal expansion calculators
-- Parametric code-CAD workflows and interchange pipelines
-- High-temperature thermodynamics modeling
-- OSHWA compliance auditor and CERN-OHL / CC-BY licensing
-- Multi-agent coordination (Antigravity, Cursor, Claude Code) and synchronization
-- Material sourcing & classifieds scraping pipeline
-
-The repository is a clean slate awaiting the user's initial design criteria and requirements.
+Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/angas-dragon-variants-d981` and opened against `main`. Morning is the blackwood body, 19.12 kg ready. Moondancer is the aluminium shell, 15.57 kg ready. Both keep the Angas dome, mouth, and burner crescent. The port has no `research/` files, no `REPORT.md`, no `REPORT.pdf`, and no bom-study files. Nothing else from `design/tailgate-oven` was required. FreeCAD solids seat without unintended interference. The press fits are the Morning ferrules and the cinch dowels. CalculiX still matches the skin temperatures.
 
 ---
 
 ## 2. Completed in This Session
-- [x] Cleansed all hardcoded CAD models, exports, and generator scripts from `cad/`.
-- [x] Cleansed `bom/bom.csv` into a clean, un-opinionated OSHWA-compliant template.
-- [x] Removed assumed engineering specification, assembly guide, and thermal calculation docs.
-- [x] Cleansed `AGENTS.md`, `GEMINI.md`, `README.md`, and `OSHWA.md` of any assumed dimensions, fuel types, or materials.
-- [x] Kept all general engineering calculation tools, DFM helpers, multi-agent frameworks, and scraping tools intact.
+- [x] scipy SLSQP mass minimum for both variants, skin temperature as a constraint.
+- [x] FreeCAD solids through the freecad-mcp headless runner. FCStd, STEP, GA sheets.
+- [x] Gmsh + CalculiX steady check. Slab, both walls, both grips.
+- [x] One Argon critique round per variant. Both held. `design/tailgate/argon/05-critique.md`.
+- [x] Comparison in `design/variants/COMPARISON.md`. BOM rows MR-* and MD-*.
+- [x] Managed Antigravity agent (`antigravity-preview-09-2026`, model `gemini-4-argon`) rebuilt the FreeCAD scripts. Interference report in `design/variants/interference-report.md`. Wrapper is `tools/argon/antigravity.py`.
+- [x] Those files are on `design/morning-moondancer` for review against `main`. `python -m unittest cad.tests.test_variants` passes without FreeCAD.
 
 ---
 
 ## 3. Immediate Next Steps (For Incoming Agent)
-1. **Wait for User Direction:** Do NOT implement CAD models, select materials, or fix dimensions until the user explicitly defines the project requirements (e.g. fuel type, capacity, portability, target temperature, budget, or preferred manufacturing method).
-2. **Consult Available Skills:** Use `.agents/skills/` once design criteria are given.
+1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.
+2. Do not put either oven on the lowered tailgate. Plans are Ø572 and Ø547.
+3. Do not add the rack or the stand. The bosses are the interface. Their mass is already in.
+4. Rebuild with `FREECADCMD` pointing at FreeCADCmd: `python3 cad/freecad/drive.py morning`.
+5. Modelling rounds go through `tools/argon/antigravity.py`, not `tools/argon/argon.py`. The agent endpoint rejects `thinking_level` and `effort`.
 
 ---
 
 ## 4. Guiding Invariants
-- **No Premature Assumptions:** Never assume specific dimensions, fuel source, sheet metal thickness, stone type, or assembly method without user input.
-- **Material Safety Invariant:** When materials are chosen, always verify food safety (FDA/EU 1935/2004) and avoid toxic materials (e.g. galvanized zinc in high-temp zones).
-- **OSHWA Compliance:** Any future physical parts must be added to `bom/bom.csv` with editable CAD and open interchange exports.
-- **Commit Format:** Conventional commit with agent signature, e.g. `feat(cad): initial floor layout [agent:antigrav]`.
+- **No Premature Assumptions:** Fuel is gas. Cooking geometry is the Angas 430. New numbers live in `design/variants/optimizer.json`.
+- **Material Safety Invariant:** No galvanised zinc in the hot path. Liner and stone pan are 304. Morning's wood inner face is 65°C.
+- **OSHWA Compliance:** Hardware CERN-OHL-P v2. These notes CC-BY-4.0.
+- **Commit Format:** Conventional commit with agent signature, e.g. `feat(cad): initial floor layout [agent:cursor]`.
 
 ---
 
 ## 5. Active Locks & Touched Files
-- **Active Locks:** None. All resources unlocked in `.agents/locks/`.
+- **Active Locks:** None.
+- **Key paths:** `cad/freecad/`, `design/variants/`, `tools/freecad_mcp/`, `bom/bom.csv`. Web meshes sit beside the STEP files: `morning.glb`, `moondancer.glb`, and the matching STL.
+- **Mass to believe:** FreeCAD solid plus the 1.85 kg burner allowance. Morning 19.12 kg. Moondancer 15.57 kg.

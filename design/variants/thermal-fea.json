@@ -1,0 +1,39 @@
+{
+  "slab": {
+    "outer_C": 62.11,
+    "expected_C": 62.11,
+    "error_C": 0.0
+  },
+  "walls": {
+    "morning": {
+      "dragon": "Morning",
+      "outer_C": 50.0,
+      "oned_C": 50.0,
+      "error_C": 0.0,
+      "elements": 12650
+    },
+    "moondancer": {
+      "dragon": "Moondancer",
+      "outer_C": 54.95,
+      "oned_C": 54.95,
+      "error_C": 0.0,
+      "elements": 57422
+    }
+  },
+  "handles": {
+    "morning": {
+      "dragon": "Morning",
+      "grip_C": 21.27,
+      "grip_max_C": 27.38,
+      "oned_C": 25.33,
+      "skin_root_C": 50.0
+    },
+    "moondancer": {
+      "dragon": "Moondancer",
+      "grip_C": 21.48,
+      "grip_max_C": 28.6,
+      "oned_C": 26.21,
+      "skin_root_C": 54.95
+    }
+  }
+}
