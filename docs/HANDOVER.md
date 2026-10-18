@@ -1,37 +1,39 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Current Branch / Commit:** design/tailgate-oven
+**Timestamp:** 2026-10-18T17:00:00Z
+**Current Branch / Commit:** cursor/angas-dragon-variants-d981
 **Overall Status:** DESIGN_DRAFT
 
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-Adib's tailgate oven is the Angas 430 on `design/tailgate-oven`: a circular double-skin 304 dome, brass cinch, jarrah handles, Ø675 × 340 mm, 31.5 kg without the stone. It does not sit on the Shark tailgate. The wood body (Cask-430) and the wood-ring hybrid (Angas Binnacle) are concepts only. Gas parts stay bought certified. The draft PR targets `research/argon-anatomy`, not `main`.
+Angas 430 stays the baseline on `design/tailgate-oven`. Two early prototypes sit on `cursor/angas-dragon-variants-d981`: Morning, the blackwood body, 19.12 kg ready, and Moondancer, the aluminium shell, 15.57 kg ready. Both keep the Angas dome, mouth, and burner crescent. FreeCAD solids now seat without unintended interference. The press fits are the Morning ferrules and the cinch dowels. CalculiX still matches the skin temperatures.
 
 ---
 
 ## 2. Completed in This Session
-- [x] Four Argon HIGH passes: wood body, unconstrained optimum, hybrid, critique. Files in `design/tailgate/argon/`.
-- [x] Comparison and the recommendation in `design/tailgate/CONCEPTS.md`.
-- [x] Parametric model `cad/tailgate/`, STEP AP214 and STL in `design/tailgate/models/`.
-- [x] GA sheets in `design/tailgate/drawings/`, shaded views in `design/tailgate/concepts/`.
-- [x] BOM in `bom/bom.csv`. Figures are AUD. The required cost column keeps its schema name.
-- [x] Tests in `cad/tests/test_tailgate.py`, including the stone-does-not-pass-the-mouth check.
+- [x] scipy SLSQP mass minimum for both variants, skin temperature as a constraint.
+- [x] FreeCAD solids through the freecad-mcp headless runner. FCStd, STEP, GA sheets.
+- [x] Gmsh + CalculiX steady check. Slab, both walls, both grips.
+- [x] One Argon critique round per variant. Both held. `design/tailgate/argon/05-critique.md`.
+- [x] Comparison in `design/variants/COMPARISON.md`. BOM rows MR-* and MD-*.
+- [x] Managed Antigravity agent (`antigravity-preview-09-2026`, model `gemini-4-argon`) rebuilt the FreeCAD scripts. Interference report in `design/variants/interference-report.md`. Wrapper is `tools/argon/antigravity.py`.
 
 ---
 
 ## 3. Immediate Next Steps (For Incoming Agent)
-1. Wait for Adib's answers in `design/tailgate/CONCEPTS.md` before cutting metal or changing the burner slot.
-2. Do not put the oven on the lowered tailgate. The plan is 675 mm and the tailgate is 517 mm deep, and a flame there has no clearance to the ute.
-3. Do not add injector geometry. Do not glue a wood shell over this oven.
-4. The Gozney study on `research/argon-anatomy` is still the reference for the insulation network. It is not the oven being built.
+1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.
+2. Do not put either oven on the lowered tailgate. Plans are Ø572 and Ø547.
+3. Do not add the rack or the stand. The bosses are the interface. Their mass is already in.
+4. Rebuild with `FREECADCMD` pointing at FreeCADCmd: `python3 cad/freecad/drive.py morning`.
+5. Modelling rounds go through `tools/argon/antigravity.py`, not `tools/argon/argon.py`. The agent endpoint rejects `thinking_level` and `effort`.
 
 ---
 
 ## 4. Guiding Invariants
-- **No Premature Assumptions:** Fuel is gas. Wood fire is out unless Adib reopens it. Dimensions live in `cad/tailgate/spec.py`.
-- **Material Safety Invariant:** No galvanised zinc in the hot path. This oven has no wood in the thermal stack. Handles and feet are jarrah, off the shell.
+- **No Premature Assumptions:** Fuel is gas. Cooking geometry is the Angas 430. New numbers live in `design/variants/optimizer.json`.
+- **Material Safety Invariant:** No galvanised zinc in the hot path. Liner and stone pan are 304. Morning's wood inner face is 65°C.
 - **OSHWA Compliance:** Hardware CERN-OHL-P v2. These notes CC-BY-4.0.
 - **Commit Format:** Conventional commit with agent signature, e.g. `feat(cad): initial floor layout [agent:cursor]`.
 
@@ -39,5 +41,5 @@ Adib's tailgate oven is the Angas 430 on `design/tailgate-oven`: a circular doub
 
 ## 5. Active Locks & Touched Files
 - **Active Locks:** None.
-- **Key paths:** `cad/tailgate/`, `design/tailgate/`, `bom/bom.csv`.
-- **Mass to believe:** 31.5 kg stone-out, 37.6 kg ready, from the model. Argon's hand total of 27.7 kg was the Ø625 crown-only thickening.
+- **Key paths:** `cad/freecad/`, `design/variants/`, `tools/freecad_mcp/`, `bom/bom.csv`. Web meshes sit beside the STEP files: `morning.glb`, `moondancer.glb`, and the matching STL.
+- **Mass to believe:** FreeCAD solid plus the 1.85 kg burner allowance. Morning 19.12 kg. Moondancer 15.57 kg.

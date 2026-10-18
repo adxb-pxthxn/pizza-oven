@@ -53,6 +53,26 @@ Do not use the cheap model for the engineering argument.
 
 A job may set `thinking_level`, `thinking_budget`, or `"thinking": false`.
 
+## Managed Antigravity agent
+
+Modelling rounds use `tools/argon/antigravity.py`. That script calls the
+Interactions API agent `antigravity-preview-09-2026` with
+`agent_config.model` set to `gemini-4-argon`. It does not call
+`generateContent`.
+
+The agent config accepts `type`, `model`, and `max_total_tokens`. The
+endpoint rejects `thinking_level`, `generation_config`, and `effort`.
+Passing `--thinking-level` still sends the field and surfaces the HTTP
+error. It does not retry on a cheaper model.
+
+```bash
+python3 tools/argon/antigravity.py ping
+python3 tools/argon/antigravity.py run \
+  --prompt-file design/variants/prompts/06-antigravity-interference.md \
+  --source cad/freecad/build_variant.py:/workspace/cad/freecad/build_variant.py \
+  --text-out design/variants/antigravity/answer.md
+```
+
 `--json` sets Gemini JSON mode.
 
 ## Parallel workers

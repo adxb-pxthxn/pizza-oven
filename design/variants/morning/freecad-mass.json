@@ -1,0 +1,263 @@
+{
+  "name": "morning",
+  "dragon": "Morning",
+  "freecad_kg": 17.268,
+  "analytical_kg": 17.256,
+  "ready_with_burner_kg": 19.118,
+  "outer_diameter": 571.8,
+  "body_height": 260.1,
+  "handle_r": 275.1,
+  "handle_z": 198.7,
+  "skin_C": 50.0,
+  "grip_C": 25.33,
+  "parts": [
+    {
+      "name": "base_pan",
+      "kind": "ss",
+      "kg": 1.623,
+      "crown": false
+    },
+    {
+      "name": "base_lip",
+      "kind": "ss",
+      "kg": 0.136,
+      "crown": false
+    },
+    {
+      "name": "floor_insulation",
+      "kind": "micro",
+      "kg": 1.212,
+      "crown": false
+    },
+    {
+      "name": "stone_pan",
+      "kind": "ss",
+      "kg": 0.822,
+      "crown": false
+    },
+    {
+      "name": "floor_cordierite",
+      "kind": "cordierite",
+      "kg": 4.364,
+      "crown": false
+    },
+    {
+      "name": "liner_skirt",
+      "kind": "ss",
+      "kg": 0.607,
+      "crown": false
+    },
+    {
+      "name": "wall_insulation",
+      "kind": "micro",
+      "kg": 1.551,
+      "crown": false
+    },
+    {
+      "name": "outer_skirt",
+      "kind": "blackwood",
+      "kg": 0.858,
+      "crown": false
+    },
+    {
+      "name": "cinch_band",
+      "kind": "brass",
+      "kg": 0.258,
+      "crown": false
+    },
+    {
+      "name": "dowel_a",
+      "kind": "ss",
+      "kg": 0.002,
+      "crown": false
+    },
+    {
+      "name": "dowel_b",
+      "kind": "ss",
+      "kg": 0.002,
+      "crown": false
+    },
+    {
+      "name": "mouth_frame",
+      "kind": "ss",
+      "kg": 0.418,
+      "crown": false
+    },
+    {
+      "name": "peel_landing",
+      "kind": "ss",
+      "kg": 0.181,
+      "crown": false
+    },
+    {
+      "name": "liner_dome",
+      "kind": "ss",
+      "kg": 0.898,
+      "crown": true
+    },
+    {
+      "name": "crown_insulation",
+      "kind": "micro",
+      "kg": 2.546,
+      "crown": true
+    },
+    {
+      "name": "outer_dome",
+      "kind": "blackwood",
+      "kg": 1.566,
+      "crown": true
+    },
+    {
+      "name": "handle_port",
+      "kind": "jarrah",
+      "kg": 0.041,
+      "crown": false
+    },
+    {
+      "name": "post_port_a",
+      "kind": "ss",
+      "kg": 0.004,
+      "crown": false
+    },
+    {
+      "name": "washer_port_a",
+      "kind": "ptfe",
+      "kg": 0.001,
+      "crown": false
+    },
+    {
+      "name": "post_port_b",
+      "kind": "ss",
+      "kg": 0.004,
+      "crown": false
+    },
+    {
+      "name": "washer_port_b",
+      "kind": "ptfe",
+      "kg": 0.001,
+      "crown": false
+    },
+    {
+      "name": "ferrule_port_a",
+      "kind": "brass",
+      "kg": 0.011,
+      "crown": false
+    },
+    {
+      "name": "ferrule_port_b",
+      "kind": "brass",
+      "kg": 0.011,
+      "crown": false
+    },
+    {
+      "name": "handle_starboard",
+      "kind": "jarrah",
+      "kg": 0.041,
+      "crown": false
+    },
+    {
+      "name": "post_starboard_a",
+      "kind": "ss",
+      "kg": 0.004,
+      "crown": false
+    },
+    {
+      "name": "washer_starboard_a",
+      "kind": "ptfe",
+      "kg": 0.001,
+      "crown": false
+    },
+    {
+      "name": "post_starboard_b",
+      "kind": "ss",
+      "kg": 0.004,
+      "crown": false
+    },
+    {
+      "name": "washer_starboard_b",
+      "kind": "ptfe",
+      "kg": 0.001,
+      "crown": false
+    },
+    {
+      "name": "ferrule_starboard_a",
+      "kind": "brass",
+      "kg": 0.011,
+      "crown": false
+    },
+    {
+      "name": "ferrule_starboard_b",
+      "kind": "brass",
+      "kg": 0.011,
+      "crown": false
+    },
+    {
+      "name": "foot_0",
+      "kind": "jarrah",
+      "kg": 0.006,
+      "crown": false
+    },
+    {
+      "name": "foot_1",
+      "kind": "jarrah",
+      "kg": 0.006,
+      "crown": false
+    },
+    {
+      "name": "foot_2",
+      "kind": "jarrah",
+      "kg": 0.006,
+      "crown": false
+    },
+    {
+      "name": "rack_boss_0",
+      "kind": "ss",
+      "kg": 0.005,
+      "crown": true
+    },
+    {
+      "name": "rack_boss_1",
+      "kind": "ss",
+      "kg": 0.005,
+      "crown": true
+    },
+    {
+      "name": "rack_boss_2",
+      "kind": "ss",
+      "kg": 0.005,
+      "crown": true
+    },
+    {
+      "name": "rack_boss_3",
+      "kind": "ss",
+      "kg": 0.005,
+      "crown": true
+    },
+    {
+      "name": "stand_boss_0",
+      "kind": "ss",
+      "kg": 0.01,
+      "crown": false
+    },
+    {
+      "name": "stand_boss_1",
+      "kind": "ss",
+      "kg": 0.01,
+      "crown": false
+    },
+    {
+      "name": "stand_boss_2",
+      "kind": "ss",
+      "kg": 0.01,
+      "crown": false
+    },
+    {
+      "name": "stand_boss_3",
+      "kind": "ss",
+      "kg": 0.01,
+      "crown": false
+    }
+  ],
+  "fcstd": "/workspace/design/variants/morning/morning.FCStd",
+  "step": "/workspace/design/variants/morning/morning.step"
+}

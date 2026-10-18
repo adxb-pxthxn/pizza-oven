@@ -20,3 +20,17 @@ TG-406,Cinch band,Brass 35 × 3 mm,1,Fabricated,University roll and makerspace l
 TG-407,Handles,Jarrah with brass ferrules,2,Fabricated,Makerspace metal lathe,0,AUD,Material in TG-220 and TG-210. Leave the timber free to move. Do not clamp it solid between metal faces.
 TG-408,Stub feet,Jarrah,3,Fabricated,Makerspace metal lathe,0,AUD,Material in TG-220. Camp-table stance.
 TG-409,Badge,Brass plate,1,Fabricated,Makerspace metal lathe and a laser etch mask,0,AUD,Material in TG-210. The CO2 lasers engrave a mask or a thin plate. They do not cut the stainless.
+MR-100,Morning microporous board,"k 0.030 W/mK, 250 kg/m3, wall and crown 42.3 mm, floor 27.7 mm",1,Insulation,Industrial microporous panel,180,AUD,"ESTIMATE AUD Adelaide Oct 2026. Morning only. Replaces the Angas AES and calcium silicate. Templates on the CO2 laser, trim on the WorkBee."
+MR-110,Morning cooking floor,Cordierite Ø420 × 15 mm,1,Refractory,Pottery supply or second-hand kiln shelf,40,AUD,ESTIMATE AUD. 15 mm is the thin end of a soak. Does not pass the mouth. Crown off to load it.
+MR-200,Morning liner and base,"304, liner and pan 0.6 mm, base 0.8 mm",1,Metal,Sheet drop,90,AUD,ESTIMATE AUD. University workshop TIG. Makerspace has no roll.
+MR-210,Morning wood shell,Blackwood segmented stave 8 mm,1,Timber,Adelaide hardwood blank,80,AUD,"ESTIMATE AUD. Table saw, thicknesser, WorkBee. Not a bowl turning. Outer face 50°C, inner face 65°C."
+MR-220,Morning brass cinch,C26000 14 × 1.2 mm plus ferrules,1,Metal,Metal merchant,35,AUD,ESTIMATE AUD. Ferrules on the makerspace lathe. Band closed at the university shop.
+MR-230,Morning handles and feet,"Jarrah grips Ø22 × 130, three 12 mm feet, PTFE washers",1,Timber,Offcut,15,AUD,ESTIMATE AUD. High on the dome shoulder. Grip under 30°C in the mesh.
+MR-240,Morning rack and stand bosses,"4× M5 on PCD 120, 4× M6 on a 220 mm square",1,Metal,304 bar,0,AUD,Mass is in the oven. The rack and the stand are not built.
+MD-100,Moondancer microporous board,"k 0.030 W/mK, 250 kg/m3, wall and crown 37.0 mm, floor 27.7 mm",1,Insulation,Industrial microporous panel,160,AUD,ESTIMATE AUD. Moondancer only.
+MD-110,Moondancer cooking floor,Cordierite Ø420 × 15 mm,1,Refractory,Pottery supply or second-hand kiln shelf,40,AUD,ESTIMATE AUD. Same stone as Morning.
+MD-200,Moondancer liner,304 liner and stone pan 0.6 mm,1,Metal,Sheet drop,60,AUD,ESTIMATE AUD. University workshop TIG. Food-side metal stays stainless.
+MD-210,Moondancer shell,"Aluminium skin 0.8 mm and base 0.9 mm",1,Metal,Sheet drop,40,AUD,"ESTIMATE AUD. Skin 55°C, so the alloy is nowhere near soft. Not the food-side liner."
+MD-220,Moondancer cinch,304 band 12 × 0.8 mm,1,Metal,Sheet drop,0,AUD,Material in MD-200. Crown lifts here.
+MD-230,Moondancer handles,Jarrah grips on stainless posts and PTFE,1,Timber,Offcut,15,AUD,ESTIMATE AUD. Same placement as Morning. No brass ferrules.
+MD-240,Moondancer rack and stand bosses,"4× M5 on PCD 120, 4× M6 on a 220 mm square",1,Metal,304 bar,0,AUD,Interfaces only. Accessory mass is not included.
