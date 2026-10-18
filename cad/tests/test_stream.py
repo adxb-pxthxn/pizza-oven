@@ -116,5 +116,23 @@ class ArraxPhysicsTest(unittest.TestCase):
         self.assertLess(live["parts"]["launch-sill"], 0.6)
 
 
+class VermaxPhysicsTest(unittest.TestCase):
+    def test_rear_plate_leaves_a_broil_bay(self):
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["vermax"]
+        self.assertEqual(saved["design"]["length"], 780.0)
+        self.assertEqual(saved["design"]["plate_pose"], "rear")
+        self.assertEqual(saved["design"]["stop_gap"], 4.0)
+        live = evaluate(Vault(**saved["design"]))
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        self.assertLessEqual(live["floor_C"], 315.0)
+        self.assertGreaterEqual(live["scorch_s"], 120.0)
+        self.assertLessEqual(live["skin_C"], 60.0)
+        self.assertLessEqual(live["cooldown_ratio"], 0.8)
+        plate_l = min(saved["design"]["steel_l"] - 20.0, saved["design"]["length"] - saved["design"]["landing"] - 80.0)
+        bay = (saved["design"]["length"] - 20.0 - plate_l) - saved["design"]["landing"]
+        self.assertGreater(bay, 200.0)
+
+
 if __name__ == "__main__":
     unittest.main()

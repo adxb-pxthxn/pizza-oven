@@ -336,19 +336,42 @@ def build(name: str = "stormcloud") -> dict:
     add("skin", skin, "al")
 
     plate_z = deck + radius - design.plate_drop
-    plate_y = design.landing + 30.0
+    plate_y_forward = design.landing + 30.0
+    if design.plate_pose == "in":
+        plate_y = plate_y_forward
+    elif design.plate_pose == "rear":
+        # Broil pose. The plate slides back and leaves a front bay under the crown.
+        plate_y = design.length - 20.0 - plate_l
+    else:
+        raise RuntimeError(f"unknown plate_pose {design.plate_pose}")
     add(
         "sky-plate",
         _box(-plate_w / 2.0, plate_y, plate_z, plate_w, plate_l, design.plate_t),
         "ss",
     )
+    rail_y = plate_y_forward
+    rail_l = (plate_y + plate_l) - rail_y
     rail_z = plate_z - gap - 8.0
     for sign, label in ((-1.0, "port"), (1.0, "starboard")):
         add(
             f"rail-{label}",
-            _box(sign * (plate_w / 2.0 - 10.0) - 4.0, plate_y, rail_z, 8.0, plate_l, 8.0 - gap),
+            _box(sign * (plate_w / 2.0 - 10.0) - 4.0, rail_y, rail_z, 8.0, rail_l, 8.0 - gap),
             "ss",
         )
+    if design.plate_pose == "rear":
+        # In the mouth, so the front view shows the grate. Still under the crown.
+        rod_z = deck + design.mouth_h - 20.0
+        y_a = design.landing + 16.0
+        y_b = plate_y - 12.0
+        half = math.sqrt(max(radius * radius - (rod_z - deck) ** 2, 0.0)) - 8.0
+        for index, rod_x in enumerate((-120.0, -60.0, 0.0, 60.0, 120.0)):
+            if abs(rod_x) + 2.0 > half or y_b - y_a < 40.0:
+                raise RuntimeError(f"broil rod {index} does not fit")
+            add(
+                f"broil-rod-{index}",
+                Part.makeCylinder(2.0, y_b - y_a, App.Vector(rod_x, y_a, rod_z), App.Vector(0, 1, 0)),
+                "ss",
+            )
 
     hood_z = deck + design.mouth_h - hw["hood_drop"]
     # Width limited by the arch at that height.
@@ -560,6 +583,14 @@ def build(name: str = "stormcloud") -> dict:
             stray.append({"a": "launch-sill", "b": "deck", "mm3": -1})
         gate["png"]["front"] = "Mouth arch open. Launch sill is the lip under the opening."
         gate["png"]["side"] = "Long barrel. Sill projects under the mouth. Parked door on the port cheek."
+    if design.plate_pose == "rear":
+        plate_bb = by_name["sky-plate"].BoundBox
+        gate["plate_ymin"] = round(plate_bb.YMin, 1)
+        gate["broil_bay_mm"] = round(plate_bb.YMin - design.landing, 1)
+        if plate_bb.YMax > design.length - 10.0:
+            stray.append({"a": "sky-plate", "b": "rear-liner", "mm3": -1})
+        gate["png"]["front"] = "Mouth open. Five grate bars in the arch. Door fin on the port cheek."
+        gate["png"]["section"] = "Centreline. Plate is the rear half. Grate bars cross the front bay."
     (out_dir / "gate.json").write_text(json.dumps(gate, indent=2) + "\n", encoding="utf-8")
     print("GATE", json.dumps(gate))
 
