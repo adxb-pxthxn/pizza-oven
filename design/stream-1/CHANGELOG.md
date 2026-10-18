@@ -15,3 +15,4 @@
 - Vermithor: the hinge post laps the floor, weld 2173 mm³ instead of a 90 mm³ tack. Same door, 38.7 kg.
 - Caraxes: 11 mm finger hollow in the middle of the grip, 3 mm arris, ends left square, 38.7 kg. The gate records volume, centre of mass, and closed shells.
 - Caraxes shop sheet: `design/stream-1/caraxes/BUILD.md`, machine, sequence, jigs, and fits for Makerspace Adelaide.
+- Inspiration re-read: five Wright lessons. The 20 mm sill grid and the flat skin stay. Veneer, a flush crane niche, side flues, and levelling screws stay off Caraxes.
