@@ -50,6 +50,25 @@ VERMAX = Stack(
     standoff=55.0,
 )
 
+ARRAX = Stack(
+    dragon="Arrax",
+    deck_t=4.0,
+    ins_t=22.0,
+    floor_ins=12.0,
+    belly_ins=12.0,
+    liner_t=0.6,
+    skin_t=0.6,
+    pit_t=1.0,
+    front_h=294.0,
+    soffit_h=110.0,
+    air_gap=16.0,
+    standoff=54.0,
+    launch_y=260.0,
+    stepped=True,
+)
+
+DRAGONS = {"vermax": VERMAX, "arrax": ARRAX}
+
 FORBIDDEN_CONSOLE_TOKENS = ("Error", "Recompute failed", "subshape")
 
 
@@ -190,9 +209,10 @@ class _ConsoleObserver:
 def _load_design(name: str | Stack = "vermax") -> Stack:
     if isinstance(name, Stack):
         return name
-    if str(name).strip().lower() != "vermax":
+    key = str(name).strip().lower()
+    if key not in DRAGONS:
         raise ValueError(f"Unsupported stack design: {name!r}")
-    return VERMAX
+    return DRAGONS[key]
 
 
 def _make_box(part: dict) -> Part.Shape:
@@ -413,7 +433,7 @@ def _write_sheets(out_dir: Path, design: Stack, report: dict, compound: Part.Sha
         "top": _oriented_view(compound, "top"),
         "section": _oriented_view(section, "section"),
     }
-    title = "Vermax — modular stack"
+    title = f"{design.dragon} — modular stack"
     mods = report["modules_kg"]
     note = (
         f"Three modules: pit {mods['pit']:.2f} kg, hearth {mods['hearth']:.2f} kg, hood {mods['hood']:.2f} kg · "
@@ -462,7 +482,8 @@ def build(name: str = "vermax") -> dict:
     expected_parts = parts(design)
     report = evaluate(design)
 
-    out_dir = ROOT / "design" / "stream-2" / "vermax"
+    slug = design.dragon.lower()
+    out_dir = ROOT / "design" / "stream-2" / slug
     out_dir.mkdir(parents=True, exist_ok=True)
     gate_path = out_dir / "gate.json"
 
@@ -639,9 +660,9 @@ def build(name: str = "vermax") -> dict:
             )
 
         # Save FCStd, STEP files, section, and drawings.
-        fcstd_path = out_dir / "vermax.FCStd"
-        step_path = out_dir / "vermax.step"
-        pit_step_path = out_dir / "vermax-pit.step"
+        fcstd_path = out_dir / f"{slug}.FCStd"
+        step_path = out_dir / f"{slug}.step"
+        pit_step_path = out_dir / f"{slug}-pit.step"
 
         doc.saveAs(str(fcstd_path))
 

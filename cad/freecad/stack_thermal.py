@@ -35,10 +35,22 @@ def _solve(layers: list[tuple[str, float, float]], films: list[tuple[str, float,
     return fea._face_mean(mesh, temps, mesh["z_top"])
 
 
+def _arrax() -> Stack:
+    return Stack(
+        dragon="Arrax",
+        deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+        liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+        soffit_h=110.0, air_gap=16.0, standoff=54.0,
+        launch_y=260.0, stepped=True,
+    )
+
+
 def main() -> None:
-    design = _vermax()
+    import os
+    name = os.environ.get("DRAGON", "vermax")
+    design = _arrax() if name == "arrax" else _vermax()
     report = evaluate(design)
-    out = ROOT / "design" / "stream-2" / "vermax" / "thermal"
+    out = ROOT / "design" / "stream-2" / design.dragon.lower() / "thermal"
     slab = fea.slab_check(out / "slab")
     print("SLAB", json.dumps(slab))
     if abs(slab["error_C"]) > 2.0:
@@ -67,7 +79,7 @@ def main() -> None:
         out / "floor",
     )
     payload = {
-        "dragon": "Vermax",
+        "dragon": design.dragon,
         "slab": slab,
         "wall_outer_C": round(wall_outer, 2),
         "wall_oned_C": report["skin_C"],
@@ -76,7 +88,7 @@ def main() -> None:
         "under_oned_C": report["under_C"],
         "under_error_C": round(floor_outer - report["under_C"], 2),
     }
-    dest = ROOT / "design" / "stream-2" / "vermax" / "thermal.json"
+    dest = ROOT / "design" / "stream-2" / design.dragon.lower() / "thermal.json"
     dest.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     print("WROTE", json.dumps(payload))
     if abs(payload["wall_error_C"]) > 2.0 or abs(payload["under_error_C"]) > 3.0:

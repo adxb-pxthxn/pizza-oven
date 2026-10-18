@@ -1,0 +1,10 @@
+{
+  "dragon": "Arrax",
+  "launch_y_mm": 260,
+  "front_h_mm": 294,
+  "soffit_h_mm": 110,
+  "mouth_mm": [424, 185],
+  "ready_kg": 32.161,
+  "modules_kg": {"pit": 10.378, "hearth": 8.963, "hood": 12.819},
+  "note": "Brow for the launch only. Body crown is 8 mm above the soffit. The grate stays in the pit."
+}

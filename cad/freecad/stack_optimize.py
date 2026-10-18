@@ -13,7 +13,7 @@ from pathlib import Path
 import numpy as np
 from scipy.optimize import minimize
 
-from cad.freecad.stacklib import Stack, evaluate, vector_keys
+from cad.freecad.stacklib import BURNER_KG, Stack, evaluate, part_mass_kg, parts, vector_keys
 
 ROOT = Path(__file__).resolve().parents[2]
 T_SKIN = 55.0
@@ -23,9 +23,14 @@ BOW_MM = 0.30
 SAG_MM = 0.40
 
 
-def _from(x: np.ndarray, dragon: str) -> Stack:
+def _from(x: np.ndarray, proto: Stack) -> Stack:
     values = {key: float(val) for key, val in zip(vector_keys(), x)}
-    return Stack(dragon=dragon, **values)
+    return Stack(
+        dragon=proto.dragon,
+        launch_y=proto.launch_y,
+        stepped=proto.stepped,
+        **values,
+    )
 
 
 def _penalties(result: dict, design: Stack) -> list[float]:
@@ -38,7 +43,7 @@ def _penalties(result: dict, design: Stack) -> list[float]:
         BOW_MM - result["bow_mm"],
         SAG_MM - result["sag_mm"],
         result["side_gap_mm"] - (result["growth_mm"] + 2.0),
-        mouth - 160.0,
+        mouth - (180.0 if design.stepped else 160.0),
         design.front_h - design.soffit_h - 80.0,
         design.soffit_h - 105.0,
         mouth - design.soffit_h - 25.0,
@@ -50,14 +55,16 @@ def _penalties(result: dict, design: Stack) -> list[float]:
 
 def solve(proto: Stack, bounds: list[tuple[float, float]], x0: list[float]) -> dict:
     def objective(x: np.ndarray) -> float:
-        return evaluate(_from(x, proto.dragon))["ready_kg"]
+        # Unrounded. evaluate() rounds to grams, which flattens the gradient.
+        design = _from(x, proto)
+        return BURNER_KG + sum(part_mass_kg(part) for part in parts(design))
 
     constraints = []
     width = len(_penalties(evaluate(proto), proto))
     for index in range(width):
         constraints.append({
             "type": "ineq",
-            "fun": lambda x, i=index: _penalties(evaluate(_from(x, proto.dragon)), _from(x, proto.dragon))[i],
+            "fun": lambda x, i=index: _penalties(evaluate(_from(x, proto)), _from(x, proto))[i],
         })
     fit = minimize(
         objective,
@@ -65,9 +72,9 @@ def solve(proto: Stack, bounds: list[tuple[float, float]], x0: list[float]) -> d
         method="SLSQP",
         bounds=bounds,
         constraints=constraints,
-        options={"maxiter": 80, "ftol": 1e-7, "eps": 1e-3, "disp": False},
+        options={"maxiter": 60, "ftol": 1e-9, "eps": 0.05, "disp": False},
     )
-    design = _from(fit.x, proto.dragon)
+    design = _from(fit.x, proto)
     result = evaluate(design)
     return {
         "success": bool(fit.success),

@@ -120,6 +120,10 @@ class Stack:
     soffit_h: float
     air_gap: float
     standoff: float
+    # Arrax: the tall brow is only the launch. The body crown sits on the soffit.
+    # Vermax leaves both at the defaults, so its boxes do not move.
+    launch_y: float = 110.0
+    stepped: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -268,20 +272,35 @@ def _cool_open_minutes(s: Stack, deck_kg: float) -> float:
     return elapsed / 60.0
 
 
+def body_crown(s: Stack) -> float:
+    """Height of the liner over the parked pizza. Vermax uses the front crown."""
+    if not s.stepped:
+        return s.front_h
+    return s.soffit_h + 8.0
+
+
+def soffit_y0(s: Stack) -> float:
+    return s.launch_y if s.stepped else SOFFIT_Y0
+
+
 def _hood_areas(s: Stack) -> dict[str, float]:
-    """Inner-surface areas, mm², of the rectangular tunnel."""
+    """Inner-surface areas, mm². A stepped hood does not count the empty plenum."""
     cw = chamber_w()
     cl = chamber_l()
     fh = s.front_h
+    bh = body_crown(s)
+    launch = s.launch_y if s.stepped else cl
     mh = mouth_h(fh)
     top = cw * cl
-    side = cl * fh
-    back = cw * fh
+    side = launch * fh + max(cl - launch, 0.0) * bh
+    back = cw * bh
     front_gross = cw * fh
     mouth = MOUTH_W * mh
     front = max(front_gross - mouth, 0.0)
-    soffit = (SOFFIT_Y1 - SOFFIT_Y0) * (cw - 2.0 * s.liner_t)
-    riser = max(fh - s.soffit_h, 0.0) * (cw - 2.0 * s.liner_t)
+    step = max(fh - bh, 0.0) * (cw - 2.0 * s.liner_t) if s.stepped else 0.0
+    y0 = soffit_y0(s)
+    soffit = max(SOFFIT_Y1 - y0, 0.0) * (cw - 2.0 * s.liner_t)
+    riser = max(bh - s.soffit_h, 0.0) * (cw - 2.0 * s.liner_t)
     return {
         "top": top,
         "side": side,
@@ -290,7 +309,8 @@ def _hood_areas(s: Stack) -> dict[str, float]:
         "mouth": mouth,
         "soffit": soffit,
         "riser": riser,
-        "inner": top + 2.0 * side + back + front,
+        "step": step,
+        "inner": top + 2.0 * side + back + front + step,
     }
 
 
@@ -411,6 +431,30 @@ def parts(s: Stack) -> list[dict]:
         0.0, BURNER_OD / 2.0, pit_inner_w - 40.0,
     ))
 
+    if s.stepped:
+        # The grate stays in the pit, under the hearth. Lift the hearth off and it is the fire.
+        grate_z = z_pit_floor + 90.0
+        grate_x0 = hx0 + 28.0
+        grate_x1 = hx0 + pit_inner_w - 28.0
+        grate_y0 = 70.0
+        grate_y1 = DECK_L - 40.0
+        items.append(_box(
+            "grate-rail-port", "pit", "ss", "hot",
+            grate_x0, grate_y0, grate_z, 4.0, grate_y1 - grate_y0, 4.0,
+        ))
+        items.append(_box(
+            "grate-rail-starboard", "pit", "ss", "hot",
+            grate_x1 - 4.0, grate_y0, grate_z, 4.0, grate_y1 - grate_y0, 4.0,
+        ))
+        grate_span = grate_x1 - grate_x0
+        for index in range(6):
+            gy = grate_y0 + (grate_y1 - grate_y0) * (index + 0.5) / 6.0
+            items.append(_tube(
+                f"grate-rod-{index}", "pit", "ss", "hot",
+                [grate_x0 + 4.4, gy, grate_z + 2.0], [1, 0, 0],
+                0.0, 2.0, grate_span - 8.8,
+            ))
+
     # Feet, inboard of the corners, on the belly skin.
     foot_r = FOOT_D / 2.0
     inset = 40.0
@@ -507,27 +551,49 @@ def parts(s: Stack) -> list[dict]:
 
     # --- hood ---
     # Liner plates. Front is two cheeks and a lintel, so the mouth is a real opening.
+    # Vermax is one crown. Arrax keeps that crown only for the launch, then drops
+    # to a body crown 8 mm above the soffit so the outside is the ceiling that cooks.
     z_top = s.front_h
     seam = 0.4
     t = s.liner_t
-    items.append(_box("liner-top", "hood", "mild", "hot", hx0, 0.0, z_top, cw, cl, t))
-    items.append(_box("liner-port", "hood", "mild", "hot", hx0, t + seam, 0.0, t, cl - 2.0 * t - 2.0 * seam, s.front_h))
-    items.append(_box("liner-starboard", "hood", "mild", "hot", hx0 + cw - t, t + seam, 0.0, t, cl - 2.0 * t - 2.0 * seam, s.front_h))
-    items.append(_box("liner-rear", "hood", "mild", "hot", hx0, cl - t, 0.0, cw, t, s.front_h))
+    bh = body_crown(s)
+    launch = s.launch_y if s.stepped else cl
+    if s.stepped:
+        items.append(_box("liner-top-brow", "hood", "mild", "hot", hx0, 0.0, z_top, cw, launch - seam, t))
+        items.append(_box("liner-top-body", "hood", "mild", "hot", hx0, launch + seam, bh, cw, cl - launch - seam, t))
+        items.append(_box(
+            "liner-step", "hood", "mild", "hot",
+            hx0 + t + seam, launch - t, bh + t, cw - 2.0 * t - 2.0 * seam, t, z_top - bh - t,
+        ))
+        brow_len = launch - t - 2.0 * seam
+        body_y = launch + t + seam
+        body_len = cl - t - seam - body_y
+        items.append(_box("liner-port-brow", "hood", "mild", "hot", hx0, t + seam, 0.0, t, brow_len, s.front_h))
+        items.append(_box("liner-port-body", "hood", "mild", "hot", hx0, body_y, 0.0, t, body_len, bh))
+        items.append(_box("liner-starboard-brow", "hood", "mild", "hot", hx0 + cw - t, t + seam, 0.0, t, brow_len, s.front_h))
+        items.append(_box("liner-starboard-body", "hood", "mild", "hot", hx0 + cw - t, body_y, 0.0, t, body_len, bh))
+        items.append(_box("liner-rear", "hood", "mild", "hot", hx0, cl - t, 0.0, cw, t, bh))
+    else:
+        items.append(_box("liner-top", "hood", "mild", "hot", hx0, 0.0, z_top, cw, cl, t))
+        items.append(_box("liner-port", "hood", "mild", "hot", hx0, t + seam, 0.0, t, cl - 2.0 * t - 2.0 * seam, s.front_h))
+        items.append(_box("liner-starboard", "hood", "mild", "hot", hx0 + cw - t, t + seam, 0.0, t, cl - 2.0 * t - 2.0 * seam, s.front_h))
+        items.append(_box("liner-rear", "hood", "mild", "hot", hx0, cl - t, 0.0, cw, t, s.front_h))
     items.append(_box("liner-cheek-port", "hood", "mild", "hot", hx0, 0.0, 0.0, CHEEK, t, mh))
     items.append(_box("liner-cheek-starboard", "hood", "mild", "hot", hx0 + cw - CHEEK, 0.0, 0.0, CHEEK, t, mh))
     items.append(_box("liner-lintel", "hood", "mild", "hot", hx0, 0.0, mh + seam, cw, t, s.front_h - mh - seam))
     # Soffit and its riser. The riser is the step you see through the mouth.
     soffit_x = hx0 + t + 2.0
     soffit_w = cw - 2.0 * t - 4.0
-    items.append(_box("soffit", "hood", "mild", "hot", soffit_x, SOFFIT_Y0, s.soffit_h, soffit_w, SOFFIT_Y1 - SOFFIT_Y0, 1.2))
+    y0 = soffit_y0(s)
+    riser_h = bh - s.soffit_h - 0.4
+    items.append(_box("soffit", "hood", "mild", "hot", soffit_x, y0, s.soffit_h, soffit_w, SOFFIT_Y1 - y0, 1.2))
     items.append(_box(
         "soffit-riser", "hood", "mild", "hot",
-        soffit_x, SOFFIT_Y0 - 1.5, s.soffit_h, soffit_w, 1.5, s.front_h - s.soffit_h - 0.4,
+        soffit_x, y0 - 1.5, s.soffit_h, soffit_w, 1.5, riser_h,
     ))
     # Broiler rods under the soffit, over the rear half of the deck.
     rod_z = s.soffit_h - RACK_BELOW_SOFFIT
-    rod_y0 = max(SOFFIT_Y0, 200.0)
+    rod_y0 = max(y0, 200.0)
     rod_y1 = min(DECK_L - 10.0, SOFFIT_Y1)
     rod_x0 = soffit_x + 8.0
     rod_x1 = soffit_x + soffit_w - 8.0
@@ -544,25 +610,51 @@ def parts(s: Stack) -> list[dict]:
         ))
 
     # Insulation and aluminium skin, outside the liner, air gap between board and skin.
-    # Modelled as continuous shells on top and four sides. The mouth is left open by
-    # stopping the front board and skin at the lintel and the cheeks.
+    # The mouth is left open by stopping the front board and skin at the lintel and the cheeks.
+    # A stepped hood repeats the stack on the brow and on the lower body, with a board on the step.
     ins_x = hx0 - s.ins_t
     ins_y = -s.ins_t
+    del ins_y
     ins_z = s.front_h + s.liner_t
-    items.append(_box("ins-top", "hood", "micro", "cool", ins_x, 0.0, ins_z, cw + 2 * s.ins_t, cl + s.ins_t, s.ins_t))
-    items.append(_box("ins-port", "hood", "micro", "cool", ins_x, 0.0, 0.0, s.ins_t, cl, s.front_h + s.liner_t))
-    items.append(_box("ins-starboard", "hood", "micro", "cool", hx0 + cw, 0.0, 0.0, s.ins_t, cl, s.front_h + s.liner_t))
-    items.append(_box("ins-rear", "hood", "micro", "cool", ins_x, cl, 0.0, cw + 2 * s.ins_t, s.ins_t, s.front_h + s.liner_t))
+    body_ins_z = bh + s.liner_t
+    skin_off = s.ins_t + s.air_gap
+    skin_x = hx0 - skin_off
+    brow_skin_z = ins_z + s.ins_t + s.air_gap
+    body_skin_z = body_ins_z + s.ins_t + s.air_gap
+    if s.stepped:
+        items.append(_box("ins-top-brow", "hood", "micro", "cool", ins_x, 0.0, ins_z, cw + 2 * s.ins_t, launch, s.ins_t))
+        items.append(_box("ins-top-body", "hood", "micro", "cool", ins_x, launch, body_ins_z, cw + 2 * s.ins_t, cl + s.ins_t - launch, s.ins_t))
+        step_ins_h = s.front_h - bh - s.ins_t
+        items.append(_box("ins-step", "hood", "micro", "cool", ins_x, launch, body_ins_z + s.ins_t, cw + 2 * s.ins_t, s.ins_t, step_ins_h))
+        items.append(_box("ins-port-brow", "hood", "micro", "cool", ins_x, 0.0, 0.0, s.ins_t, launch, s.front_h + s.liner_t))
+        items.append(_box("ins-port-body", "hood", "micro", "cool", ins_x, launch, 0.0, s.ins_t, cl - launch, bh + s.liner_t))
+        items.append(_box("ins-starboard-brow", "hood", "micro", "cool", hx0 + cw, 0.0, 0.0, s.ins_t, launch, s.front_h + s.liner_t))
+        items.append(_box("ins-starboard-body", "hood", "micro", "cool", hx0 + cw, launch, 0.0, s.ins_t, cl - launch, bh + s.liner_t))
+        items.append(_box("ins-rear", "hood", "micro", "cool", ins_x, cl, 0.0, cw + 2 * s.ins_t, s.ins_t, bh + s.liner_t))
+        items.append(_box("skin-top-brow", "hood", "al", "cool", skin_x, 0.0, brow_skin_z, cw + 2 * skin_off, launch + skin_off, s.skin_t))
+        items.append(_box("skin-top-body", "hood", "al", "cool", skin_x, launch + skin_off, body_skin_z, cw + 2 * skin_off, cl + skin_off - launch - skin_off, s.skin_t))
+        items.append(_box(
+            "skin-step", "hood", "al", "cool",
+            skin_x, launch + skin_off, body_skin_z + s.skin_t,
+            cw + 2 * skin_off, s.skin_t, s.front_h - bh - s.skin_t,
+        ))
+        items.append(_box("skin-port-brow", "hood", "al", "cool", skin_x, 0.0, 0.0, s.skin_t, launch, s.front_h + s.liner_t + s.ins_t + s.air_gap))
+        items.append(_box("skin-port-body", "hood", "al", "cool", skin_x, launch, 0.0, s.skin_t, cl - launch, bh + s.liner_t + s.ins_t + s.air_gap))
+        items.append(_box("skin-starboard-brow", "hood", "al", "cool", hx0 + cw + skin_off - s.skin_t, 0.0, 0.0, s.skin_t, launch, s.front_h + s.liner_t + s.ins_t + s.air_gap))
+        items.append(_box("skin-starboard-body", "hood", "al", "cool", hx0 + cw + skin_off - s.skin_t, launch, 0.0, s.skin_t, cl - launch, bh + s.liner_t + s.ins_t + s.air_gap))
+        items.append(_box("skin-rear", "hood", "al", "cool", skin_x, cl + skin_off - s.skin_t, 0.0, cw + 2 * skin_off, s.skin_t, bh + s.liner_t + s.ins_t + s.air_gap))
+    else:
+        items.append(_box("ins-top", "hood", "micro", "cool", ins_x, 0.0, ins_z, cw + 2 * s.ins_t, cl + s.ins_t, s.ins_t))
+        items.append(_box("ins-port", "hood", "micro", "cool", ins_x, 0.0, 0.0, s.ins_t, cl, s.front_h + s.liner_t))
+        items.append(_box("ins-starboard", "hood", "micro", "cool", hx0 + cw, 0.0, 0.0, s.ins_t, cl, s.front_h + s.liner_t))
+        items.append(_box("ins-rear", "hood", "micro", "cool", ins_x, cl, 0.0, cw + 2 * s.ins_t, s.ins_t, s.front_h + s.liner_t))
+        items.append(_box("skin-top", "hood", "al", "cool", skin_x, 0.0, brow_skin_z, cw + 2 * skin_off, cl + skin_off, s.skin_t))
+        items.append(_box("skin-port", "hood", "al", "cool", skin_x, 0.0, 0.0, s.skin_t, cl, s.front_h + s.liner_t + s.ins_t + s.air_gap))
+        items.append(_box("skin-starboard", "hood", "al", "cool", hx0 + cw + skin_off - s.skin_t, 0.0, 0.0, s.skin_t, cl, s.front_h + s.liner_t + s.ins_t + s.air_gap))
+        items.append(_box("skin-rear", "hood", "al", "cool", skin_x, cl + skin_off - s.skin_t, 0.0, cw + 2 * skin_off, s.skin_t, s.front_h + s.liner_t + s.ins_t + s.air_gap))
     items.append(_box("ins-lintel", "hood", "micro", "cool", ins_x, -s.ins_t, mh, cw + 2 * s.ins_t, s.ins_t, s.front_h - mh + s.liner_t))
     items.append(_box("ins-cheek-port", "hood", "micro", "cool", ins_x, -s.ins_t, 0.0, s.ins_t + CHEEK, s.ins_t, mh))
     items.append(_box("ins-cheek-starboard", "hood", "micro", "cool", hx0 + cw - CHEEK, -s.ins_t, 0.0, s.ins_t + CHEEK, s.ins_t, mh))
-
-    skin_off = s.ins_t + s.air_gap
-    skin_x = hx0 - skin_off
-    items.append(_box("skin-top", "hood", "al", "cool", skin_x, 0.0, ins_z + s.ins_t + s.air_gap, cw + 2 * skin_off, cl + skin_off, s.skin_t))
-    items.append(_box("skin-port", "hood", "al", "cool", skin_x, 0.0, 0.0, s.skin_t, cl, s.front_h + s.liner_t + s.ins_t + s.air_gap))
-    items.append(_box("skin-starboard", "hood", "al", "cool", hx0 + cw + skin_off - s.skin_t, 0.0, 0.0, s.skin_t, cl, s.front_h + s.liner_t + s.ins_t + s.air_gap))
-    items.append(_box("skin-rear", "hood", "al", "cool", skin_x, cl + skin_off - s.skin_t, 0.0, cw + 2 * skin_off, s.skin_t, s.front_h + s.liner_t + s.ins_t + s.air_gap))
     items.append(_box("skin-lintel", "hood", "al", "cool", skin_x, -skin_off, mh, cw + 2 * skin_off, s.skin_t, s.front_h - mh + s.liner_t + s.ins_t + s.air_gap))
 
     # Door, closed, in front of the cheek insulation so the hinge leaf is in free air.
@@ -595,25 +687,28 @@ def parts(s: Stack) -> list[dict]:
     items.append(_box("flue-rear", "hood", "mild", "hot", flue_x + ft + 0.4, flue_y + flue_d - ft, flue_z, flue_w - 2 * ft - 0.8, ft, flue_h))
     items.append(_box("damper", "hood", "mild", "hot", flue_x + flue_w + 4.0, flue_y, flue_z + 10.0, 1.5, flue_d, flue_h - 20.0))
 
-    # Hood lift grip, on the cool top skin, centred.
+    # Hood lift grip, on the cool top skin. On a stepped hood it sits on the low body.
     hood_post = 16.0
-    skin_top_z = ins_z + s.ins_t + s.air_gap + s.skin_t
+    # Behind the step, with the palm radius clear of the vertical skin.
+    grip_y = (launch + s.ins_t + s.air_gap + 18.0 + 16.0) if s.stepped else cl * 0.45
+    grip_crown = bh if s.stepped else s.front_h
+    skin_top_z = grip_crown + s.liner_t + s.ins_t + s.air_gap + s.skin_t
     hood_axis_z = skin_top_z + hood_post + 0.4 + 18.0
     for step, xoff in enumerate((-40.0, 40.0)):
         items.append(_tube(
             f"post-hood-{step}", "hood", "ss", "cool",
-            [xoff, cl * 0.45, skin_top_z], [0, 0, 1],
+            [xoff, grip_y, skin_top_z], [0, 0, 1],
             0.0, POST_D / 2.0, hood_post,
         ))
     items.append(_part(
         "grip-hood", "hood", "jarrah", "cool", "revolve",
-        origin=[-GRIP_LEN / 2.0, cl * 0.45, hood_axis_z],
+        origin=[-GRIP_LEN / 2.0, grip_y, hood_axis_z],
         axis=[1, 0, 0],
         profile=[list(pair) for pair in GRIP_PROFILE],
     ))
     items.append(_tube(
         "ferrule-hood", "hood", "ss", "cool",
-        [-GRIP_LEN / 2.0, cl * 0.45, hood_axis_z],
+        [-GRIP_LEN / 2.0, grip_y, hood_axis_z],
         [1, 0, 0],
         GRIP_PROFILE[0][1] - FERRULE_PRESS,
         GRIP_PROFILE[0][1] + 3.0,

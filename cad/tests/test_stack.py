@@ -78,5 +78,35 @@ class StackTests(unittest.TestCase):
         self.assertGreater(result["pack_open_min"], 10.0)
 
 
+def _arrax() -> Stack:
+    return Stack(
+        dragon="Arrax",
+        deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+        liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+        soffit_h=110.0, air_gap=16.0, standoff=54.0,
+        launch_y=260.0, stepped=True,
+    )
+
+
+class ArraxTests(unittest.TestCase):
+    def test_crown_follows_the_soffit(self) -> None:
+        design = _arrax()
+        items = {part["id"]: part for part in parts(design)}
+        brow = items["liner-top-brow"]["corner"][2]
+        body = items["liner-top-body"]["corner"][2]
+        self.assertGreater(brow - body, 100.0)
+        self.assertAlmostEqual(body, design.soffit_h + 8.0, places=2)
+        self.assertIn("grate-rod-0", items)
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertGreaterEqual(result["mouth_h"], 180.0)
+        self.assertLess(result["ready_kg"], 34.0)
+        self.assertLessEqual(result["skin_C"], 55.0)
+        self.assertLessEqual(result["grip_pit_C"], 40.0)
+        for part in parts(design):
+            if part["material"] in ("jarrah", "gidgee"):
+                self.assertEqual(part["zone"], "cool", part["id"])
+
+
 if __name__ == "__main__":
     unittest.main()
