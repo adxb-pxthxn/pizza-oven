@@ -29,6 +29,7 @@ def _from(x: np.ndarray, proto: Stack) -> Stack:
         dragon=proto.dragon,
         launch_y=proto.launch_y,
         stepped=proto.stepped,
+        sloped=proto.sloped,
         **values,
     )
 

@@ -124,6 +124,8 @@ class Stack:
     # Vermax leaves both at the defaults, so its boxes do not move.
     launch_y: float = 110.0
     stepped: bool = False
+    # Shrykos folds the step. Arrax and Vermax stay square.
+    sloped: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -280,7 +282,11 @@ def body_crown(s: Stack) -> float:
 
 
 def soffit_y0(s: Stack) -> float:
-    return s.launch_y if s.stepped else SOFFIT_Y0
+    if not s.stepped:
+        return SOFFIT_Y0
+    if s.sloped:
+        return s.launch_y + (s.front_h - body_crown(s))
+    return s.launch_y
 
 
 def _hood_areas(s: Stack) -> dict[str, float]:
@@ -324,6 +330,36 @@ def _part(pid: str, module: str, material: str, zone: str, shape: str, **payload
     }
     item.update(payload)
     return item
+
+
+def _prism(pid: str, module: str, material: str, zone: str,
+           x: float, dx: float, profile: list[list[float]]) -> dict:
+    """Polygon in the YZ plane, extruded along +X. Profile is [[y, z], ...]."""
+    return _part(pid, module, material, zone, "prism", x=x, dx=dx, profile=profile)
+
+
+def _slope_plate(pid: str, module: str, material: str, zone: str,
+                 x: float, dx: float, y0: float, z_hi: float, y1: float, z_lo: float,
+                 start: float, thick: float) -> dict:
+    """Plate along the cowl, thickness measured outward (up and back)."""
+    run = y1 - y0
+    rise = z_hi - z_lo
+    length = math.hypot(run, rise)
+    if length < 1.0 or thick <= 0.0 or dx <= 0.0:
+        raise ValueError(f"bad slope {pid}")
+    ny = rise / length
+    nz = run / length
+
+    def shift(y: float, z: float, dist: float) -> list[float]:
+        return [y + ny * dist, z + nz * dist]
+
+    profile = [
+        shift(y0, z_hi, start),
+        shift(y1, z_lo, start),
+        shift(y1, z_lo, start + thick),
+        shift(y0, z_hi, start + thick),
+    ]
+    return _prism(pid, module, material, zone, x, dx, profile)
 
 
 def _box(pid: str, module: str, material: str, zone: str, x: float, y: float, z: float,
@@ -558,21 +594,39 @@ def parts(s: Stack) -> list[dict]:
     t = s.liner_t
     bh = body_crown(s)
     launch = s.launch_y if s.stepped else cl
+    # A 45° fold runs as far as it rises. The square step is the Arrax case.
+    y1 = launch + (s.front_h - bh) if s.sloped else launch
     if s.stepped:
         items.append(_box("liner-top-brow", "hood", "mild", "hot", hx0, 0.0, z_top, cw, launch - seam, t))
-        items.append(_box("liner-top-body", "hood", "mild", "hot", hx0, launch + seam, bh, cw, cl - launch - seam, t))
-        items.append(_box(
-            "liner-step", "hood", "mild", "hot",
-            hx0 + t + seam, launch - t, bh + t, cw - 2.0 * t - 2.0 * seam, t, z_top - bh - t,
-        ))
+        liner_body_y = y1 + seam
+        if s.sloped:
+            slope_len = math.hypot(y1 - launch, s.front_h - bh)
+            liner_body_y = y1 + ((s.front_h - bh) / slope_len) * t + seam
+        items.append(_box("liner-top-body", "hood", "mild", "hot", hx0, liner_body_y, bh, cw, cl - liner_body_y, t))
+        if s.sloped:
+            items.append(_slope_plate(
+                "liner-cowl", "hood", "mild", "hot",
+                hx0, cw, launch, z_top, y1, bh, 0.0, t,
+            ))
+        else:
+            items.append(_box(
+                "liner-step", "hood", "mild", "hot",
+                hx0 + t + seam, launch - t, bh + t, cw - 2.0 * t - 2.0 * seam, t, z_top - bh - t,
+            ))
         brow_len = launch - t - 2.0 * seam
-        body_y = launch + t + seam
+        body_y = y1 + t + seam
         body_len = cl - t - seam - body_y
         items.append(_box("liner-port-brow", "hood", "mild", "hot", hx0, t + seam, 0.0, t, brow_len, s.front_h))
         items.append(_box("liner-port-body", "hood", "mild", "hot", hx0, body_y, 0.0, t, body_len, bh))
         items.append(_box("liner-starboard-brow", "hood", "mild", "hot", hx0 + cw - t, t + seam, 0.0, t, brow_len, s.front_h))
         items.append(_box("liner-starboard-body", "hood", "mild", "hot", hx0 + cw - t, body_y, 0.0, t, body_len, bh))
         items.append(_box("liner-rear", "hood", "mild", "hot", hx0, cl - t, 0.0, cw, t, bh))
+        if s.sloped:
+            for side, xside in (("port", hx0), ("starboard", hx0 + cw - t)):
+                items.append(_prism(
+                    f"liner-{side}-cowl", "hood", "mild", "hot", xside, t,
+                    [[launch, 0.0], [y1, 0.0], [y1, bh], [launch, s.front_h]],
+                ))
     else:
         items.append(_box("liner-top", "hood", "mild", "hot", hx0, 0.0, z_top, cw, cl, t))
         items.append(_box("liner-port", "hood", "mild", "hot", hx0, t + seam, 0.0, t, cl - 2.0 * t - 2.0 * seam, s.front_h))
@@ -622,27 +676,49 @@ def parts(s: Stack) -> list[dict]:
     brow_skin_z = ins_z + s.ins_t + s.air_gap
     body_skin_z = body_ins_z + s.ins_t + s.air_gap
     if s.stepped:
+        body_y_shell = y1 if s.sloped else launch
+        if s.sloped:
+            slope_len = math.hypot(y1 - launch, s.front_h - bh)
+            ny = (s.front_h - bh) / slope_len
+        else:
+            ny = 0.0
         items.append(_box("ins-top-brow", "hood", "micro", "cool", ins_x, 0.0, ins_z, cw + 2 * s.ins_t, launch, s.ins_t))
-        items.append(_box("ins-top-body", "hood", "micro", "cool", ins_x, launch, body_ins_z, cw + 2 * s.ins_t, cl + s.ins_t - launch, s.ins_t))
-        step_ins_h = s.front_h - bh - s.ins_t
-        items.append(_box("ins-step", "hood", "micro", "cool", ins_x, launch, body_ins_z + s.ins_t, cw + 2 * s.ins_t, s.ins_t, step_ins_h))
+        ins_body_y = body_y_shell + (ny * (t + s.ins_t) + seam if s.sloped else 0.0)
+        items.append(_box("ins-top-body", "hood", "micro", "cool", ins_x, ins_body_y, body_ins_z, cw + 2 * s.ins_t, cl + s.ins_t - ins_body_y, s.ins_t))
         items.append(_box("ins-port-brow", "hood", "micro", "cool", ins_x, 0.0, 0.0, s.ins_t, launch, s.front_h + s.liner_t))
-        items.append(_box("ins-port-body", "hood", "micro", "cool", ins_x, launch, 0.0, s.ins_t, cl - launch, bh + s.liner_t))
+        items.append(_box("ins-port-body", "hood", "micro", "cool", ins_x, ins_body_y, 0.0, s.ins_t, cl - ins_body_y, bh + s.liner_t))
         items.append(_box("ins-starboard-brow", "hood", "micro", "cool", hx0 + cw, 0.0, 0.0, s.ins_t, launch, s.front_h + s.liner_t))
-        items.append(_box("ins-starboard-body", "hood", "micro", "cool", hx0 + cw, launch, 0.0, s.ins_t, cl - launch, bh + s.liner_t))
+        items.append(_box("ins-starboard-body", "hood", "micro", "cool", hx0 + cw, ins_body_y, 0.0, s.ins_t, cl - ins_body_y, bh + s.liner_t))
         items.append(_box("ins-rear", "hood", "micro", "cool", ins_x, cl, 0.0, cw + 2 * s.ins_t, s.ins_t, bh + s.liner_t))
-        items.append(_box("skin-top-brow", "hood", "al", "cool", skin_x, 0.0, brow_skin_z, cw + 2 * skin_off, launch + skin_off, s.skin_t))
-        items.append(_box("skin-top-body", "hood", "al", "cool", skin_x, launch + skin_off, body_skin_z, cw + 2 * skin_off, cl + skin_off - launch - skin_off, s.skin_t))
-        items.append(_box(
-            "skin-step", "hood", "al", "cool",
-            skin_x, launch + skin_off, body_skin_z + s.skin_t,
-            cw + 2 * skin_off, s.skin_t, s.front_h - bh - s.skin_t,
-        ))
+        brow_skin_dy = launch if s.sloped else launch + skin_off
+        body_skin_y = (y1 + ny * (t + s.ins_t + s.air_gap + s.skin_t) + seam) if s.sloped else (launch + skin_off)
+        items.append(_box("skin-top-brow", "hood", "al", "cool", skin_x, 0.0, brow_skin_z, cw + 2 * skin_off, brow_skin_dy, s.skin_t))
+        items.append(_box("skin-top-body", "hood", "al", "cool", skin_x, body_skin_y, body_skin_z, cw + 2 * skin_off, cl + skin_off - body_skin_y, s.skin_t))
         items.append(_box("skin-port-brow", "hood", "al", "cool", skin_x, 0.0, 0.0, s.skin_t, launch, s.front_h + s.liner_t + s.ins_t + s.air_gap))
-        items.append(_box("skin-port-body", "hood", "al", "cool", skin_x, launch, 0.0, s.skin_t, cl - launch, bh + s.liner_t + s.ins_t + s.air_gap))
+        skin_side_y = body_skin_y if s.sloped else body_y_shell
+        items.append(_box("skin-port-body", "hood", "al", "cool", skin_x, skin_side_y, 0.0, s.skin_t, cl - skin_side_y, bh + s.liner_t + s.ins_t + s.air_gap))
         items.append(_box("skin-starboard-brow", "hood", "al", "cool", hx0 + cw + skin_off - s.skin_t, 0.0, 0.0, s.skin_t, launch, s.front_h + s.liner_t + s.ins_t + s.air_gap))
-        items.append(_box("skin-starboard-body", "hood", "al", "cool", hx0 + cw + skin_off - s.skin_t, launch, 0.0, s.skin_t, cl - launch, bh + s.liner_t + s.ins_t + s.air_gap))
+        items.append(_box("skin-starboard-body", "hood", "al", "cool", hx0 + cw + skin_off - s.skin_t, skin_side_y, 0.0, s.skin_t, cl - skin_side_y, bh + s.liner_t + s.ins_t + s.air_gap))
         items.append(_box("skin-rear", "hood", "al", "cool", skin_x, cl + skin_off - s.skin_t, 0.0, cw + 2 * skin_off, s.skin_t, bh + s.liner_t + s.ins_t + s.air_gap))
+        if s.sloped:
+            items.append(_slope_plate(
+                "ins-cowl", "hood", "micro", "cool",
+                ins_x, cw + 2.0 * s.ins_t,
+                launch, z_top, y1, bh, t, s.ins_t,
+            ))
+            items.append(_slope_plate(
+                "skin-cowl", "hood", "al", "cool",
+                skin_x, cw + 2.0 * skin_off,
+                launch, z_top, y1, bh, t + s.ins_t + s.air_gap, s.skin_t,
+            ))
+        else:
+            step_ins_h = s.front_h - bh - s.ins_t
+            items.append(_box("ins-step", "hood", "micro", "cool", ins_x, launch, body_ins_z + s.ins_t, cw + 2 * s.ins_t, s.ins_t, step_ins_h))
+            items.append(_box(
+                "skin-step", "hood", "al", "cool",
+                skin_x, launch + skin_off, body_skin_z + s.skin_t,
+                cw + 2 * skin_off, s.skin_t, s.front_h - bh - s.skin_t,
+            ))
     else:
         items.append(_box("ins-top", "hood", "micro", "cool", ins_x, 0.0, ins_z, cw + 2 * s.ins_t, cl + s.ins_t, s.ins_t))
         items.append(_box("ins-port", "hood", "micro", "cool", ins_x, 0.0, 0.0, s.ins_t, cl, s.front_h + s.liner_t))
@@ -690,7 +766,8 @@ def parts(s: Stack) -> list[dict]:
     # Hood lift grip, on the cool top skin. On a stepped hood it sits on the low body.
     hood_post = 16.0
     # Behind the step, with the palm radius clear of the vertical skin.
-    grip_y = (launch + s.ins_t + s.air_gap + 18.0 + 16.0) if s.stepped else cl * 0.45
+    grip_clear = (y1 if s.sloped else launch) + s.ins_t + s.air_gap + 18.0 + 16.0
+    grip_y = grip_clear if s.stepped else cl * 0.45
     grip_crown = bh if s.stepped else s.front_h
     skin_top_z = grip_crown + s.liner_t + s.ins_t + s.air_gap + s.skin_t
     hood_axis_z = skin_top_z + hood_post + 0.4 + 18.0
@@ -753,7 +830,17 @@ def part_volume_mm3(part: dict) -> float:
         return _tube_vol(part["r_in"], part["r_out"], part["length"])
     if shape == "revolve":
         return _grip_vol()
+    if shape == "prism":
+        return _poly_area(part["profile"]) * abs(float(part["dx"]))
     raise KeyError(shape)
+
+
+def _poly_area(profile: list) -> float:
+    area = 0.0
+    pts = [(float(y), float(z)) for y, z in profile]
+    for (y0, z0), (y1, z1) in zip(pts, pts[1:] + pts[:1]):
+        area += y0 * z1 - y1 * z0
+    return abs(area) * 0.5
 
 
 def part_mass_kg(part: dict) -> float:
@@ -787,6 +874,11 @@ def _aabb(part: dict) -> tuple[float, float, float, float, float, float] | None:
         if axis == [0, 1, 0]:
             return ox - r, oy, oz - r, ox + r, oy + length, oz + r
         return ox, oy - r, oz - r, ox + length, oy + r, oz + r
+    if part["shape"] == "prism":
+        ys = [float(p[0]) for p in part["profile"]]
+        zs = [float(p[1]) for p in part["profile"]]
+        x = float(part["x"])
+        return x, min(ys), min(zs), x + float(part["dx"]), max(ys), max(zs)
     return None
 
 
@@ -798,21 +890,75 @@ def _overlap(a: tuple[float, ...], b: tuple[float, ...], pad: float = 0.05) -> b
     )
 
 
+def _yz_polygon(part: dict) -> list[tuple[float, float]] | None:
+    if part["shape"] == "prism":
+        return [(float(y), float(z)) for y, z in part["profile"]]
+    if part["shape"] == "box":
+        _x, y, z = part["corner"]
+        _dx, dy, dz = part["size"]
+        return [(y, z), (y + dy, z), (y + dy, z + dz), (y, z + dz)]
+    return None
+
+
+def _x_interval(part: dict) -> tuple[float, float] | None:
+    box = _aabb(part)
+    if box is None:
+        return None
+    return box[0], box[3]
+
+
+def _polygons_overlap(poly_a: list[tuple[float, float]], poly_b: list[tuple[float, float]], pad: float = 0.05) -> bool:
+    """Separating-axis test for two convex YZ polygons. The pad ignores a seat face."""
+    def axes(poly: list[tuple[float, float]]) -> list[tuple[float, float]]:
+        found = []
+        for (y0, z0), (y1, z1) in zip(poly, poly[1:] + poly[:1]):
+            found.append((-(z1 - z0), y1 - y0))
+        return found
+
+    def project(poly: list[tuple[float, float]], axis: tuple[float, float]) -> tuple[float, float]:
+        vals = [y * axis[0] + z * axis[1] for y, z in poly]
+        return min(vals), max(vals)
+
+    for axis in axes(poly_a) + axes(poly_b):
+        if abs(axis[0]) + abs(axis[1]) < 1e-9:
+            continue
+        a0, a1 = project(poly_a, axis)
+        b0, b1 = project(poly_b, axis)
+        if a1 <= b0 + pad or b1 <= a0 + pad:
+            return False
+    return True
+
+
 def aabb_collisions(items: list[dict]) -> list[tuple[str, str]]:
-    """Axis-aligned overlaps. Press fits are excluded. A 0.05 mm pad ignores seat gaps."""
+    """Overlaps. Boxes use their bounds. A folded plate uses the real polygon, so a
+    parallel cowl is not a hit just because the bounds cross. Press fits are excluded.
+    """
     allowed = {frozenset(pair) for pair in PRESS_FITS}
-    boxes = []
+    solids = []
     for part in items:
         box = _aabb(part)
         if box is not None:
-            boxes.append((part["id"], box))
+            solids.append(part)
     hits = []
-    for i, (ida, ba) in enumerate(boxes):
-        for idb, bb in boxes[i + 1:]:
-            if frozenset((ida, idb)) in allowed:
+    for i, part_a in enumerate(solids):
+        box_a = _aabb(part_a)
+        poly_a = _yz_polygon(part_a)
+        span_a = _x_interval(part_a)
+        for part_b in solids[i + 1:]:
+            pair = frozenset((part_a["id"], part_b["id"]))
+            if pair in allowed:
                 continue
-            if _overlap(ba, bb):
-                hits.append((ida, idb))
+            box_b = _aabb(part_b)
+            if not _overlap(box_a, box_b):
+                continue
+            poly_b = _yz_polygon(part_b)
+            span_b = _x_interval(part_b)
+            if poly_a is not None and poly_b is not None and span_a is not None and span_b is not None:
+                if span_a[1] <= span_b[0] + 0.05 or span_b[1] <= span_a[0] + 0.05:
+                    continue
+                if not _polygons_overlap(poly_a, poly_b):
+                    continue
+            hits.append((part_a["id"], part_b["id"]))
     return hits
 
 

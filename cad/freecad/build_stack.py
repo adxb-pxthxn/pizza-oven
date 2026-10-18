@@ -67,7 +67,25 @@ ARRAX = Stack(
     stepped=True,
 )
 
-DRAGONS = {"vermax": VERMAX, "arrax": ARRAX}
+SHRYKOS = Stack(
+    dragon="Shrykos",
+    deck_t=4.0,
+    ins_t=22.0,
+    floor_ins=12.0,
+    belly_ins=12.0,
+    liner_t=0.6,
+    skin_t=0.6,
+    pit_t=1.0,
+    front_h=294.0,
+    soffit_h=110.0,
+    air_gap=16.0,
+    standoff=54.0,
+    launch_y=150.0,
+    stepped=True,
+    sloped=True,
+)
+
+DRAGONS = {"vermax": VERMAX, "arrax": ARRAX, "shrykos": SHRYKOS}
 
 FORBIDDEN_CONSOLE_TOKENS = ("Error", "Recompute failed", "subshape")
 
@@ -275,6 +293,20 @@ def _make_revolve(part: dict) -> Part.Shape:
     return solid
 
 
+def _make_prism(part: dict) -> Part.Shape:
+    x = float(part["x"])
+    dx = float(part["dx"])
+    pts = [App.Vector(x, float(y), float(z)) for y, z in part["profile"]]
+    wire = Part.makePolygon(pts + [pts[0]])
+    face = Part.Face(wire)
+    solid = face.extrude(App.Vector(dx, 0.0, 0.0))
+    if solid.Solids:
+        solid = solid.Solids[0]
+    if solid.Volume < 0.0:
+        solid.reverse()
+    return solid
+
+
 def _make_shape(part: dict) -> Part.Shape:
     shape_type = part["shape"]
     if shape_type == "box":
@@ -283,6 +315,8 @@ def _make_shape(part: dict) -> Part.Shape:
         return _make_tube(part)
     if shape_type == "revolve":
         return _make_revolve(part)
+    if shape_type == "prism":
+        return _make_prism(part)
     raise ValueError(f"Unsupported shape type {shape_type!r} for part {part['id']}")
 
 

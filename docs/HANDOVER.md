@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T18:10:00Z
+**Timestamp:** 2026-10-18T18:25:00Z
 **Current Branch / Commit:** design/stream-2-modular
 **Overall Status:** IN_PROGRESS
 
@@ -24,7 +24,7 @@ Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/an
 ---
 
 ## 2b. Stream 2 (this branch)
-Arrax is the current stack. The tall crown is only the 260 mm launch. The body sits 8 mm above a 110 mm soffit. Ready 32.2 kg: pit 10.4 with the burner and the grate, hearth 9.0, hood 12.8. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 10 min. Bread window 59 min. Pack cool-down 27 min with the door open. Vermax remains the rectangular tunnel, 36.1 kg, whose section showed the empty crown. Stream 1 has Stormcloud and Tyraxes. See `design/stream-2/README.md`.
+Shrykos is the current stack. The crown folds at 45° from a 185 mm mouth down to a 110 mm soffit. Ready 30.6 kg: pit 10.4 with the burner and the grate, hearth 9.0, hood 11.2. Skin 55.0°C, CalculiX agrees. Heat-up 10 min. Bread window 60 min. Pack cool-down 27 min with the door open. Arrax is the square step. Vermax is the empty box. Stream 1 has Stormcloud and Tyraxes. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.
