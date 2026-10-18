@@ -288,5 +288,37 @@ class SheepstealerTests(unittest.TestCase):
         self.assertLessEqual(result["skin_C"], 55.0)
 
 
+class VermithorTests(unittest.TestCase):
+    def test_the_plate_runs_forward_over_the_steak(self) -> None:
+        design = Stack(
+            dragon="Vermithor",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        plate = items["soffit-broiler"]
+        self.assertEqual(plate["corner"][2], 100.0)
+        self.assertLessEqual(plate["corner"][1], 264.0)
+        self.assertGreaterEqual(plate["corner"][1] + plate["size"][1], 264.0)
+        self.assertLess(plate["corner"][1] + plate["size"][1], 454.0)
+        rail = items["rail-broiler-0"]
+        self.assertLess(rail["corner"][1], plate["corner"][1])
+        self.assertGreaterEqual(rail["corner"][1] + rail["size"][1], 640.0)
+        self.assertGreater(rail["corner"][2], plate["corner"][2] + plate["size"][2] + 0.4)
+        post = items["post-broiler-0"]
+        self.assertGreater(post["origin"][1], 540.0)
+        tang = items["broiler-tang"]
+        self.assertLess(tang["corner"][2] + tang["size"][2], plate["corner"][2] + 0.1)
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertGreaterEqual(result["mouth_h"], 180.0)
+        self.assertLessEqual(result["skin_C"], 55.0)
+        self.assertLess(result["modules_kg"]["tunnel"], result["modules_kg"]["pit"])
+
+
 if __name__ == "__main__":
     unittest.main()

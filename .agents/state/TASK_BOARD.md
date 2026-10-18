@@ -7,7 +7,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/stream-2-modular`. Draft PR. Do not merge.
-  - Sheepstealer is current: 32.6 kg, rope in the door gap, damper shut, pit 10.5 kg still heaviest. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
+  - Vermithor is current: 33.8 kg, plate slides over the steak, pit 10.5 kg still heaviest. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
 
 ---
 

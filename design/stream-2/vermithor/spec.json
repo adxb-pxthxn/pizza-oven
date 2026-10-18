@@ -1,0 +1,9 @@
+{
+  "dragon": "Vermithor",
+  "slide": "Steak pose draws the plate at Y 180 to 350, Z 100, over the middle of the deck. Rails run Y 178.4 to 640, 0.6 mm above the plate. Rear posts end at Z 157.6, 0.4 mm short of the liner. Park for pizza is Y 468 to 638, 2 mm short of the rear stop. The rack travels with the plate.",
+  "flux": "13776 W/m². Same surface, same view factor. The plate moved. The number did not.",
+  "mouth_mm": [424, 185],
+  "ready_kg": 33.806,
+  "modules_kg": {"pit": 10.482, "hearth": 9.094, "brow": 5.193, "tunnel": 9.037},
+  "note": "A peel below Z 30 clears the plate. The 150 mm roof is there when the plate is parked aft."
+}

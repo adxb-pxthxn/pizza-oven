@@ -141,6 +141,8 @@ class Stack:
     damper_shut: bool = False
     # Sheepstealer: the door stands off the skin and a rope sits in the gap.
     gasket: bool = False
+    # Vermithor: the broiler plate runs forward on rails, over the steak.
+    slide: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -843,7 +845,49 @@ def parts(s: Stack) -> list[dict]:
     # Caraxes hangs a plate under the high roof. The steak rack follows the plate,
     # not the roof, so the pizza still has the tall chamber.
     plate_z = 100.0
-    if s.broiler:
+    if s.broiler and s.slide:
+        # Over the middle of the deck. A centred steak is near Y 264.
+        # The same plate parks aft, Y 470 to 640, when the pizza wants the 150 mm roof.
+        # Drawn in the steak pose. Rails run the whole travel. Rear posts only.
+        plate_y0 = 180.0
+        plate_y1 = 350.0
+        items.append(_box(
+            "soffit-broiler", "hood", "mild", "hot",
+            soffit_x + 6.0, plate_y0, plate_z, soffit_w - 12.0, plate_y1 - plate_y0, 1.2,
+        ))
+        items.append(_box(
+            "broiler-tang", "hood", "mild", "hot",
+            -12.0, plate_y0, plate_z - 22.0, 24.0, 1.5, 22.0,
+        ))
+        rail_z = plate_z + 1.2 + 0.6
+        rail_h = 16.0
+        rail_t = 10.0
+        rail_y0 = 178.4
+        rail_y1 = 640.0
+        for step, xoff in enumerate((-100.0, 100.0)):
+            x = xoff - rail_t / 2.0
+            items.append(_box(
+                f"rail-broiler-{step}", "hood", "ss", "hot",
+                x, rail_y0, rail_z, rail_t, rail_y1 - rail_y0, rail_h,
+            ))
+            items.append(_box(
+                f"stop-broiler-{step}", "hood", "ss", "hot",
+                x, rail_y0 - 4.0, plate_z - 4.0, rail_t, 4.0, rail_z + rail_h - (plate_z - 4.0),
+            ))
+            items.append(_box(
+                f"stop-broiler-rear-{step}", "hood", "ss", "hot",
+                x, rail_y1, plate_z - 4.0, rail_t, 4.0, rail_z + rail_h - (plate_z - 4.0),
+            ))
+            post_z = rail_z + rail_h
+            items.append(_tube(
+                f"post-broiler-{step}", "hood", "ss", "hot",
+                [xoff, 610.0, post_z], [0, 0, 1],
+                0.0, 2.5, bh - post_z - 0.4,
+            ))
+        rod_z = plate_z - RACK_BELOW_SOFFIT
+        rod_y0 = plate_y0 + 8.0
+        rod_y1 = plate_y1 - 8.0
+    elif s.broiler:
         # Behind a centred 15 inch pizza (rear edge near Y 454). The pie stays
         # under the high roof. The steak slides back under this plate.
         plate_y0 = 470.0

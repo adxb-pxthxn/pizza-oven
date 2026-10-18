@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T19:15:00Z
+**Timestamp:** 2026-10-18T19:35:00Z
 **Current Branch / Commit:** design/stream-2-modular
 **Overall Status:** IN_PROGRESS
 
@@ -24,7 +24,7 @@ Morning and Moondancer are on `design/morning-moondancer`, taken from `cursor/an
 ---
 
 ## 2b. Stream 2 (this branch)
-Sheepstealer is the current stack. A ceramic rope sits in the door gap, four strips, 0.8 mm off the door and 2.2 mm short of the skin. Syrax's damper stays shut. Pit 10.5 kg. Hearth 9.1 kg, jarrah bail. Brow 5.2 kg. Tunnel 7.8 kg. Ready 32.6 kg. Roof 150 mm, steak plate at 100 mm behind the pie. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min, still the lumped steel. Pack cool-down 27 min with the door open. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Vermithor. See `design/stream-2/README.md`.
+Vermithor is the current stack. The broiler plate is drawn over the steak, Y 180 to 350 at Z 100. Rails run back to Y 640. Pizza parks the plate at Y 468 to 638. Pit 10.5 kg. Hearth 9.1 kg. Brow 5.2 kg. Tunnel 9.0 kg. Ready 33.8 kg. Mouth 424 × 185. Skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Flux stays 13.8 kW/m². Sheepstealer is the rope. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost. Do not reuse those. Next free name is Silverwing. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Read `design/variants/COMPARISON.md` before changing a thickness. The gauges are on the solver bounds.

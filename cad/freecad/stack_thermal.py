@@ -98,6 +98,18 @@ def _meleys() -> Stack:
     )
 
 
+def _vermithor() -> Stack:
+    return Stack(
+        dragon="Vermithor",
+        deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+        liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+        soffit_h=150.0, air_gap=16.0, standoff=54.0,
+        launch_y=150.0, stepped=True, sloped=True, split=True,
+        seated=True, grill=True, broiler=True, bail=True,
+        damper_shut=True, gasket=True, slide=True,
+    )
+
+
 def _sheepstealer() -> Stack:
     return Stack(
         dragon="Sheepstealer",
@@ -133,6 +145,7 @@ def main() -> None:
         "meleys": _meleys,
         "syrax": _syrax,
         "sheepstealer": _sheepstealer,
+        "vermithor": _vermithor,
     }.get(name, _vermax)()
     report = evaluate(design)
     out = ROOT / "design" / "stream-2" / design.dragon.lower() / "thermal"
