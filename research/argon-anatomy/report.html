@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Gozney reconstruction for an Adelaide build</title>
+<style>
+  body { font: 14px/1.45 "Iowan Old Style", Palatino, Georgia, serif; color: #1c1a17; margin: 28px auto; max-width: 860px; }
+  h1 { font-size: 26px; line-height: 1.2; }
+  h2 { font-size: 18px; margin-top: 1.6em; border-top: 1px solid #d9d3c8; padding-top: 0.6em; }
+  table { border-collapse: collapse; width: 100%; font-size: 12px; margin: 0.6em 0 1em; }
+  th, td { border: 1px solid #d0c9bc; padding: 4px 6px; text-align: left; vertical-align: top; }
+  th { background: #f3efe6; }
+  code, pre { font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+  pre { background: #f6f3ec; padding: 10px; white-space: pre-wrap; }
+  img { width: 100%; height: auto; }
+  figcaption { font-size: 12px; color: #3c3832; margin-bottom: 1em; }
+</style>
+</head>
+<body>
+<h1>Gozney Arc Lite, Tread, and Dome XL — reconstruction for an Adelaide build</h1>
+<p>18 October 2026. Documentation is CC-BY-4.0. The parametric solids are CERN-OHL-P v2.</p>
+<p>This is a reconstruction from published envelopes, manuals, and spec sheets. It is not a measured teardown and it is not a copy of Gozney drawings. Every number below is tagged <strong>Published</strong>, <strong>Inferred</strong>, or <strong>Modelled</strong>. Gauges, blanket thicknesses, skin temperatures, and Adelaide prices that are not on a plate are estimates.</p>
+<p>The four long analyses were written by <code>gemini-4-argon</code> with thinking level <code>HIGH</code>. The agent checked the arithmetic, built the solids, and kept the solids on one stack. No Argon call failed, so nothing in the engineering argument was filled in by falling back to the coordinator.</p>
+<h2>Who wrote what</h2>
+<table>
+<tr><th>Job</th><th>Model</th><th>Thinking</th><th>Thought tokens</th><th>Output tokens</th><th>Time</th></tr>
+<tr><td>Geometry</td><td>gemini-4-argon</td><td>HIGH</td><td>8396</td><td>7859</td><td>198 s</td></tr>
+<tr><td>Why the three ovens differ</td><td>gemini-4-argon</td><td>HIGH</td><td>6582</td><td>17736</td><td>285 s</td></tr>
+<tr><td>Materials and the hardwood shell</td><td>gemini-4-argon</td><td>HIGH</td><td>9079</td><td>17409</td><td>333 s</td></tr>
+<tr><td>Build plan, costs, risk</td><td>gemini-4-argon</td><td>HIGH</td><td>5779</td><td>15100</td><td>243 s</td></tr>
+</table>
+<p>Worker text is in <code>research/argon-anatomy/argon/</code>. The agent owns <code>cad/reconstructed/</code>, the section drawings, the STL renders, the hardwood script, and this report. Where a worker&#x27;s prose and the script disagree, the script is the number quoted here.</p>
+<h2>Published envelopes</h2>
+<p>Retail prices are the au.gozney.com figures recorded in <code>prompts/facts.md</code> on 18 October 2026.</p>
+<table>
+<tr><th></th><th>Arc Lite GOZ-3102</th><th>Tread GOZ-1893</th><th>Dome XL Gen 2 GOZ-2509</th></tr>
+<tr><td>External W×D×H</td><td>430 × 481 × 297</td><td>418 × 484 × 320</td><td>946 × 697 × 997 including flue</td></tr>
+<tr><td>Internal W×D×H</td><td>325 × 355 × 150</td><td>310 × 380 × 150</td><td>724 × 543 × 238</td></tr>
+<tr><td>Mouth</td><td>325 × 85</td><td>310 × 85</td><td>470 × 140</td></tr>
+<tr><td>Stone</td><td>12 mm cordierite</td><td>12 mm cordierite</td><td>30 mm cordierite</td></tr>
+<tr><td>Insulation</td><td>1-layer AES, water-soluble</td><td>1-layer AES, calcium-magnesium silicate</td><td>3-layer AES</td></tr>
+<tr><td>Mass</td><td>12.0 kg</td><td>13.5 kg (stand must hold 14 kg)</td><td>73.0 kg (packed 80.8 kg)</td></tr>
+<tr><td>Fuel</td><td>Propane, 3.4 kW, 252 g/h</td><td>LPG, 3.7 kW, 273.8 g/h</td><td>10.6 kW, 784 g/h; hardwood or charcoal, never with gas</td></tr>
+<tr><td>Flue / door</td><td>None / none</td><td>None / none</td><td>Removable flue, 3 mm rain gap / door after the flame is gone</td></tr>
+<tr><td>AU retail</td><td>AUD 649</td><td>AUD 899</td><td>AUD 3999</td></tr>
+</table>
+<p>Carton for Dome XL is 1077 × 815 × 613 mm, so the body without the flue is shorter than 613 mm.</p>
+<h2>Conflicts, and the number to design from</h2>
+<ul>
+<li>Arc Lite&#x27;s comparison-tool flow of 273.8 g/h is Tread&#x27;s figure. Design from the UK/EU plate: <strong>3.4 kW and 252 g/h</strong>. At propane LHV 46.4 MJ/kg, 252 g/h is 3.25 kW; the nameplate matches a gross calorific value near 48.6 MJ/kg.</li>
+<li>Tread&#x27;s spec sheet mouth is 310 mm. The comparison tool&#x27;s 12.4 in (~315 mm) is not used. Nameplate <strong>3.7 kW</strong>; 273.8 g/h is 3.53 kW at LHV and 3.70 kW at about 48.65 MJ/kg. A 3.7 kW LHV flame needs about 287 g/h.</li>
+<li>Dome XL&#x27;s spec sheet writes &quot;10.6 kWh&quot;. That is a unit error. Design from <strong>10.6 kW and 784 g/h</strong>. 784 g/h is 10.11 kW at LHV and 10.60 kW on the same gross factor as Tread. The US tool&#x27;s 0.75 kg/h is 9.67 kW at LHV. US injector 1.86 mm, 36850 BTU/h.</li>
+<li>Dome XL heat-up: the comparison tool says 40–45 min. The EU spec says 15 min to 300°C, 30 min to 400°C, 60 min to 500°C. Use <strong>60 min</strong> for a soaked floor. A 30 mm cordierite slab has a through-thickness time of about L²/α ≈ 14 min (α = k/ρc = 2.2 / (2100 × 950) = 1.10×10⁻⁶ m²/s), so the top skin is hot long before the slab is.</li>
+<li>Tread&#x27;s 125 mm drawing callout and Dome XL&#x27;s 219 mm callout are <strong>unassigned</strong>. 543 mm on the Dome sheet matches the published internal depth.</li>
+</ul>
+<h2>Why the three ovens are different</h2>
+<p>Mouth / apex is 85/150 = 0.567 on Arc Lite and Tread, and 140/238 = 0.588 on Dome XL. The Neapolitan 0.63 ratio is a heuristic, not a Gozney specification. All three sit a little under it, which holds a hot layer above the lintel: 65 mm on the small ovens, 98 mm on Dome XL.</p>
+<p>Mouth / width is 1.00 on Arc Lite and Tread and 470/724 = 0.649 on Dome XL. A 12-inch pizza fills the small hearths, so there is no cheek for a wood bed and no flue to make stack draft. Dome XL&#x27;s cheeks are the point: gas stays on the left, wood is pushed to the right over the duct grate, and the cheeks keep the ember bed out of the mouth wind. The manual forbids gas and wood together, and forbids lighting wood with the gas burner.</p>
+<p>Side wall is (external − internal) / 2: <strong>52.5 mm</strong>, <strong>54 mm</strong>, and <strong>111 mm</strong>. One AES layer fits the portable ovens. Three layers fit the Dome because it is a 73 kg stationary oven with a 10.6 kW burner and a wood fire, not because the cavity is a different shape of flame roll. The flame roll itself is the same idea: a lateral burner at hearth level throws a flame up the left wall and across the crown.</p>
+<p>Arc Lite is the cheap tabletop: no thermometer, no door, no wood, die-cast aluminium and stainless, 12 kg. Tread spends the extra mass and height on a crash base, a 304 mid-wrap, an HPDC landing, roof-rack handles, and an analog stone thermometer, and it asks for 50 mm of air around the dock. Dome XL spends mass on a 30 mm segmented floor, three insulation layers, a flue, a door, and probes.</p>
+<p>Clearance on the published plates: 0.3 m sides and back, 1 m in front, outdoor only. Minimum bottle called out for Arc Lite is 5 kg. Dome XL at 784 g/h will ice a single small bottle on a cold Adelaide night; that is an operating limit, not a licence to build a bigger jet.</p>
+<h2>Geometry the solids use</h2>
+<p>Axis: X across the mouth, centred; Y from the front face toward the back; Z up from the underside.</p>
+<table>
+<tr><th>Inferred field</th><th>Arc Lite</th><th>Tread</th><th>Dome XL</th></tr>
+<tr><td>Body height</td><td>297 (published)</td><td>320 (published)</td><td><strong>520</strong></td></tr>
+<tr><td>Hearth z (top of stone)</td><td>107</td><td>115</td><td><strong>187</strong></td></tr>
+<tr><td>Crown space</td><td>40</td><td>55</td><td><strong>95</strong></td></tr>
+<tr><td>Liner / outer sheet</td><td>1.0 / 1.0</td><td>1.0 / 1.0</td><td>1.5 / 1.5</td></tr>
+<tr><td>Blanket layers</td><td>25</td><td>25</td><td>25 + 25 + 25</td></tr>
+<tr><td>Front + rear walls</td><td>40 + 86</td><td>35 + 69</td><td>64 + 90</td></tr>
+<tr><td>Flue rise</td><td>—</td><td>—</td><td>997 − 520 = <strong>477</strong></td></tr>
+</table>
+<p>Dome body height is the geometry worker&#x27;s inference: 613 − 520 = 93 mm of packing, and 520 − 238 = 282 mm of floor plus roof. The materials worker&#x27;s looser band was 550–580 mm. The solids use 520 because it is the only figure with a stated packing allowance. Hearth z = 187 leaves a 95 mm crown, which is enough for three 25 mm blankets plus the skins (blanket stack grows 76.5 mm from the liner). The 219 mm callout is not the hearth. Hypothesis that it is a skirt or landing height stays open; hypothesis that it is the vault or the flue is rejected (vault is published as 238 mm, and 997 − 219 = 778 mm cannot fit a 613 mm carton).</p>
+<p>A one-piece 724 × 543 mm floor cannot pass a 470 mm mouth (mouth diagonal is 490 mm). The real floor is segmented. The solid models a single rectangle, inset 4 mm a side, so the mass model can be checked. It is not a cutting plan.</p>
+<h2>Mass model</h2>
+<p>Densities used: liner 7900, skin 7850, insulation 128, underfloor 240, stone 2100, aluminium landing and handles 2700 kg/m³. Volumes are the solids after the mouth window is cut.</p>
+<table>
+<tr><th>Oven</th><th>Modelled kg</th><th>Published kg</th><th>Gap</th></tr>
+<tr><td>Arc Lite</td><td>10.79</td><td>12.0</td><td>Valve, hose, igniter, die-cast landing</td></tr>
+<tr><td>Tread</td><td>11.23</td><td>13.5</td><td>Same, plus thermometer and PPS clips</td></tr>
+<tr><td>Dome XL</td><td>70.15</td><td>73.0</td><td>Gas train, probes, real segmented floor vs the rectangular stand-in</td></tr>
+</table>
+<p>The Dome stone stand-in is about 24 kg. That is the right order for a full-plan 30 mm cordierite slab (0.724 × 0.543 × 0.030 × 2100 ≈ 24.8 kg). Cutouts for the burner and the grate make the real set lighter.</p>
+<p>STEP files are AP214. STL deflection is 0.35 mm linear and 0.25 rad angular. External envelopes match the published width, depth, and installed height within 1 mm (Dome height is the flue, 997 mm).</p>
+<h2>Hardwood outer body</h2>
+<p>Adib&#x27;s idea: a turned or coopered hardwood shell, with clay or insulation inside, so the outer cover is not a sheet-metal job. The limit used here is 80°C on the inner face of the wood. Char is not an acceptable design state. Mouth, flue, and landing stay non-combustible (304 or refractory). Species that make sense in Adelaide: red gum, sugar gum, blackwood, jarrah.</p>
+<p><code>calcs/hardwood_shell.py</code> is a 1D steady wall, 500°C gas to 20°C air, h_in = 25, h_ext = 10. The code is the number. An earlier prose draft said the ventilated wood sat at 45–55°C; that sentence is wrong.</p>
+<table>
+<tr><th>Case</th><th>Stack</th><th>Wood inner face</th><th>Verdict</th></tr>
+<tr><td>A</td><td>20 mm castable + 50 mm AES (k=0.08) + 25 mm calcium silicate (k=0.065) + 20 mm wood (k=0.16)</td><td>103.9°C</td><td>Fail</td></tr>
+<tr><td>B</td><td>Same, AES increased to 75 mm</td><td>87.5°C</td><td>Fail</td></tr>
+<tr><td>C</td><td>75 mm AES + 50 mm calcium silicate + 20 mm wood</td><td><strong>74.4°C</strong></td><td>Pass</td></tr>
+<tr><td>Ventilated</td><td>Cavity air fixed at 30°C, h=8, then the wood</td><td>wood inner 26.4°C; calcium silicate outer face 79.5°C</td><td>Only if the slots actually move air</td></tr>
+</table>
+<p>Case C flux is about 242 W/m² and the wood outer face is about 44°C. If the vents choke, the wall returns to the sealed case and the wood climbs back through 80°C. Do not rely on a picture of slots.</p>
+<p>Other shells, from the materials worker, all labelled <strong>ESTIMATE, AUD, Adelaide, 2026</strong>:</p>
+<ul>
+<li>Refractory castable: a real dome, but the first fire spalls if free water is still in the binder. Cure covered, air-dry, then step through 80, 150, and 300°C.</li>
+<li>Perlite or vermiculite concrete: insulating, weak in bending, not a food surface.</li>
+<li>AES blanket: the Gozney fibre family. Do not use household fibreglass; the binder burns and the glass slumps.</li>
+<li>Cordierite or firebrick floor: cordierite for the pizza (effusivity gives an interface near 310°C when 25°C dough meets 480°C stone). Firebrick is slower and heavier. Granite, marble, slate, and concrete pavers spall.</li>
+<li>Cast iron: a floor or a grate, not a vault. High effusivity burns the dough face.</li>
+<li>Keg or gas bottle: a 304 keg can be an inner vault after it is empty and cold-cut. A gas bottle is mild steel and a residual-gas hazard. Do not cut a cylinder that has not been purged.</li>
+<li>Spun aluminium: outer skin only. It loses strength near 150°C and melts if it becomes the liner.</li>
+<li>GRP and cement sheet: cold covers only. GRP resins go soft around 60–110°C. Cement sheet holds water and can delaminate.</li>
+</ul>
+<h2>What must be bought certified</h2>
+<p>Buy the burner, the flame-failure valve, the thermocouple, the regulator, and the hose. Australian target is a certified LCC27 regulator at 2.75 kPa and an AS/NZS 1869 hose. Do not drill jets. Do not delete the flame-failure device.</p>
+<p>AS/NZS 5601.1 is the installation standard (clearances, cylinders, outdoor use). AGA / SANZ approval to AS/NZS 5263 is appliance certification. A single backyard prototype on a portable bottle does not need that approval. Selling, hiring, or plumbing the oven to a fixed gas line does. South Australia&#x27;s technical regulator treats an uncertified appliance on fixed pipework as an illegal installation.</p>
+<p>No galvanised sheet, zinc-plated fasteners, or cadmium plating in the hot gas path.</p>
+<h2>A first oven, if the next decision is to build</h2>
+<p>The build worker&#x27;s recommendation is a press-brake oven, not a copy of any of the three. Working name in that draft: <strong>Adelaide Folded-Vault 14</strong>.</p>
+<ul>
+<li>Hearth 380 × 380 × 20 mm cordierite. 20 mm matches the ~20 mm cooling depth of a 90 s bake (2√(αt) ≈ 19.9 mm). 12 mm dumps its heat mid-pizza. 30 mm soaks for the better part of an hour.</li>
+<li>Cavity about 435 × 410 × 155 mm. Mouth about 370 × 90 mm, so mouth/apex ≈ 0.58.</li>
+<li>50 mm AES over the vault, 25 mm calcium silicate under the stone.</li>
+<li>Certified 4.0–4.5 kW lateral LPG burner. The worker&#x27;s shell-loss check is about 370 W through the insulation; the mouth is where the kilowatts leave.</li>
+<li>External about 540 × 500 × 315 mm, mass about 18 kg.</li>
+<li>Slotted tabs between the 304 vault and the face, so the steel can grow ~4 mm without crushing the stone.</li>
+</ul>
+<p><strong>ESTIMATE, AUD, Adelaide, 2026.</strong> Retail band AUD 620–940. Scavenged band AUD 220–400, and the hose and regulator in that band are still bought new. A 16-inch floor is a different oven: heavier stone, a 6.5–7.5 kW burner, and full sheets. The study bill is <code>research/argon-anatomy/bom-study.csv</code>. <code>bom/bom.csv</code> stays the empty project template until a design is chosen.</p>
+<h2>Drawings and the figure</h2>
+<ul>
+<li>Sections, 1 px = 1 mm: <code>drawings/arc-lite-section.svg</code>, <code>tread-section.svg</code>, <code>dome-xl-section.svg</code>.</li>
+<li>Shaded STL views: <code>drawings/*.png</code>. These are envelope renders. The section sheets carry the dimensions.</li>
+<li>Interactive cutaway: <code>figures/dome-xl/dome-xl.html</code> (dark) and <code>dome-xl-light.html</code>. Hover the right half and the door shuts; the readout changes from &quot;gas may run&quot; to &quot;gas off&quot;. That is the Dome XL rule, shown on one oven rather than as three product likenesses.</li>
+<li>Solids: <code>models/*.step</code> and <code>models/*.stl</code>, including a Dome cutaway and an exploded door.</li>
+</ul>
+<h2>Files</h2>
+<table>
+<tr><th>Path</th><th>Role</th></tr>
+<tr><td><code>tools/argon/argon.py</code></td><td>Orchestrator. Default thinking level HIGH on gemini-4-argon. Cheap model has thinking off unless a job sets it.</td></tr>
+<tr><td><code>tools/argon/README.md</code></td><td>Mac setup. Python 3 only. Key stays in the environment.</td></tr>
+<tr><td><code>research/argon-anatomy/prompts/</code></td><td>System, facts, and the four task briefs.</td></tr>
+<tr><td><code>research/argon-anatomy/argon/</code></td><td>HIGH worker outputs and <code>batch-summary.json</code>.</td></tr>
+<tr><td><code>cad/reconstructed/</code></td><td>Parametric spec, builder, exporter.</td></tr>
+<tr><td><code>research/argon-anatomy/calcs/hardwood_shell.py</code></td><td>The wood-shell temperatures above.</td></tr>
+</table>
+<h2>Mac and this cloud image</h2>
+<p>Argon is stdlib. On a Mac: <code>export GEMINI_API_KEY=...</code> and <code>python3 tools/argon/argon.py ping</code>. No virtualenv.</p>
+<p>CAD needs Python 3.11–3.14 and the pins in <code>cad/requirements.txt</code> (<code>build123d==0.13.0</code>, <code>cadquery-ocp-novtk==8.0.1.1.0</code>). On Apple Silicon, pip selects the <code>macosx_11_0_arm64</code> wheel. Do not compile OpenCascade. This cloud image also needed <code>python3-venv</code> and <code>python3-pip</code> before <code>python3 -m venv .venv</code> could install those wheels. Pillow and numpy are used by the STL renderer and are not part of the CAD pin file.</p>
+<pre>python3 tools/argon/test_argon.py
+python3 -m cad.reconstructed.export_all
+PYTHONPATH=. python3 research/argon-anatomy/drawings/sections.py
+python3 research/argon-anatomy/drawings/render_stl.py
+node research/argon-anatomy/figures/dome-xl/build.mjs --light
+python3 research/argon-anatomy/calcs/hardwood_shell.py</pre>
+
+<h2>Figures</h2>
+<figure><img src="drawings/dome-xl-section.svg" alt="Dome XL section"/><figcaption>Dome XL section. Body 520 mm, hearth 187 mm, flue to 997 mm.</figcaption></figure>
+<figure><img src="drawings/dome-xl.png" alt="Dome XL shaded solid"/><figcaption>Shaded solid of the Dome XL reconstruction.</figcaption></figure>
+<figure><img src="drawings/dome-xl-cutaway.png" alt="Dome XL cutaway render"/><figcaption>Cutaway of the same solid. The section sheet is the dimensioned view.</figcaption></figure>
+<figure><img src="drawings/arc-lite.png" alt="Arc Lite shaded solid"/><figcaption>Arc Lite reconstructed envelope.</figcaption></figure>
+<figure><img src="drawings/tread.png" alt="Tread shaded solid"/><figcaption>Tread reconstructed envelope.</figcaption></figure>
+
+</body>
+</html>

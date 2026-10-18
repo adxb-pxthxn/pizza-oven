@@ -1,0 +1,62 @@
+[
+  {
+    "id": "geometry",
+    "model": "gemini-4-argon",
+    "requested_model": "gemini-4-argon",
+    "out": "/workspace/research/argon-anatomy/argon/geometry.json",
+    "seconds": 197.92,
+    "attempts": 1,
+    "prompt_tokens": 3659,
+    "output_tokens": 7859,
+    "thought_tokens": 8396,
+    "thinking": {
+      "thinkingLevel": "HIGH"
+    },
+    "chars": 25454
+  },
+  {
+    "id": "why",
+    "model": "gemini-4-argon",
+    "requested_model": "gemini-4-argon",
+    "out": "/workspace/research/argon-anatomy/argon/why.md",
+    "seconds": 284.75,
+    "attempts": 1,
+    "prompt_tokens": 3459,
+    "output_tokens": 17736,
+    "thought_tokens": 6582,
+    "thinking": {
+      "thinkingLevel": "HIGH"
+    },
+    "chars": 51170
+  },
+  {
+    "id": "materials",
+    "model": "gemini-4-argon",
+    "requested_model": "gemini-4-argon",
+    "out": "/workspace/research/argon-anatomy/argon/materials.md",
+    "seconds": 332.53,
+    "attempts": 1,
+    "prompt_tokens": 3680,
+    "output_tokens": 17409,
+    "thought_tokens": 9079,
+    "thinking": {
+      "thinkingLevel": "HIGH"
+    },
+    "chars": 50818
+  },
+  {
+    "id": "build",
+    "model": "gemini-4-argon",
+    "requested_model": "gemini-4-argon",
+    "out": "/workspace/research/argon-anatomy/argon/build.md",
+    "seconds": 242.83,
+    "attempts": 1,
+    "prompt_tokens": 3437,
+    "output_tokens": 15100,
+    "thought_tokens": 5779,
+    "thinking": {
+      "thinkingLevel": "HIGH"
+    },
+    "chars": 45908
+  }
+]

@@ -1,0 +1,8 @@
+Line,Item,Spec,Qty,Retail AUD low,Retail AUD high,Scavenged AUD low,Scavenged AUD high,Buy certified,Notes
+1,Inner vault,1.5 mm 304 sheet about 1200 x 600 mm,1,110,150,35,60,no,"ESTIMATE Adelaide 2026. Adelaide Folded-Vault 14 study only. Not the project bom/bom.csv."
+2,Outer clamshell and base,1.2 mm 304 or painted mild steel,1,110,160,30,60,no,ESTIMATE. Mouth landing stays metal even if a later shell is hardwood.
+3,Hearth,400 x 400 x 20 mm cordierite kiln shelf cut to 380 mm,1,70,110,25,45,no,ESTIMATE. 20 mm matches a 90 s diffusion depth. Not granite or a paver.
+4,Insulation,50 mm AES blanket plus 25 mm calcium silicate board,1,95,150,35,65,no,ESTIMATE. Household fibreglass is the wrong fibre.
+5,Gas train,4.0-4.5 kW lateral LPG burner with FFD thermocouple piezo and new LCC27 2.75 kPa regulator and AS/NZS 1869 hose,1,160,240,65,110,yes,Buy certified. Scavenged band still uses a new regulator and hose. Do not drill the jet.
+6,Thermometer,Dual K-type display with under-stone and dome probes,1,35,65,15,30,no,ESTIMATE.
+7,Fasteners and feet,304 M5 screws rivet nuts ER308L filler hardwood offcuts,1,40,65,15,30,no,ESTIMATE. No zinc plating in the hot path.
