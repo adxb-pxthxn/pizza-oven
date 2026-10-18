@@ -1,0 +1,1 @@
+Argon checked the rods. They sit 0.6 mm above the plate. The stops are 0.4 mm and 2 mm clear of the rod ends. The posts end at z 157.6, 0.4 mm short of the liner. The post stands on the rod. That shared face is the joint, not a press.

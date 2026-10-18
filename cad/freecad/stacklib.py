@@ -143,6 +143,8 @@ class Stack:
     gasket: bool = False
     # Vermithor: the broiler plate runs forward on rails, over the steak.
     slide: bool = False
+    # Silverwing: those rails are 8 mm rods. The flat bars were more steel than the span needs.
+    rod_rail: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -859,31 +861,59 @@ def parts(s: Stack) -> list[dict]:
             "broiler-tang", "hood", "mild", "hot",
             -12.0, plate_y0, plate_z - 22.0, 24.0, 1.5, 22.0,
         ))
-        rail_z = plate_z + 1.2 + 0.6
-        rail_h = 16.0
-        rail_t = 10.0
-        rail_y0 = 178.4
-        rail_y1 = 640.0
-        for step, xoff in enumerate((-100.0, 100.0)):
-            x = xoff - rail_t / 2.0
-            items.append(_box(
-                f"rail-broiler-{step}", "hood", "ss", "hot",
-                x, rail_y0, rail_z, rail_t, rail_y1 - rail_y0, rail_h,
-            ))
-            items.append(_box(
-                f"stop-broiler-{step}", "hood", "ss", "hot",
-                x, rail_y0 - 4.0, plate_z - 4.0, rail_t, 4.0, rail_z + rail_h - (plate_z - 4.0),
-            ))
-            items.append(_box(
-                f"stop-broiler-rear-{step}", "hood", "ss", "hot",
-                x, rail_y1, plate_z - 4.0, rail_t, 4.0, rail_z + rail_h - (plate_z - 4.0),
-            ))
-            post_z = rail_z + rail_h
-            items.append(_tube(
-                f"post-broiler-{step}", "hood", "ss", "hot",
-                [xoff, 610.0, post_z], [0, 0, 1],
-                0.0, 2.5, bh - post_z - 0.4,
-            ))
+        if s.rod_rail:
+            rod_r = 4.0
+            centre_z = plate_z + 1.2 + 0.6 + rod_r
+            rod_y0 = 178.4
+            rod_y1 = 638.0
+            for step, xoff in enumerate((-100.0, 100.0)):
+                items.append(_tube(
+                    f"rail-broiler-{step}", "hood", "ss", "hot",
+                    [xoff, rod_y0, centre_z], [0, 1, 0],
+                    0.0, rod_r, rod_y1 - rod_y0,
+                ))
+                items.append(_box(
+                    f"stop-broiler-{step}", "hood", "ss", "hot",
+                    xoff - 5.0, rod_y0 - 4.4, plate_z - 4.0,
+                    10.0, 4.0, centre_z + rod_r - (plate_z - 4.0),
+                ))
+                items.append(_box(
+                    f"stop-broiler-rear-{step}", "hood", "ss", "hot",
+                    xoff - 5.0, rod_y1 + 2.0, plate_z - 4.0,
+                    10.0, 4.0, centre_z + rod_r - (plate_z - 4.0),
+                ))
+                post_z = centre_z + rod_r
+                items.append(_tube(
+                    f"post-broiler-{step}", "hood", "ss", "hot",
+                    [xoff, 610.0, post_z], [0, 0, 1],
+                    0.0, 2.5, bh - post_z - 0.4,
+                ))
+        else:
+            rail_z = plate_z + 1.2 + 0.6
+            rail_h = 16.0
+            rail_t = 10.0
+            rail_y0 = 178.4
+            rail_y1 = 640.0
+            for step, xoff in enumerate((-100.0, 100.0)):
+                x = xoff - rail_t / 2.0
+                items.append(_box(
+                    f"rail-broiler-{step}", "hood", "ss", "hot",
+                    x, rail_y0, rail_z, rail_t, rail_y1 - rail_y0, rail_h,
+                ))
+                items.append(_box(
+                    f"stop-broiler-{step}", "hood", "ss", "hot",
+                    x, rail_y0 - 4.0, plate_z - 4.0, rail_t, 4.0, rail_z + rail_h - (plate_z - 4.0),
+                ))
+                items.append(_box(
+                    f"stop-broiler-rear-{step}", "hood", "ss", "hot",
+                    x, rail_y1, plate_z - 4.0, rail_t, 4.0, rail_z + rail_h - (plate_z - 4.0),
+                ))
+                post_z = rail_z + rail_h
+                items.append(_tube(
+                    f"post-broiler-{step}", "hood", "ss", "hot",
+                    [xoff, 610.0, post_z], [0, 0, 1],
+                    0.0, 2.5, bh - post_z - 0.4,
+                ))
         rod_z = plate_z - RACK_BELOW_SOFFIT
         rod_y0 = plate_y0 + 8.0
         rod_y1 = plate_y1 - 8.0

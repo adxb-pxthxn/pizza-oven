@@ -320,5 +320,30 @@ class VermithorTests(unittest.TestCase):
         self.assertLess(result["modules_kg"]["tunnel"], result["modules_kg"]["pit"])
 
 
+class SilverwingTests(unittest.TestCase):
+    def test_the_rails_are_rods(self) -> None:
+        design = Stack(
+            dragon="Silverwing",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True, rod_rail=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        rail = items["rail-broiler-0"]
+        self.assertEqual(rail["shape"], "tube")
+        self.assertEqual(rail["r_out"], 4.0)
+        plate = items["soffit-broiler"]
+        self.assertLessEqual(plate["corner"][1], 264.0)
+        self.assertGreater(rail["origin"][2] - rail["r_out"], plate["corner"][2] + plate["size"][2] + 0.4)
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertLess(result["ready_kg"], 33.2)
+        self.assertLess(result["modules_kg"]["tunnel"], result["modules_kg"]["pit"])
+        self.assertLessEqual(result["skin_C"], 55.0)
+
+
 if __name__ == "__main__":
     unittest.main()
