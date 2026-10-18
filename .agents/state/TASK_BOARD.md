@@ -9,12 +9,16 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ---
 
 ## READY
-- [ ] **[TASK-002]** `REQUIREMENTS`: Define user design requirements and initial specifications *(Priority: HIGH, Assigned: unassigned)*
-  - Await user input regarding oven form factor, fuel type (wood/gas/pellet/electric), target capacity, portability, and preferred materials.
+- [ ] **[TASK-003]** `DESIGN`: Adib chooses whether the first build is the Adelaide Folded-Vault 14 or another envelope *(Priority: HIGH, Assigned: unassigned)*
+  - Study is in `research/argon-anatomy/REPORT.md`. Do not treat it as a locked design.
+  - Gas burner, FFD, regulator, and hose stay bought certified.
 
 ---
 
 ## UNDER_REVIEW
+- [ ] **[TASK-002]** `RESEARCH`: Gozney Arc Lite, Tread, and Dome XL reconstruction *(Priority: HIGH, Assigned: cursor)*
+  - Branch `research/argon-anatomy`. Argon HIGH workers plus verified CAD and hardwood cases.
+  - Dome body 520 mm. 219 mm callout left unassigned.
 
 ---
 

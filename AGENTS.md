@@ -34,3 +34,10 @@ This repository is an open-source physical engineering and mechanical developmen
 - `cross-agent-coordination`: Handover protocol, situational awareness briefings, and file locking.
 - `cursor-sync`: Rules synchronization between Antigravity, Cursor (`.cursor/rules/*.mdc`), and Claude Code.
 - `multi-agent-review`: Maker/Critic peer review protocol and automated validation harness.
+
+## Cursor Cloud specific instructions
+
+- Argon is stdlib: `python3 tools/argon/argon.py ping` after `GEMINI_API_KEY` is exported. Do not write the key into the repo.
+- CAD needs a virtualenv. This image has no `ensurepip` until `python3-venv` and `python3-pip` are installed. Then `python3 -m venv .venv` and `python3 -m pip install -r cad/requirements.txt`. Pillow and numpy are extra, for `research/argon-anatomy/drawings/render_stl.py`.
+- On Apple Silicon, pip selects the `macosx_11_0_arm64` wheel of `cadquery-ocp-novtk`. Do not compile OpenCascade.
+- `.venv/` is gitignored. Do not commit it.

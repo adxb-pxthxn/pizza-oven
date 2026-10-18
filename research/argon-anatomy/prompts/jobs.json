@@ -1,0 +1,38 @@
+{
+  "jobs": [
+    {
+      "id": "geometry",
+      "model": "gemini-4-argon",
+      "prompt_file": "research/argon-anatomy/prompts/composed/geometry.md",
+      "system": "Return JSON only. No markdown fence.",
+      "json": true,
+      "temperature": 0.2,
+      "thinking_level": "HIGH",
+      "out": "research/argon-anatomy/argon/geometry.json"
+    },
+    {
+      "id": "why",
+      "model": "gemini-4-argon",
+      "prompt_file": "research/argon-anatomy/prompts/composed/why.md",
+      "temperature": 0.4,
+      "thinking_level": "HIGH",
+      "out": "research/argon-anatomy/argon/why.md"
+    },
+    {
+      "id": "materials",
+      "model": "gemini-4-argon",
+      "prompt_file": "research/argon-anatomy/prompts/composed/materials.md",
+      "temperature": 0.4,
+      "thinking_level": "HIGH",
+      "out": "research/argon-anatomy/argon/materials.md"
+    },
+    {
+      "id": "build",
+      "model": "gemini-4-argon",
+      "prompt_file": "research/argon-anatomy/prompts/composed/build.md",
+      "temperature": 0.3,
+      "thinking_level": "HIGH",
+      "out": "research/argon-anatomy/argon/build.md"
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "units": "mm",
+  "step_schema": "AP214",
+  "ovens": {
+    "arc-lite": {
+      "model_no": "GOZ-3102",
+      "published_mm": {
+        "external": [
+          430,
+          481,
+          297
+        ],
+        "internal": [
+          325,
+          355,
+          150
+        ],
+        "mouth": [
+          325,
+          85
+        ]
+      },
+      "inferred": {
+        "body_h_mm": 297,
+        "hearth_z_mm": 107,
+        "side_wall_mm": 52.5,
+        "air_gap_mm": 25.5,
+        "roof_space_mm": 40,
+        "mouth_over_apex": 0.5667,
+        "insulation_mm": [
+          25
+        ]
+      },
+      "notes": "Published envelope and 12 mm stone. Side wall (430-325)/2 = 52.5 mm. One 25 mm AES layer inferred inside that wall, leaving an air gap. Hearth at 107 mm is inferred: 297 - 150 - 40 mm of crown. UK/EU plate 3.4 kW and 252 g/h; the comparison tool's 273.8 g/h is Tread's figure.",
+      "mass_kg": {
+        "arc-lite-skirt": 1.804,
+        "arc-lite-underfloor": 0.676,
+        "arc-lite-stone": 2.772,
+        "arc-lite-liner": 1.377,
+        "arc-lite-blanket-1": 0.605,
+        "arc-lite-skin": 3.177,
+        "arc-lite-landing": 0.066,
+        "arc-lite-burner": 0.311,
+        "total_kg": 10.79,
+        "published_kg": 12.0
+      },
+      "files": {
+        "assembled": {
+          "step": "/workspace/research/argon-anatomy/models/arc-lite.step",
+          "stl": "/workspace/research/argon-anatomy/models/arc-lite.stl"
+        },
+        "cutaway": {
+          "step": "/workspace/research/argon-anatomy/models/arc-lite-cutaway.step",
+          "stl": "/workspace/research/argon-anatomy/models/arc-lite-cutaway.stl"
+        }
+      }
+    },
+    "tread": {
+      "model_no": "GOZ-1893",
+      "published_mm": {
+        "external": [
+          418,
+          484,
+          320
+        ],
+        "internal": [
+          310,
+          380,
+          150
+        ],
+        "mouth": [
+          310,
+          85
+        ]
+      },
+      "inferred": {
+        "body_h_mm": 320,
+        "hearth_z_mm": 115,
+        "side_wall_mm": 54.0,
+        "air_gap_mm": 27.0,
+        "roof_space_mm": 55,
+        "mouth_over_apex": 0.5667,
+        "insulation_mm": [
+          25
+        ]
+      },
+      "notes": "Published envelope, 12 mm stone, SPCC pressings, 304 core, HPDC landing. Side wall (418-310)/2 = 54 mm. The extra external height over Arc Lite is modelled as a deeper base plus roof-rack handles, not a taller cavity. The 125 mm drawing callout is left unassigned.",
+      "mass_kg": {
+        "tread-skirt": 1.889,
+        "tread-underfloor": 0.69,
+        "tread-stone": 2.831,
+        "tread-liner": 1.439,
+        "tread-blanket-1": 0.634,
+        "tread-skin": 3.304,
+        "tread-landing": 0.063,
+        "tread-burner": 0.333,
+        "tread-handle": 0.021,
+        "total_kg": 11.23,
+        "published_kg": 13.5
+      },
+      "files": {
+        "assembled": {
+          "step": "/workspace/research/argon-anatomy/models/tread.step",
+          "stl": "/workspace/research/argon-anatomy/models/tread.stl"
+        },
+        "cutaway": {
+          "step": "/workspace/research/argon-anatomy/models/tread-cutaway.step",
+          "stl": "/workspace/research/argon-anatomy/models/tread-cutaway.stl"
+        }
+      }
+    },
+    "dome-xl": {
+      "model_no": "GOZ-2509",
+      "published_mm": {
+        "external": [
+          946,
+          697,
+          997
+        ],
+        "internal": [
+          724,
+          543,
+          238
+        ],
+        "mouth": [
+          470,
+          140
+        ]
+      },
+      "inferred": {
+        "body_h_mm": 520,
+        "hearth_z_mm": 187,
+        "side_wall_mm": 111.0,
+        "air_gap_mm": 33.0,
+        "roof_space_mm": 95,
+        "mouth_over_apex": 0.5882,
+        "insulation_mm": [
+          25,
+          25,
+          25
+        ]
+      },
+      "notes": "Published cavity 724 x 543 x 238, mouth 470 x 140, installed height 997 with flue. Body height 520 mm is the geometry worker's inference: 613 mm carton minus 93 mm of packing. Floor plus roof is 520 - 238 = 282 mm. Hearth at 187 mm leaves a 95 mm crown, enough for three 25 mm blankets plus the skins. The unassigned 219 mm callout is not the hearth. Flue rise is 997 - 520 = 477 mm. Side wall (946-724)/2 = 111 mm.",
+      "mass_kg": {
+        "dome-xl-skirt": 8.951,
+        "dome-xl-underfloor": 3.726,
+        "dome-xl-stone": 24.133,
+        "dome-xl-liner": 6.08,
+        "dome-xl-blanket-1": 1.714,
+        "dome-xl-blanket-2": 1.851,
+        "dome-xl-blanket-3": 1.987,
+        "dome-xl-skin": 15.379,
+        "dome-xl-landing": 0.094,
+        "dome-xl-burner": 1.174,
+        "dome-xl-flue": 1.915,
+        "dome-xl-flue-ring": 0.172,
+        "dome-xl-flue-cap": 0.294,
+        "dome-xl-throat": 1.413,
+        "dome-xl-grate": 0.143,
+        "dome-xl-door": 1.129,
+        "total_kg": 70.15,
+        "published_kg": 73.0
+      },
+      "files": {
+        "assembled": {
+          "step": "/workspace/research/argon-anatomy/models/dome-xl.step",
+          "stl": "/workspace/research/argon-anatomy/models/dome-xl.stl"
+        },
+        "cutaway": {
+          "step": "/workspace/research/argon-anatomy/models/dome-xl-cutaway.step",
+          "stl": "/workspace/research/argon-anatomy/models/dome-xl-cutaway.stl"
+        },
+        "exploded": {
+          "step": "/workspace/research/argon-anatomy/models/dome-xl-exploded.step",
+          "stl": "/workspace/research/argon-anatomy/models/dome-xl-exploded.stl"
+        }
+      }
+    }
+  }
+}

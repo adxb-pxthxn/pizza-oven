@@ -1,0 +1,233 @@
+{
+  "ovens": [
+    {
+      "id": "arc-lite",
+      "published": {
+        "external_mm": [430, 481, 297],
+        "internal_mm": [325, 355, 150],
+        "mouth_mm": [325, 85],
+        "mass_kg": 12.0,
+        "stone_mm": 12,
+        "power_kW": 3.4,
+        "mass_flow_g_h": 273.8,
+        "model": "GOZ-3102"
+      },
+      "conflicts": [
+        {
+          "item": "Gas mass flow rate vs nameplate power",
+          "values": "Published US comparison tool states 273.8 g/h and 3.4 kW (11687 BTU/h); Published UK/EU data plate states 3.4 kW (252 g/h) across I3P(30), I3+(28-30/37), I3P(37), and I3P(50) with 0.85 mm, 0.90 mm, or 0.95 mm injectors (US/CA uses 0.95 mm at 11 in WC). Modelled check at propane LHV 46.4 MJ/kg: 273.8 g/h * 46.4 kJ/g / 3600 s/h = 3.53 kW; 252 g/h * 46.4 kJ/g / 3600 s/h = 3.25 kW; 3.4 kW requires 263.8 g/h at LHV (or 244.8 g/h at ~50 MJ/kg gross CV).",
+          "use": "Use 3.4 kW as the thermal design target and 273.8 g/h as the conservative LPG bottle draw rate. Do not fabricate a DIY gas train; buy a certified AS/NZS 5601 LPG burner, injector, flame-failure valve, hose, and regulator assembly rated around 3.4 to 3.7 kW."
+        },
+        {
+          "item": "Unpacked oven mass",
+          "values": "Published product page states 12.0 kg oven (14.8 kg packed); Published US comparison tool states 26.4 lb (11.97 kg).",
+          "use": "Use 12.0 kg for structural and portability calculations."
+        }
+      ],
+      "inferred_envelope": {
+        "side_wall_mm": "52.5 mm average per side (Inferred from Published external width 430 mm minus Published internal width 325 mm = 105 mm total side wall thickness; 105 mm / 2 = 52.5 mm per side. Inferred as asymmetric because the left wall houses the lateral gas burner tube and ignition assembly while the right wall holds only insulation and skin).",
+        "front_plus_rear_mm": "126 mm total front-plus-rear depth budget (Inferred from Published external depth 481 mm minus Published internal depth 355 mm = 126 mm; split between the front mouth bezel/sill and the rear insulation plus gas dock with CO ventilation slots).",
+        "vertical_stack_mm": "147 mm total vertical stack (Inferred from Published external height 297 mm minus Published internal height 150 mm = 147 mm; contains feet/base clearance, bottom outer skin, under-stone insulation, 12 mm cordierite stone, 304 inner vault sheet, single-layer calcium-magnesium silicate blanket, and top shell. Because Arc Lite has no flue, 297 mm is the solid body height, unlike Dome XL where 997 mm includes a tall removable flue).",
+        "mouth_over_apex": "0.567 (Computed from Published mouth height 85 mm / Published internal apex height 150 mm = 0.5667. This is lower than the 0.63 Neapolitan rule-of-thumb heuristic, creating a 150 - 85 = 65 mm deep overhead hot-gas trap to retain rolling flame heat while venting flue gases out the upper mouth opening).",
+        "mouth_over_width": "1.000 (Computed from Published mouth width 325 mm / Published internal width 325 mm = 1.000; full-width opening with no front cheek walls).",
+        "hypothesis_wall_stack": [
+          {
+            "layer": "Inner chamber liner (304 stainless steel, Inferred from Published stainless steel material note and Tread/Dome inner core spec)",
+            "thickness_mm_low": 0.9,
+            "thickness_mm_high": 1.5,
+            "why": "Inferred to match the 12.0 kg total oven mass after subtracting the Modelled 2.91 kg cordierite stone (0.325 * 0.355 * 0.012 m * 2100 kg/m3). Do not use galvanised steel, zinc plating, or cadmium in the hot gas path. Adelaide 2026 estimate: retail 304 sheet AUD 90-140; second-hand Gumtree/scrapyard stainless offcuts or keg skin AUD 20-50."
+          },
+          {
+            "layer": "Single-layer alkaline-earth silicate (AES) water-soluble insulation blanket (Published as 1 layer, water-soluble insulation)",
+            "thickness_mm_low": 25.0,
+            "thickness_mm_high": 38.0,
+            "why": "Inferred to fit inside the 52.5 mm average side wall and 147 mm vertical budget while keeping outer skin temperatures manageable. Never substitute residential fibreglass (binder burns off and glass slumps well below 500 C). Adelaide 2026 estimate: retail 25 mm Morgan Superwool / AES blanket cut length AUD 65-110; second-hand kiln/boiler surplus on Marketplace AUD 25-50."
+          },
+          {
+            "layer": "Airspace, brackets, and left-hand burner plenum clearance (Inferred)",
+            "thickness_mm_low": 10.0,
+            "thickness_mm_high": 24.0,
+            "why": "Inferred thermal break between blanket cold face and outer shell, plus clearance on the left side for the lateral burner manifold and FFD thermocouple."
+          },
+          {
+            "layer": "Outer case and end caps (Published as stainless steel and die-cast aluminium with high-temperature paint and powder coat)",
+            "thickness_mm_low": 1.0,
+            "thickness_mm_high": 2.5,
+            "why": "Inferred sheet and casting thickness for structural stiffness without exceeding the 12.0 kg mass budget. Adelaide 2026 estimate: retail sheet metal and high-temp paint AUD 80-130; second-hand casing stock AUD 25-45."
+          }
+        ]
+      },
+      "geometry_for_cad": {
+        "body_height_mm": "297 mm (Published external height; solid tabletop body with no loose flue).",
+        "flue": null,
+        "vault": "Inferred CAD sweep: Loft or press-brake a 304 stainless steel inner hood over the 325 x 355 mm floor so the interior crown reaches 150 mm above the top of the 12 mm stone, then curve or step the front baffle down to an 85 mm mouth lintel height so the 65 mm upper pocket contains the rolling flame before exhausting out the mouth.",
+        "burner_side": "Left side looking into the mouth, where the push-turn dial and Flame Failure Device (held up to 30 s on lighting) feed a lateral burner whose yellow/orange flame rolls across the vault ceiling; wood is prohibited in Arc Lite, whereas in the Dome XL wood is pushed to the right over the duct grate.",
+        "stone_plan_mm": [325, 355],
+        "confidence": "High on Published bounding envelopes (430 x 481 x 297 mm external, 325 x 355 x 150 mm internal, 325 x 85 mm mouth); Medium on Inferred stone cutting dimensions (nominally 321 x 351 x 12 mm to leave 2 mm per side thermal expansion and removal clearance through the 325 mm mouth; cordierite expands by Modelled dL = 325 mm * 2.8e-6 /K * 500 K = 0.46 mm while the 304 shell expands by 325 mm * 18e-6 /K * 500 K = 2.93 mm; never use granite, marble, or slate as a hearth; Adelaide 2026 estimate for 12-15 mm cordierite kiln shelf: retail AUD 55-90, second-hand Gumtree pottery kiln shelf AUD 15-35); Low on exact internal sheet metal gauge and left/right wall offset."
+      }
+    },
+    {
+      "id": "tread",
+      "published": {
+        "external_mm": [418, 484, 320],
+        "internal_mm": [310, 380, 150],
+        "mouth_mm": [310, 85],
+        "mass_kg": 13.5,
+        "stone_mm": 12,
+        "power_kW": 3.7,
+        "mass_flow_g_h": 273.8,
+        "model": "GOZ-1893"
+      },
+      "conflicts": [
+        {
+          "item": "Mouth opening width",
+          "values": "Published spec sheet states 310 mm (12.2 in) mouth width; Published US comparison tool states 12.4 in (315 mm).",
+          "use": "Use 310 mm as the spec-sheet mouth width."
+        },
+        {
+          "item": "Gas power vs mass flow rate",
+          "values": "Published spec sheet states 3.7 kW and 273.8 g/h at 30/37/50 mbar; Published US technical manual states 12500 BTU/h (3.66 kW) with 0.98 mm injector at 11 in WC propane; Published US comparison tool states 3.7 kW (12621 BTU/h) and 273 g/h. Modelled check at propane LHV 46.4 MJ/kg: 273.8 g/h * 46.4 kJ/g / 3600 s/h = 3.53 kW; 3.7 kW requires 287.1 g/h at LHV (at ~50 MJ/kg gross CV, 273.8 g/h equals ~3.80 kW).",
+          "use": "Treat 3.7 kW as the nameplate thermal output and 273.8 g/h as the spec-sheet mass flow. Purchase a complete certified LPG burner/valve/regulator assembly to AS/NZS 5601."
+        },
+        {
+          "item": "Oven mass and marketing weight-reduction claims",
+          "values": "Published spec sheet states 13.5 kg (16 kg packed); Published US comparison tool states 29.7 lb (13.47 kg); Published US manual placement note states support surface must hold 14 kg. Marketing claims both 'about 33% lighter than Roccbox' and '25% lighter than Roccbox or Arc'.",
+          "use": "Use 13.5 kg as the dry appliance mass and 14.0 kg minimum as the support-surface structural load."
+        },
+        {
+          "item": "Unassigned 125 mm drawing callout",
+          "values": "Published spec-sheet drawing shows a 125 mm dimension callout without identifying the feature measured.",
+          "use": "Do not assign 125 mm to the internal baking chamber (which is Published as 310 x 380 x 150 mm with an 85 mm mouth); treat 125 mm as an unassigned external trim/dock/handle callout."
+        }
+      ],
+      "inferred_envelope": {
+        "side_wall_mm": "54.0 mm average per side (Inferred from Published external width 418 mm minus Published internal width 310 mm = 108 mm total side wall budget; 108 mm / 2 = 54.0 mm per side, shifted asymmetrically to accommodate the left lateral burner).",
+        "front_plus_rear_mm": "104 mm total front-plus-rear depth budget (Inferred from Published external depth 484 mm minus Published internal depth 380 mm = 104 mm; divided between the front HPDC aluminium landing/304 mouth arch and the rear SPCC dock, which requires 50 mm clear air around it for combustion intake).",
+        "vertical_stack_mm": "170 mm total vertical stack (Inferred from Published external height 320 mm minus Published internal height 150 mm = 170 mm; includes base feet, SPCC lower pressing, under-hearth insulation, 12 mm cordierite stone, 304 inner core, single-layer calcium-magnesium silicate fibre blanket, SPCC top pressing, and integrated roof-rack carry handles. Unlike Dome XL, Tread has no vertical flue pipe, so 320 mm is the complete portable envelope).",
+        "mouth_over_apex": "0.567 (Computed from Published mouth height 85 mm / Published internal apex height 150 mm = 0.5667; matches Arc Lite and sits below the 0.63 Neapolitan heuristic to hold a 65 mm deep radiant/convective ceiling pocket).",
+        "mouth_over_width": "1.000 (Computed from Published spec-sheet mouth width 310 mm / Published internal width 310 mm = 1.000; full-width mouth).",
+        "hypothesis_wall_stack": [
+          {
+            "layer": "Inner core and mouth arch (Published as 304 stainless steel, with ceramic paint on mouth arch)",
+            "thickness_mm_low": 0.9,
+            "thickness_mm_high": 1.5,
+            "why": "Inferred gauge for durability under portable transport while keeping total oven mass to 13.5 kg (after subtracting Modelled 2.97 kg for the 0.310 * 0.380 * 0.012 m cordierite stone at 2100 kg/m3). No zinc, cadmium, or galvanised steel in the hot gas path."
+          },
+          {
+            "layer": "Single-layer calcium-magnesium silicate fibre blanket (Published as 1 layer, non-carcinogenic and water soluble)",
+            "thickness_mm_low": 25.0,
+            "thickness_mm_high": 38.0,
+            "why": "Inferred to fit within the 54.0 mm average side wall and 170 mm vertical stack. Do not use residential fibreglass."
+          },
+          {
+            "layer": "Internal structural brackets, burner plenum, and handle standoffs (Inferred)",
+            "thickness_mm_low": 12.0,
+            "thickness_mm_high": 26.0,
+            "why": "Inferred space for mounting the GF20 PPS handles/clips, analog stone-temperature capillary/stem routing, lateral gas burner, and thermal break."
+          },
+          {
+            "layer": "Outer shell assembly (Published as SPCC top pressing with ceramic paint, brushed 304 mid-wrap, SPCC lower pressing and dock with high-temp powder coat, aluminium extrusion trim)",
+            "thickness_mm_low": 0.8,
+            "thickness_mm_high": 1.6,
+            "why": "Inferred cold-rolled steel (SPCC) and 304 wrap thickness suitable for press-brake or stamping reconstruction in an Adelaide makerspace."
+          }
+        ]
+      },
+      "geometry_for_cad": {
+        "body_height_mm": "320 mm (Published external height including top carry/roof-rack handle profile; no loose flue).",
+        "flue": null,
+        "vault": "Inferred CAD sweep: Form the 304 inner core with a flat or gently arched crown 150 mm above the 12 mm cordierite stone, terminating at the front in a 310 x 85 mm 304 mouth arch and HPDC aluminium landing with 304 scratch guard.",
+        "burner_side": "Left side looking into the mouth (Inferred from Gozney lateral burner architecture matching Arc Lite's left-hand lateral roll; wood fuel is prohibited in Tread, whereas Dome XL places wood on the right).",
+        "stone_plan_mm": [310, 380],
+        "confidence": "High on Published envelopes (418 x 484 x 320 mm external, 310 x 380 x 150 mm internal, 310 x 85 mm mouth); Medium on Inferred removable stone dimensions (cut ~306 x 376 x 12 mm from a cordierite kiln shelf for slip fit through the 310 mm mouth); Low on how much of the 170 mm vertical stack is consumed by the protruding roof-rack handles versus internal insulation thickness, and Low on the unassigned 125 mm drawing callout."
+      }
+    },
+    {
+      "id": "dome-xl",
+      "published": {
+        "external_mm": [946, 697, 997],
+        "internal_mm": [724, 543, 238],
+        "mouth_mm": [470, 140],
+        "mass_kg": 73.0,
+        "stone_mm": 30,
+        "power_kW": 10.6,
+        "mass_flow_g_h": 784.0,
+        "model": "GOZ-2509"
+      },
+      "conflicts": [
+        {
+          "item": "Heat-up time to 500 C / 950+ F",
+          "values": "Published US comparison tool states 40-45 min; Published EU spec sheet states 15 min to 300 C, 30 min to 400 C, and 60 min to 500 C.",
+          "use": "Use 60 min to reach a fully soaked 500 C stone. Modelled thermal storage check: a 724 x 543 x 30 mm cordierite slab (volume ~0.01179 m3, mass ~24.76 kg at 2100 kg/m3, cp 950 J/kgK) requires 24.76 kg * 0.95 kJ/kgK * 480 K = 11.29 MJ just to raise the stone by 480 K, which takes time to conduct through 30 mm (k = 2.2 W/mK, characteristic diffusion time L^2 / alpha = 0.03^2 / (2.2 / (2100 * 950)) = 816 s ~ 13.6 min minimum thermal relaxation time)."
+        },
+        {
+          "item": "Gas power, units, and mass flow rate",
+          "values": "Published EU manual states 10.6 kW (784 g/h) for I3P(50/37/30); Published US manual states 36850 BTU/h (10.80 kW) with 1.86 mm injector at 11 in WC; Published US comparison tool states 10.6 kW (36100 BTU/h) and 0.75 kg/h (750 g/h); Published EU spec sheet writes '10.6 kWh | 0.75 kg/h' (where kWh is a unit typo for kW). Modelled check at propane LHV 46.4 MJ/kg: 750 g/h = 9.67 kW; 784 g/h = 10.11 kW; 10.6 kW requires 822.4 g/h at LHV (or ~763 g/h at ~50 MJ/kg gross CV).",
+          "use": "Use 10.6 kW as the nameplate thermal design power and 784 to 822 g/h as the LPG supply and cylinder vaporisation design rate. Buy a certified AS/NZS 5601 / AGA-approved commercial burner train; do not build a DIY gas valve or injector."
+        },
+        {
+          "item": "Unassigned 219 mm spec-sheet drawing callout",
+          "values": "Published spec-sheet drawing callouts include 219 mm and 543 mm alongside 997, 697, and 946 mm. 543 mm matches the Published internal depth (543 mm), whereas 219 mm is unassigned in the text.",
+          "use": "Keep 219 mm as a named unknown with two hypotheses: Hypothesis 1 (Accepted as plausible CAD reference) is that 219 mm measures an external sub-feature such as the lower base/dock skirt height or the mouth/landing projection; Hypothesis 2 (Rejected) is that 219 mm is the internal vault height or the removable flue height above the carton (rejected as internal height because internal height is explicitly Published as 238 mm, and rejected as the sole removable flue height because 997 mm total height minus 219 mm = 778 mm body height, which cannot fit inside the Published 613 mm tall shipping carton)."
+        }
+      ],
+      "inferred_envelope": {
+        "side_wall_mm": "111.0 mm average per side (Inferred from Published external width 946 mm minus Published internal width 724 mm = 222 mm total side wall thickness; 222 mm / 2 = 111.0 mm per side).",
+        "front_plus_rear_mm": "154 mm total front-plus-rear depth budget (Inferred from Published external depth 697 mm minus Published internal depth 543 mm = 154 mm).",
+        "vertical_stack_mm": "759 mm gross vertical difference including flue (Computed from Published external height 997 mm minus Published internal height 238 mm = 759 mm). What this cannot mean: It cannot mean 759 mm of solid floor-and-roof insulation, because the oven ships inside a Published 1077 x 815 x 613 mm carton with the flue pipe, flue collar, flue top, and flue cap detached. Using an Inferred solid body height of 520 mm (allowing 613 - 520 = 93 mm for top/bottom carton packaging), the true solid vertical stack (base + under-stone insulation + 30 mm stone + over-dome 3-layer insulation + shells) is 520 mm - 238 mm = 282 mm.",
+        "mouth_over_apex": "0.588 (Computed from Published mouth height 140 mm / Published internal apex height 238 mm = 0.5882; closer to the 0.63 Neapolitan heuristic than Arc Lite or Tread, leaving a 238 - 140 = 98 mm upper hood pocket that vents into the top flue collar above the mouth arch).",
+        "mouth_over_width": "0.649 (Computed from Published mouth width 470 mm / Published internal width 724 mm = 0.6492; unlike the 1.000 full-width mouths on Arc Lite and Tread, Dome XL closes in by (724 - 470) / 2 = 127.0 mm per side at the front cheeks, shielding both the left-side lateral gas burner and the right-side wood fire bed).",
+        "hypothesis_wall_stack": [
+          {
+            "layer": "Inner core dome and mouth arch (Published as 304 stainless steel, ceramic paint on mouth arch)",
+            "thickness_mm_low": 1.2,
+            "thickness_mm_high": 2.0,
+            "why": "Inferred heavier gauge 304 sheet to span the 724 x 543 mm internal vault without buckling under wood or 10.6 kW gas firing. No galvanised, zinc-plated, or cadmium-coated parts in the hot gas path. Adelaide 2026 estimate: retail 1.5 mm 304 sheet laser-cut and press-braked AUD 220-350; second-hand stainless tank/vat sheet via Gumtree AUD 70-140."
+          },
+          {
+            "layer": "Three-layer calcium-magnesium silicate thermal insulation (Published as 3 insulation layers of non-carcinogenic water-soluble calcium and magnesium silicate fibres)",
+            "thickness_mm_low": 75.0,
+            "thickness_mm_high": 100.0,
+            "why": "Inferred as three ~25 to 30 mm layers (e.g., two 25 mm AES wool blankets over the dome plus a third 25 mm AES blanket or 25-50 mm calcium silicate board under the 30 mm stone and around the lower perimeter), fitting inside the 111.0 mm side wall and 282 mm Inferred solid vertical stack. Modelled 1D steady-state heat flux check: for 75 mm of AES wool (k ~ 0.08 W/mK) with 500 C inside and 60 C outer skin (ISO 13732-1 short-contact bare-metal burn threshold), q = 0.08 * (500 - 60) / 0.075 = 469 W/m2, which easily dissipates by natural convection and radiation. Adelaide 2026 estimate: retail AES blanket roll + calcium silicate board AUD 240-380; second-hand industrial refractory offcuts AUD 80-160."
+          },
+          {
+            "layer": "Air gap, structural frame ribs, and probe routing space (Inferred)",
+            "thickness_mm_low": 8.0,
+            "thickness_mm_high": 30.0,
+            "why": "Inferred space inside the 111.0 mm side envelope for weldments supporting the 73.0 kg oven, digital ambient thermometer and dual meat-probe wiring, left-side gas manifold, and right-side wood-fire air duct."
+          },
+          {
+            "layer": "Outer case pressings and mid-wrap (Published as aluminised steel top pressing with ceramic paint, aluminised steel lower pressing with high-temp powder coat, brushed 304 mid-wrap, aluminium extrusion trim, GF20 PP dock)",
+            "thickness_mm_low": 1.2,
+            "thickness_mm_high": 2.0,
+            "why": "Inferred sheet thickness for the outer shell. Note that aluminised steel is used only on the outer cold shells, never inside the firebox."
+          }
+        ]
+      },
+      "geometry_for_cad": {
+        "body_height_mm": "520 mm (Inferred solid body height excluding the removable flue assembly, derived to fit inside the Published 613 mm carton height with 93 mm packaging clearance and providing 520 - 238 = 282 mm of combined floor and roof stack).",
+        "flue": {
+          "rises_to_total_height_mm": 997,
+          "clear_of_carton_mm": 384,
+          "rain_gap_mm": 3
+        },
+        "vault": "Inferred CAD sweep: Loft a 304 stainless inner dome from the 724 x 543 mm hearth footprint up to a 238 mm internal crown apex, narrowing forward to the 470 x 140 mm mouth arch (a 98 mm deep upper flame dam) with an exhaust port in the roof just behind the mouth arch that mates with the bolt-on flue collar, flue pipe, flue top, and flue cap (with the Published 3 mm rain guard gap from the top of the oven).",
+        "burner_side": "Left side for the lateral gas burner (matching the Arc Lite manual description), whereas for solid fuel the Dome XL manual instructs the user to push the established kiln-dried hardwood fire (10-20% moisture, 16% optimum) to the right over the duct grate until the flame rolls the roof; never use gas and wood together, never light wood with the gas burner, and never fit the door while the gas burner is on or while naked wood flames are present.",
+        "stone_plan_mm": [724, 543],
+        "confidence": "High on Published overall dimensions (946 x 697 x 997 mm with flue, 724 x 543 x 238 mm internal, 470 x 140 mm mouth, 3 mm flue rain gap); Medium on Inferred 520 mm body height and 477 mm flue assembly height (997 - 520 = 477 mm flue rise above body; 997 - 613 = 384 mm clear of the 613 mm shipping carton); High on the geometric inference that the 30 mm removable cordierite hearth (724 x 543 mm plan) must be segmented into multiple interlocking pieces around the burner guard and right-hand duct grate because the smallest plan dimension (543 mm) cannot pass through the 470 x 140 mm mouth diagonal (sqrt(470^2 + 140^2) = 490.4 mm). Adelaide 2026 estimate for 30 mm cordierite kiln shelves cut into multi-piece floor tiles: retail pottery supplier AUD 160-260; second-hand Gumtree heavy kiln shelves AUD 50-110."
+      }
+    }
+  ],
+  "shared_mechanism": "All three ovens use a lateral gas burner mounted at hearth level on the left side (Published as lateral gas in the comparison tool and described in the Arc Lite lighting instructions) that fires a yellow/orange diffusion-biased flame upward against the curved 304 stainless steel inner wall so buoyancy and momentum carry the flame in a continuous roll across the 150 mm (Arc Lite, Tread) or 238 mm (Dome XL) vault ceiling, heating the 12 mm or 30 mm cordierite stone from above by view-factor radiation while the 65 mm (Arc Lite, Tread) or 98 mm (Dome XL) drop from the crown apex to the mouth lintel dams the buoyant hot gas layer before spent products spill out the upper mouth (Arc Lite, Tread) or into the overhead flue collar (Dome XL); when the Dome XL is operated on kiln-dried hardwood instead of gas, the established fire is pushed to the opposite (right) side over the under-bed duct grate to drive the same ceiling flame roll from right to left.",
+  "do_not_treat_as_measured": [
+    "Exact sheet metal gauges for inner 304 liners, SPCC pressings, and aluminised steel shells (Inferred as 0.8 to 2.0 mm; not Published).",
+    "Exact thickness in millimetres and bulk density of individual calcium-magnesium silicate (AES) insulation layers (only layer count of 1 or 3 and fibre chemistry are Published; 25 to 100 mm thicknesses are Inferred).",
+    "Thermal conductivity k of Gozney's proprietary AES blanket (0.08 W/mK for ceramic fibre and 0.065 W/mK for calcium silicate board are Modelled physics constants, not measured values of Gozney's wool).",
+    "Outer skin surface temperatures during operation (not Published by Gozney; 60 C is referenced only as an ISO 13732-1 short-contact bare-metal burn threshold for Modelled heat-loss checks).",
+    "The solid body height of the Dome XL Gen 2 without its flue (520 mm is Inferred from the Published 613 mm shipping carton height; only the 997 mm total height including flue is Published).",
+    "The physical features corresponding to the unassigned 125 mm drawing callout on the Tread spec sheet and the unassigned 219 mm drawing callout on the Dome XL spec sheet (any geometric assignment is a stated hypothesis, not Published).",
+    "Left-versus-right side-wall thickness asymmetry around the lateral gas burner and wood grate (only the total external-minus-internal width difference is Published; the left/right split is Inferred).",
+    "Exact tile split lines, corner radii, and expansion clearances of the removable cordierite stones (Inferred from mouth geometry and thermal expansion arithmetic).",
+    "Adelaide 2026 retail and second-hand material cost bands in AUD (Inferred local market estimates for builder budgeting, not Published prices)."
+  ]
+}

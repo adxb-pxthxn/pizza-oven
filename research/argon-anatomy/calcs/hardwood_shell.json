@@ -1,0 +1,124 @@
+{
+  "case_a_sealed_50aes_25calsil": {
+    "R_total": 1.2879,
+    "flux_W_m2": 372.69,
+    "faces_from_outside": [
+      {
+        "name": "outside air",
+        "R": 0.1,
+        "temp_inner_face_C": 57.27
+      },
+      {
+        "name": "hardwood",
+        "R": 0.125,
+        "temp_inner_face_C": 103.85
+      },
+      {
+        "name": "calcium silicate 25 mm",
+        "R": 0.38461538461538464,
+        "temp_inner_face_C": 247.19
+      },
+      {
+        "name": "AES 50 mm",
+        "R": 0.625,
+        "temp_inner_face_C": 480.12
+      },
+      {
+        "name": "castable 20 mm",
+        "R": 0.013333333333333334,
+        "temp_inner_face_C": 485.09
+      },
+      {
+        "name": "gas film",
+        "R": 0.04,
+        "temp_inner_face_C": 500.0
+      }
+    ]
+  },
+  "case_a_wood_inner_C": 103.85,
+  "case_a_passes_80C": false,
+  "case_b_sealed_75aes_25calsil": {
+    "R_total": 1.6004,
+    "flux_W_m2": 299.92,
+    "faces_from_outside": [
+      {
+        "name": "outside air",
+        "R": 0.1,
+        "temp_inner_face_C": 49.99
+      },
+      {
+        "name": "hardwood",
+        "R": 0.125,
+        "temp_inner_face_C": 87.48
+      },
+      {
+        "name": "calcium silicate 25 mm",
+        "R": 0.38461538461538464,
+        "temp_inner_face_C": 202.83
+      },
+      {
+        "name": "AES 75 mm",
+        "R": 0.9375,
+        "temp_inner_face_C": 484.0
+      },
+      {
+        "name": "castable 20 mm",
+        "R": 0.013333333333333334,
+        "temp_inner_face_C": 488.0
+      },
+      {
+        "name": "gas film",
+        "R": 0.04,
+        "temp_inner_face_C": 500.0
+      }
+    ]
+  },
+  "case_b_wood_inner_C": 87.48,
+  "case_b_passes_80C": false,
+  "case_c_sealed_75aes_50calsil": {
+    "R_total": 1.9851,
+    "flux_W_m2": 241.81,
+    "faces_from_outside": [
+      {
+        "name": "outside air",
+        "R": 0.1,
+        "temp_inner_face_C": 44.18
+      },
+      {
+        "name": "hardwood",
+        "R": 0.125,
+        "temp_inner_face_C": 74.41
+      },
+      {
+        "name": "calcium silicate 50 mm",
+        "R": 0.7692307692307693,
+        "temp_inner_face_C": 260.41
+      },
+      {
+        "name": "AES 75 mm",
+        "R": 0.9375,
+        "temp_inner_face_C": 487.1
+      },
+      {
+        "name": "castable 20 mm",
+        "R": 0.013333333333333334,
+        "temp_inner_face_C": 490.33
+      },
+      {
+        "name": "gas film",
+        "R": 0.04,
+        "temp_inner_face_C": 500.0
+      }
+    ]
+  },
+  "case_c_wood_inner_C": 74.41,
+  "case_c_passes_80C": true,
+  "ventilated": {
+    "assumption": "Cavity air fixed at 30 C, h=8. This is only true if the slots actually move air.",
+    "calcium_silicate_outer_C": 79.45,
+    "insulation_flux_W_m2": 395.64,
+    "wood_inner_C": 26.43,
+    "wood_outer_C": 22.86,
+    "wood_flux_W_m2": 28.57
+  }
+}
