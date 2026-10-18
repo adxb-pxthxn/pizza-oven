@@ -1,0 +1,203 @@
+{
+  "case_c_with_castable": {
+    "R_total": 1.9851,
+    "flux_W_m2": 241.81,
+    "faces_hot_to_cold": [
+      {
+        "name": "gas film",
+        "R": 0.04,
+        "temp_inner_face_C": 500.0
+      },
+      {
+        "name": "castable",
+        "R": 0.0133,
+        "temp_inner_face_C": 490.33
+      },
+      {
+        "name": "AES",
+        "R": 0.9375,
+        "temp_inner_face_C": 487.1
+      },
+      {
+        "name": "calcium silicate",
+        "R": 0.7692,
+        "temp_inner_face_C": 260.41
+      },
+      {
+        "name": "hardwood",
+        "R": 0.125,
+        "temp_inner_face_C": 74.41
+      },
+      {
+        "name": "outside air",
+        "R": 0.1,
+        "temp_inner_face_C": 44.18
+      }
+    ]
+  },
+  "liner_75aes_50casi_20wood": {
+    "R_total": 1.9718,
+    "flux_W_m2": 243.43,
+    "faces_hot_to_cold": [
+      {
+        "name": "gas film",
+        "R": 0.04,
+        "temp_inner_face_C": 500.0
+      },
+      {
+        "name": "304 liner",
+        "R": 0.0001,
+        "temp_inner_face_C": 490.26
+      },
+      {
+        "name": "AES",
+        "R": 0.9375,
+        "temp_inner_face_C": 490.24
+      },
+      {
+        "name": "calcium silicate",
+        "R": 0.7692,
+        "temp_inner_face_C": 262.02
+      },
+      {
+        "name": "hardwood",
+        "R": 0.125,
+        "temp_inner_face_C": 74.77
+      },
+      {
+        "name": "outside air",
+        "R": 0.1,
+        "temp_inner_face_C": 44.34
+      }
+    ]
+  },
+  "liner_75aes_50casi_14wood": {
+    "R_total": 1.9343,
+    "flux_W_m2": 248.15,
+    "faces_hot_to_cold": [
+      {
+        "name": "gas film",
+        "R": 0.04,
+        "temp_inner_face_C": 500.0
+      },
+      {
+        "name": "304 liner",
+        "R": 0.0001,
+        "temp_inner_face_C": 490.07
+      },
+      {
+        "name": "AES",
+        "R": 0.9375,
+        "temp_inner_face_C": 490.05
+      },
+      {
+        "name": "calcium silicate",
+        "R": 0.7692,
+        "temp_inner_face_C": 257.41
+      },
+      {
+        "name": "hardwood",
+        "R": 0.0875,
+        "temp_inner_face_C": 66.53
+      },
+      {
+        "name": "outside air",
+        "R": 0.1,
+        "temp_inner_face_C": 44.81
+      }
+    ]
+  },
+  "metal_skin_75aes": {
+    "R_total": 1.0777,
+    "flux_W_m2": 445.4,
+    "faces_hot_to_cold": [
+      {
+        "name": "gas film",
+        "R": 0.04,
+        "temp_inner_face_C": 500.0
+      },
+      {
+        "name": "304 liner",
+        "R": 0.0001,
+        "temp_inner_face_C": 482.18
+      },
+      {
+        "name": "AES",
+        "R": 0.9375,
+        "temp_inner_face_C": 482.14
+      },
+      {
+        "name": "304 skin",
+        "R": 0.0001,
+        "temp_inner_face_C": 64.58
+      },
+      {
+        "name": "outside air",
+        "R": 0.1,
+        "temp_inner_face_C": 64.54
+      }
+    ]
+  },
+  "metal_skin_40aes": {
+    "R_total": 0.6402,
+    "flux_W_m2": 749.81,
+    "faces_hot_to_cold": [
+      {
+        "name": "gas film",
+        "R": 0.04,
+        "temp_inner_face_C": 500.0
+      },
+      {
+        "name": "304 liner",
+        "R": 0.0001,
+        "temp_inner_face_C": 470.01
+      },
+      {
+        "name": "AES",
+        "R": 0.5,
+        "temp_inner_face_C": 469.95
+      },
+      {
+        "name": "304 skin",
+        "R": 0.0001,
+        "temp_inner_face_C": 95.04
+      },
+      {
+        "name": "outside air",
+        "R": 0.1,
+        "temp_inner_face_C": 94.98
+      }
+    ]
+  },
+  "metal_skin_25aes": {
+    "R_total": 0.4526,
+    "flux_W_m2": 1060.43,
+    "faces_hot_to_cold": [
+      {
+        "name": "gas film",
+        "R": 0.04,
+        "temp_inner_face_C": 500.0
+      },
+      {
+        "name": "304 liner",
+        "R": 0.0001,
+        "temp_inner_face_C": 457.58
+      },
+      {
+        "name": "AES",
+        "R": 0.3125,
+        "temp_inner_face_C": 457.5
+      },
+      {
+        "name": "304 skin",
+        "R": 0.0001,
+        "temp_inner_face_C": 126.11
+      },
+      {
+        "name": "outside air",
+        "R": 0.1,
+        "temp_inner_face_C": 126.04
+      }
+    ]
+  }
+}
