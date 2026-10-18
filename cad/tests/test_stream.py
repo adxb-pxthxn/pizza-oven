@@ -74,6 +74,9 @@ class StormcloudPhysicsTest(unittest.TestCase):
         self.assertAlmostEqual(thermal["wall"]["outer_C"], thermal["wall"]["oned_C"], delta=1.0)
         self.assertAlmostEqual(thermal["floor"]["outer_C"], thermal["floor"]["oned_C"], delta=1.0)
         self.assertEqual(thermal["dragon"], "Stormcloud")
+        live = evaluate(stormcloud())
+        self.assertAlmostEqual(thermal["wall"]["oned_C"], live["skin_C"], delta=0.2)
+        self.assertAlmostEqual(thermal["floor"]["oned_C"], live["under_C"], delta=0.2)
 
 
 class TyraxesPhysicsTest(unittest.TestCase):
