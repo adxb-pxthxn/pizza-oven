@@ -126,6 +126,8 @@ class Stack:
     stepped: bool = False
     # Shrykos folds the step. Arrax and Vermax stay square.
     sloped: bool = False
+    # Morghul: the fold is the joint. Brow and tunnel lift separately.
+    split: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -360,6 +362,31 @@ def _slope_plate(pid: str, module: str, material: str, zone: str,
         shift(y0, z_hi, start + thick),
     ]
     return _prism(pid, module, material, zone, x, dx, profile)
+
+
+def _append_cowl(items: list, s: Stack, pid: str, material: str, zone: str,
+                 x: float, dx: float, y0: float, z_hi: float, y1: float, z_lo: float,
+                 start: float, thick: float) -> None:
+    """One plate, or two plates with a gap at the fold when the hood splits."""
+    if not s.split:
+        items.append(_slope_plate(pid, "hood", material, zone, x, dx, y0, z_hi, y1, z_lo, start, thick))
+        return
+    mid_y = (y0 + y1) * 0.5
+    mid_z = (z_hi + z_lo) * 0.5
+    run = y1 - y0
+    rise = z_hi - z_lo
+    length = math.hypot(run, rise)
+    gap = 2.0
+    dy = (run / length) * (gap * 0.5)
+    dz = ((z_lo - z_hi) / length) * (gap * 0.5)
+    items.append(_slope_plate(
+        f"{pid}-upper", "brow", material, zone, x, dx,
+        y0, z_hi, mid_y - dy, mid_z - dz, start, thick,
+    ))
+    items.append(_slope_plate(
+        f"{pid}-lower", "tunnel", material, zone, x, dx,
+        mid_y + dy, mid_z + dz, y1, z_lo, start, thick,
+    ))
 
 
 def _box(pid: str, module: str, material: str, zone: str, x: float, y: float, z: float,
@@ -604,10 +631,7 @@ def parts(s: Stack) -> list[dict]:
             liner_body_y = y1 + ((s.front_h - bh) / slope_len) * t + seam
         items.append(_box("liner-top-body", "hood", "mild", "hot", hx0, liner_body_y, bh, cw, cl - liner_body_y, t))
         if s.sloped:
-            items.append(_slope_plate(
-                "liner-cowl", "hood", "mild", "hot",
-                hx0, cw, launch, z_top, y1, bh, 0.0, t,
-            ))
+            _append_cowl(items, s, "liner-cowl", "mild", "hot", hx0, cw, launch, z_top, y1, bh, 0.0, t)
         else:
             items.append(_box(
                 "liner-step", "hood", "mild", "hot",
@@ -623,10 +647,25 @@ def parts(s: Stack) -> list[dict]:
         items.append(_box("liner-rear", "hood", "mild", "hot", hx0, cl - t, 0.0, cw, t, bh))
         if s.sloped:
             for side, xside in (("port", hx0), ("starboard", hx0 + cw - t)):
-                items.append(_prism(
-                    f"liner-{side}-cowl", "hood", "mild", "hot", xside, t,
-                    [[launch, 0.0], [y1, 0.0], [y1, bh], [launch, s.front_h]],
-                ))
+                if s.split:
+                    mid_y = (launch + y1) * 0.5
+                    def _z_at(y_pos: float) -> float:
+                        return s.front_h + (bh - s.front_h) * (y_pos - launch) / (y1 - launch)
+                    cut_u = mid_y - 1.0
+                    cut_l = mid_y + 1.0
+                    items.append(_prism(
+                        f"liner-{side}-cowl-upper", "brow", "mild", "hot", xside, t,
+                        [[launch, 0.0], [cut_u, 0.0], [cut_u, _z_at(cut_u)], [launch, s.front_h]],
+                    ))
+                    items.append(_prism(
+                        f"liner-{side}-cowl-lower", "tunnel", "mild", "hot", xside, t,
+                        [[cut_l, 0.0], [y1, 0.0], [y1, bh], [cut_l, _z_at(cut_l)]],
+                    ))
+                else:
+                    items.append(_prism(
+                        f"liner-{side}-cowl", "hood", "mild", "hot", xside, t,
+                        [[launch, 0.0], [y1, 0.0], [y1, bh], [launch, s.front_h]],
+                    ))
     else:
         items.append(_box("liner-top", "hood", "mild", "hot", hx0, 0.0, z_top, cw, cl, t))
         items.append(_box("liner-port", "hood", "mild", "hot", hx0, t + seam, 0.0, t, cl - 2.0 * t - 2.0 * seam, s.front_h))
@@ -701,16 +740,16 @@ def parts(s: Stack) -> list[dict]:
         items.append(_box("skin-starboard-body", "hood", "al", "cool", hx0 + cw + skin_off - s.skin_t, skin_side_y, 0.0, s.skin_t, cl - skin_side_y, bh + s.liner_t + s.ins_t + s.air_gap))
         items.append(_box("skin-rear", "hood", "al", "cool", skin_x, cl + skin_off - s.skin_t, 0.0, cw + 2 * skin_off, s.skin_t, bh + s.liner_t + s.ins_t + s.air_gap))
         if s.sloped:
-            items.append(_slope_plate(
-                "ins-cowl", "hood", "micro", "cool",
+            _append_cowl(
+                items, s, "ins-cowl", "micro", "cool",
                 ins_x, cw + 2.0 * s.ins_t,
                 launch, z_top, y1, bh, t, s.ins_t,
-            ))
-            items.append(_slope_plate(
-                "skin-cowl", "hood", "al", "cool",
+            )
+            _append_cowl(
+                items, s, "skin-cowl", "al", "cool",
                 skin_x, cw + 2.0 * skin_off,
                 launch, z_top, y1, bh, t + s.ins_t + s.air_gap, s.skin_t,
-            ))
+            )
         else:
             step_ins_h = s.front_h - bh - s.ins_t
             items.append(_box("ins-step", "hood", "micro", "cool", ins_x, launch, body_ins_z + s.ins_t, cw + 2 * s.ins_t, s.ins_t, step_ins_h))
@@ -798,8 +837,14 @@ def parts(s: Stack) -> list[dict]:
     skirt_gap = 2.0
     skirt_t = 1.2
     skirt_z = -skirt_h - skirt_gap
-    items.append(_box("skirt-port", "hood", "al", "cool", port_face - skirt_gap - skirt_t, 8.0, skirt_z, skirt_t, cl - 16.0, skirt_h))
-    items.append(_box("skirt-starboard", "hood", "al", "cool", star_face + skirt_gap, 8.0, skirt_z, skirt_t, cl - 16.0, skirt_h))
+    if s.split:
+        cut = (launch + y1) * 0.5
+        for side, xside in (("port", port_face - skirt_gap - skirt_t), ("starboard", star_face + skirt_gap)):
+            items.append(_box(f"skirt-{side}-brow", "brow", "al", "cool", xside, 8.0, skirt_z, skirt_t, cut - 1.0 - 8.0, skirt_h))
+            items.append(_box(f"skirt-{side}-tunnel", "tunnel", "al", "cool", xside, cut + 1.0, skirt_z, skirt_t, (8.0 + cl - 16.0) - (cut + 1.0), skirt_h))
+    else:
+        items.append(_box("skirt-port", "hood", "al", "cool", port_face - skirt_gap - skirt_t, 8.0, skirt_z, skirt_t, cl - 16.0, skirt_h))
+        items.append(_box("skirt-starboard", "hood", "al", "cool", star_face + skirt_gap, 8.0, skirt_z, skirt_t, cl - 16.0, skirt_h))
     front_skirt_z = -s.deck_t - 0.8 - skirt_h
     items.append(_box(
         "skirt-front", "hood", "al", "cool",
@@ -811,6 +856,14 @@ def parts(s: Stack) -> list[dict]:
     # Latches on the side walls, below the flange and below the hood insulation.
     items.append(_box("latch-port", "pit", "mild", "hot", port_face - 16.0, cl * 0.55, -52.0, 8.0, 18.0, 12.0))
     items.append(_box("latch-starboard", "pit", "mild", "hot", star_face + 8.0, cl * 0.55, -52.0, 8.0, 18.0, 12.0))
+
+    if s.split:
+        brow_names = ("brow", "door", "flue", "damper", "hinge", "lintel", "cheek", "skirt-front")
+        for item in items:
+            if item["module"] != "hood":
+                continue
+            pid = item["id"]
+            item["module"] = "brow" if any(token in pid for token in brow_names) else "tunnel"
 
     return items
 
@@ -965,7 +1018,7 @@ def aabb_collisions(items: list[dict]) -> list[tuple[str, str]]:
 def evaluate(s: Stack) -> dict:
     items = parts(s)
     rows = []
-    modules = {"pit": 0.0, "hearth": 0.0, "hood": 0.0}
+    modules = {"pit": 0.0, "hearth": 0.0, "hood": 0.0, "brow": 0.0, "tunnel": 0.0}
     for part in items:
         mass = part_mass_kg(part)
         rows.append((part["id"], part["module"], part["material"], mass))

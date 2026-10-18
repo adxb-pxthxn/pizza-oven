@@ -7,7 +7,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/stream-2-modular`. Draft PR. Do not merge.
-  - Shrykos is current: 30.6 kg, 45° cowl, mouth 424 × 185. Arrax is the square step. Vermax is the box. Stream 1 has used Stormcloud and Tyraxes.
+  - Morghul is current: 30.6 kg, fold is the joint, heaviest piece is the pit at 10.4 kg. Shrykos is the one-piece cowl. Stream 1 has used Stormcloud and Tyraxes.
 
 ---
 
