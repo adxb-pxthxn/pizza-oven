@@ -155,16 +155,15 @@ class TessarionPhysicsTest(unittest.TestCase):
         self.assertEqual(saved["design"]["length"], 780.0)
         live = evaluate(Vault(**saved["design"]))
         self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
-        # Door shut. The old 214 C figure was an open mouth.
-        self.assertAlmostEqual(live["bread_floor_C"], 240.0, delta=2.0)
-        self.assertLess(live["bread_floor_C"], 250.0)
-        self.assertLessEqual(live["floor_C"], 305.0)
+        # Shut door, gas 230 C, 75 mm under the floor.
+        self.assertAlmostEqual(live["bread_floor_C"], 216.0, delta=2.0)
+        self.assertLess(live["bread_floor_C"], 230.0)
+        self.assertLessEqual(live["floor_C"], 310.0)
         self.assertGreaterEqual(live["scorch_s"], 125.0)
         gate = json.loads((ROOT / "design" / "stream-1" / "tessarion" / "gate.json").read_text(encoding="utf-8"))
         self.assertEqual(gate["solids"], 48)
         self.assertEqual(gate["interference"], [])
-        self.assertAlmostEqual(gate["door_zmin"], 63.4, delta=0.2)
-        self.assertGreater(gate["door_zmin"], gate["sill_zmax"])
+        self.assertGreater(gate["door_zmin"], gate["sill_zmax"] + 2.0)
 
 
 class SunfyrePhysicsTest(unittest.TestCase):
@@ -175,10 +174,30 @@ class SunfyrePhysicsTest(unittest.TestCase):
         self.assertEqual(saved["design"]["door_pose"], "shut")
         live = evaluate(Vault(**saved["design"]))
         self.assertAlmostEqual(saved["result"]["bread_floor_C"], live["bread_floor_C"], delta=0.5)
-        self.assertAlmostEqual(live["bread_floor_C"], 211.0, delta=2.0)
+        self.assertAlmostEqual(live["bread_floor_C"], 216.0, delta=2.0)
         self.assertLess(live["bread_floor_C"], 230.0)
         self.assertGreater(live["scorch_s"], 120.0)
-        self.assertAlmostEqual(live["floor_C"], 300.8, delta=1.0)
+        self.assertAlmostEqual(live["floor_C"], 305.1, delta=1.0)
+
+
+class GreyGhostPhysicsTest(unittest.TestCase):
+    def test_broil_bay_underside_stays_touchable(self):
+        from cad.freecad.stream_physics import bay_underside
+
+        path = ROOT / "design" / "stream-1" / "optimizer.json"
+        saved = json.loads(path.read_text(encoding="utf-8"))["grey-ghost"]
+        self.assertEqual(saved["design"]["floor_fibre"], 75.0)
+        self.assertEqual(saved["design"]["length"], 780.0)
+        self.assertEqual(saved["design"]["plate_pose"], "rear")
+        live = evaluate(Vault(**saved["design"]))
+        bay = bay_underside(Vault(**saved["design"]))
+        self.assertAlmostEqual(saved["result"]["ready_kg"], live["ready_kg"], delta=0.05)
+        self.assertLessEqual(live["floor_C"], 315.0)
+        self.assertGreaterEqual(live["scorch_s"], 120.0)
+        self.assertLessEqual(live["under_C"], 60.0)
+        self.assertLessEqual(bay["under_C"], 60.0)
+        self.assertLess(live["bread_floor_C"], 230.0)
+        self.assertLessEqual(live["cooldown_ratio"], 0.8)
 
 
 if __name__ == "__main__":

@@ -299,6 +299,26 @@ def warp(v: Vault, q_down: float) -> dict[str, float]:
     }
 
 
+def bay_underside(v: Vault, view_crown: float = 0.55, view_mouth: float = 0.20) -> dict[str, float]:
+    """Bare front bay under the broil crown. The plate is parked behind it.
+
+    The view pair is the hotter of the two cases checked while sizing the
+    floor blanket. More mouth view runs a cooler floor.
+    """
+    resistance = floor_resistance(v)
+    crown = v.broil_gas + 273.15
+    ambient = T_AMB + 273.15
+    tf = 400.0
+    for _ in range(60):
+        tk = tf + 273.15
+        q_in = 0.79 * SIGMA * view_crown * (crown**4 - tk**4)
+        q_out = 0.79 * SIGMA * view_mouth * (tk**4 - ambient**4) + (tf - T_AMB) / resistance
+        tf += (q_in - q_out) * 0.0015
+        tf = min(max(tf, 40.0), 520.0)
+    under = T_AMB + ((tf - T_AMB) / resistance) / 10.0
+    return {"floor_C": tf, "under_C": under, "R": resistance}
+
+
 def broil_flux(v: Vault) -> float:
     """Plate out. Steak 70 mm under a  sooted crown at the broil setpoint."""
     crown = v.broil_gas + 273.15

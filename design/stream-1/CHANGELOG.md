@@ -8,3 +8,4 @@
 - Sunfyre: shut-door leak is 3% of the open mouth. Gas 230°C holds the bread floor at 211°C. Gas 260°C would hold 240°C. Same solid as Tessarion.
 - Rails: every solid carries the full slide, 590 mm on the 680 mm barrel and 690 mm on the 780 mm barrel. Tessarion matches Vermax at 37.3 kg.
 - Grate: the five rods stay in the 240 mm bay on Tessarion as well. The plate clears them by about 15 mm when it slides forward.
+- Grey Ghost: 75 mm under the whole floor. Bare bay underside 56°C. Pizza floor 305°C, 38.0 kg, cool-down 0.67× the Tread. Bread gas 230°C holds 216°C.

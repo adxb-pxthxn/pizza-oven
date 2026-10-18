@@ -8,7 +8,7 @@
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-Stream 1 is the long barrel after Morning and Moondancer. Best current oven is the Vermax body: 37.3 kg, 240 mm broil bay, pizza floor 301°C, open cool-down 0.66× the Tread. Bread is Sunfyre's gas, 230°C, floor 211°C, on the Tessarion solid. Do not merge to main.
+Stream 1 best oven is Grey Ghost: 38.0 kg, 75 mm floor blanket, bay underside 56°C, pizza floor 305°C, cool-down 0.67× the Tread. Bread gas 230°C holds 216°C. Do not merge to main.
 
 ## 2. Completed in This Session
 - [x] Shop stack and heat model in `cad/freecad/stream_physics.py`.

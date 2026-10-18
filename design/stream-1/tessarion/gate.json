@@ -5,7 +5,7 @@
   "bbox": {
     "x": 669.6,
     "y": 1089.6,
-    "z": 410.1
+    "z": 435.1
   },
   "interference": [],
   "press_fits": [
@@ -30,7 +30,7 @@
       "mm3": 176.34
     }
   ],
-  "analytical_ready_kg": 37.257,
+  "analytical_ready_kg": 38.025,
   "door_pose": "shut",
   "box_d": 48.0,
   "png": {
@@ -41,7 +41,7 @@
   },
   "sill_ymax": -86.8,
   "steel_ymin": 40.0,
-  "sill_zmax": 60.4,
+  "sill_zmax": 85.4,
   "side_gap_mm": 10.0,
-  "door_zmin": 63.4
+  "door_zmin": 88.4
 }
