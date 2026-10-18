@@ -1,0 +1,48 @@
+CERN Open Hardware Licence Version 2 - Permissive (CERN-OHL-P v2)
+
+Preamble
+CERN has developed this licence to promote collaboration on the hardware
+designs used in its experimental programme and to advance the open hardware
+movement. This licence governs the use, copying, modification, and
+distribution of hardware design documentation and the manufacture and
+distribution of products derived from that documentation. It is designed to be
+permissive, allowing users to modify and distribute the designs and make
+hardware based on them, while keeping the design open and attribution intact.
+
+1. Definitions
+1.1 "Licence" means this CERN Open Hardware Licence Version 2 - Permissive.
+1.2 "Source" means information such as design documentation, schematics,
+CAD models, drawings, and software, which is used to design and manufacture
+the Hardware.
+1.3 "Hardware" means any physical object designed or manufactured based
+on the Source.
+1.4 "You" means an individual or legal entity exercising rights under this Licence.
+1.5 "Licensee" means any person or entity exercising rights under this Licence.
+1.6 "Grantor" means any person or entity that releases Source under this Licence.
+
+2. Grant of Rights
+2.1 Grant of Copyright: Each Grantor hereby grants to You a perpetual,
+worldwide, non-exclusive, royalty-free copyright licence to use, copy,
+modify, and distribute the Source.
+2.2 Grant of Patent Rights: Each Grantor hereby grants to You a perpetual,
+worldwide, non-exclusive, royalty-free patent licence to make, have made,
+use, sell, offer for sale, import and otherwise transfer the Hardware based
+on the Source.
+2.3 Permissive Terms: You may redistribute and modify the Source and
+manufacture Hardware with no copyleft obligation. You may combine the
+Source with other designs, subject only to preserving attribution and
+notices as set forth in Section 3.
+
+3. Conditions
+3.1 Attribution: You must keep intact all copyright notices, trademarks,
+and disclaimers that appear on or in the Source.
+3.2 Documentation: If You distribute Source or Hardware, You must include
+a copy of this Licence and appropriate credit to the original creators.
+
+4. Disclaimer of Warranty & Limitation of Liability
+THE SOURCE AND HARDWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES, OR OTHER LIABILITY ARISING FROM OR IN CONNECTION WITH THE SOURCE
+OR HARDWARE OR THE USE OR OTHER DEALINGS IN THE SOURCE OR HARDWARE.
