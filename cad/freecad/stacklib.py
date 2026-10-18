@@ -132,6 +132,8 @@ class Stack:
     seated: bool = False
     # Seasmoke: a second grate, up at cooking height. The low rails stay for the fire.
     grill: bool = False
+    # Caraxes: the roof stays high over the pizza. A plate hangs under it for the steak.
+    broiler: bool = False
 
     def to_json(self) -> dict:
         return asdict(self)
@@ -795,10 +797,31 @@ def parts(s: Stack) -> list[dict]:
         "soffit-riser", "hood", "mild", "hot",
         soffit_x, y0 - 1.5, s.soffit_h, soffit_w, 1.5, riser_h,
     ))
-    # Broiler rods under the soffit, over the rear half of the deck.
-    rod_z = s.soffit_h - RACK_BELOW_SOFFIT
-    rod_y0 = max(y0, 200.0)
-    rod_y1 = min(DECK_L - 10.0, SOFFIT_Y1)
+    # Caraxes hangs a plate under the high roof. The steak rack follows the plate,
+    # not the roof, so the pizza still has the tall chamber.
+    plate_z = 100.0
+    if s.broiler:
+        # Behind a centred 15 inch pizza (rear edge near Y 454). The pie stays
+        # under the high roof. The steak slides back under this plate.
+        plate_y0 = 470.0
+        plate_y1 = chamber_l() - 20.0
+        items.append(_box(
+            "soffit-broiler", "hood", "mild", "hot",
+            soffit_x + 6.0, plate_y0, plate_z, soffit_w - 12.0, plate_y1 - plate_y0, 1.2,
+        ))
+        for step, xoff in enumerate((-80.0, 80.0)):
+            items.append(_tube(
+                f"post-broiler-{step}", "hood", "ss", "hot",
+                [xoff, (plate_y0 + plate_y1) * 0.5, plate_z + 1.2],
+                [0, 0, 1], 0.0, 2.0, bh - (plate_z + 1.2),
+            ))
+        rod_z = plate_z - RACK_BELOW_SOFFIT
+        rod_y0 = plate_y0 + 8.0
+        rod_y1 = plate_y1 - 8.0
+    else:
+        rod_z = s.soffit_h - RACK_BELOW_SOFFIT
+        rod_y0 = max(y0, 200.0)
+        rod_y1 = min(DECK_L - 10.0, SOFFIT_Y1)
     rod_x0 = soffit_x + 8.0
     rod_x1 = soffit_x + soffit_w - 8.0
     items.append(_box("rack-rail-port", "hood", "ss", "hot", rod_x0, rod_y0, rod_z, 4.0, rod_y1 - rod_y0, 4.0))

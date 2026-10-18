@@ -7,7 +7,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/stream-2-modular`. Draft PR. Do not merge.
-  - Seasmoke is current: 31.0 kg, brow foot butts the skin corner, pit 10.5 kg is still the heaviest piece. Morghul is the bare split. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
+  - Caraxes is current: 32.4 kg, 150 mm roof, steak plate behind the pizza, pit 10.5 kg still heaviest. Seasmoke is the seat. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, and Grey Ghost.
 
 ---
 

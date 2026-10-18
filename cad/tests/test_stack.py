@@ -180,5 +180,30 @@ class SeasmokeTests(unittest.TestCase):
         self.assertLess(items["ferrule-brow"]["r_in"], items["grip-brow"]["profile"][0][1])
 
 
+class CaraxesTests(unittest.TestCase):
+    def test_the_roof_stays_high_and_the_plate_hangs_back(self) -> None:
+        design = Stack(
+            dragon="Caraxes",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True,
+        )
+        items = {part["id"]: part for part in parts(design)}
+        plate = items["soffit-broiler"]
+        self.assertGreaterEqual(plate["corner"][1], 460.0)
+        self.assertAlmostEqual(plate["corner"][2], 100.0, places=2)
+        self.assertAlmostEqual(items["soffit"]["corner"][2], 150.0, places=2)
+        self.assertLess(items["rack-rod-0"]["origin"][2], plate["corner"][2])
+        result = evaluate(design)
+        self.assertEqual(result["aabb_hits"], 0)
+        self.assertGreaterEqual(result["mouth_h"], 180.0)
+        self.assertLessEqual(result["skin_C"], 55.0)
+        self.assertLess(result["modules_kg"]["tunnel"], 8.5)
+        self.assertLess(result["modules_kg"]["pit"], 12.0)
+        self.assertLess(result["heatup_min"], 25.0)
+
+
 if __name__ == "__main__":
     unittest.main()

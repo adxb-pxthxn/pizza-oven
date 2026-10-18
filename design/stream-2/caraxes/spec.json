@@ -1,0 +1,10 @@
+{
+  "dragon": "Caraxes",
+  "roof_mm": 150,
+  "broiler": "1.2 mm mild plate at Z 100, Y 470 to 640, behind a centred 15 inch pizza. Two posts at Y 555, aft of the soffit. Rack 50 mm under the plate.",
+  "mouth_mm": [424, 185],
+  "ready_kg": 32.387,
+  "modules_kg": {"pit": 10.482, "hearth": 8.963, "brow": 5.106, "tunnel": 7.836},
+  "solver": "With the roof held near 150 mm, SLSQP reaches 31.6 kg at 18 mm board, 20 mm air, and the 148 mm bound. Shop keeps 22 mm and 150 mm.",
+  "note": "Seasmoke seat and grill. The pizza stays under the high roof. The steak slides back under the plate. Reported radiant flux is still the 550°C surface at view factor 0.65."
+}

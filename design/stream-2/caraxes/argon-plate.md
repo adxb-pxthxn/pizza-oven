@@ -1,0 +1,1 @@
+The managed agent put the pizza's rear edge at Y 454 and the plate at Y 470, about 15 mm clear. It warned that a post between Y 470 and Y 540 would hit the soffit. The posts are at Y 555, aft of the soffit. Both overlap gates are clear.
