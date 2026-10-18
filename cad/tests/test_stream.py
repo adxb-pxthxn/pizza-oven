@@ -196,6 +196,8 @@ class GreyGhostPhysicsTest(unittest.TestCase):
         self.assertGreaterEqual(live["scorch_s"], 120.0)
         self.assertLessEqual(live["under_C"], 60.0)
         self.assertLessEqual(bay["under_C"], 60.0)
+        growth_bay = 13.0e-6 * (bay["floor_C"] - 20.0) * saved["design"]["steel_w"]
+        self.assertGreater(saved["design"]["stop_gap"], growth_bay)
         self.assertLess(live["bread_floor_C"], 230.0)
         self.assertLessEqual(live["cooldown_ratio"], 0.8)
 
