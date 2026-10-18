@@ -1,7 +1,7 @@
 # Agent Handover Protocol & Session Status
 
-**Active Agent:** antigrav
-**Current Branch / Commit:** main
+**Active Agent:** cursor
+**Current Branch / Commit:** cursor/cloud-env-setup-47d3
 **Overall Status:** READY_FOR_USER_INPUT
 
 ---
@@ -21,6 +21,8 @@ The repository is a clean slate awaiting the user's initial design criteria and 
 ---
 
 ## 2. Completed in This Session
+- [x] Cloud Agent environment: default image (Python 3.12, Node.js 22, Chrome). No package install. Engineering CLIs and the Anatomy dial-indicator rebuild run offline.
+- [x] Fixed material-sourcing `BOMAnalyzer` so `typing.Any` is imported. `cli.py scan` and the unittest module import again.
 - [x] Cleansed all hardcoded CAD models, exports, and generator scripts from `cad/`.
 - [x] Cleansed `bom/bom.csv` into a clean, un-opinionated OSHWA-compliant template.
 - [x] Removed assumed engineering specification, assembly guide, and thermal calculation docs.
