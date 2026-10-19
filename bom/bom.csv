@@ -76,3 +76,16 @@ QS-100,Quicksilver pintle,"Mild arm welded to the pit wall, stainless pin and co
 UR-100,Urrax hood pads,"Two mild pads, 100 by 20 by 1.5 mm, one each side of the tunnel skin",1,Metal,Second-hand mild,6,AUD,ESTIMATE AUD. Posts stand on the outer pad. Closest edge 7.5 mm. The skin is between the pads. Not a press.
 TR-100,Terrax brow pads,"Two mild pads, 100 by 20 by 1.5 mm, one each side of the brow skin",1,Metal,Second-hand mild,6,AUD,ESTIMATE AUD. Same pad as the tunnel grip. Posts clear the skin by 1.5 mm. Not a press.
 TR-110,Terrax door pads,"Two mild pads, 100 by 20 by 1.5 mm, one each side of the door skin",1,Metal,Second-hand mild,6,AUD,ESTIMATE AUD. The door grip stands on the outer pad. Inner pad sits in the door air gap. Rivet the stack. Not a press.
+SN-100,Bench spindle rails,"40×40×3 mild SHS, 600 mm",2,Metal,Metal merchant,12,AUD,ESTIMATE AUD Oct 2026. Cold cut saw. Two rails. No galvanised.
+SN-110,Bench spindle bridge and sleepers,6 mm mild plate,1,Metal,Sheet offcut,8,AUD,ESTIMATE AUD. Bolt the pillow blocks to the bridge. Do not bore a housing.
+SN-120,Pillow block,UCP204 20 mm bore,2,Bearing,Bearing merchant,18,AUD,ESTIMATE AUD. Catalogue centre height 33.3 mm. Not a measured housing.
+SN-130,Spindle shaft,Bright mild Ø20 × 280 mm,1,Metal,Metal merchant,8,AUD,ESTIMATE AUD. Turn the seats and the chuck nose on the makerspace lathe.
+SN-140,Spindle and motor pulleys,"6 mm mild, Ø100 and Ø50",1,Metal,Sheet offcut,6,AUD,ESTIMATE AUD. 2:1. Shaft ceiling 2450 rpm with the class motor. Bore to the shafts.
+SN-150,Sanding disc,6 mm mild Ø120,1,Metal,Sheet offcut,4,AUD,ESTIMATE AUD. Outboard of the Ø100 pulley. Pin or bolt. Jarrah and aluminium. Not a 2×72 belt.
+SN-160,Jarrah handwheel and feet,Jarrah offcut,1,Timber,Second-hand jarrah,12,AUD,ESTIMATE AUD. Wood at the hand and the feet. Not bonded to steel.
+SN-170,Aluminium guard,1.0 mm aluminium sheet,1,Metal,Sheet offcut,6,AUD,ESTIMATE AUD. Lifts off. Engrave 2450 only after the pulleys are fitted. Do not weld it to the mild.
+SN-180,Bed fasteners,"M10 plain or stainless, one Torx family",1,Hardware,Fastener merchant,14,AUD,ESTIMATE AUD. No zinc. No galvanised.
+SN-190,Drill chuck,13 mm,1,Tooling,Shop chuck or tool merchant,22,AUD,ESTIMATE AUD. Day-one nose. Pins and the Ø8.4 drill. A Ø22 grip stays on the makerspace lathe.
+SN-200,Open belt,"Pitch about 575 mm at 168 mm centres",1,Belt,Bearing or belting merchant,12,AUD,ESTIMATE AUD. Optional on day one. A longer belt means the motor slides back. The disc sands without it.
+SN-210,Donor motor and controller,ProForm Pro 2000 treadmill drive,1,Donor,Already in the room,0,AUD,Not a purchase. Consumer Reports m204502 is the donor listing. Keep the original controller and safety key. Mains check by someone who already does that work.
+SN-220,Separate motor fan,Small fan on the motor mount,1,Electrical,Electronics bin,15,AUD,ESTIMATE AUD. The integral fan dies at low speed. Use it under about 500 rpm.

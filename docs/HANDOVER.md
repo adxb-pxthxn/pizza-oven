@@ -1,14 +1,16 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T22:47:14Z
-**Current Branch / Commit:** design/stream-1-original, with origin/main @ 5254441
+**Timestamp:** 2026-10-19T18:33:47Z
+**Current Branch / Commit:** cursor/bench-lathe-start-a4cf @ f62ebe6
 **Overall Status:** IN_PROGRESS
 
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-Best oven on this branch is Caraxes: Grey Ghost's door and skin, with a finger hollow in the grip. 38.7 kg, pizza floor 305°C, cool-down 42 min, 0.67× the Tread. Shop sheet is `design/stream-1/caraxes/BUILD.md`. Inspiration was re-read at 2026-10-18T22:37Z (five Wright lessons, then Klättermusen). Caraxes stands.
+This branch is a shop tool, not an oven. The bench spindle is a bolt-together bed for tomorrow morning: two 600 mm rails, two UCP204 blocks, one Ø20 shaft, and the ProForm motor if it is in the room. Shop sheet is `design/shop/bench-lathe/BUILD.md`. Figure is `design/shop/bench-lathe/bench-spindle.html`. Caraxes and Terrax are unchanged. Do not give this machine a dragon name.
+
+Best oven on the stream-1 line is still Caraxes: Grey Ghost's door and skin, with a finger hollow in the grip. 38.7 kg, pizza floor 305°C, cool-down 42 min, 0.67× the Tread. Shop sheet is `design/stream-1/caraxes/BUILD.md`. Inspiration was re-read at 2026-10-18T22:37Z (five Wright lessons, then Klättermusen). Caraxes stands.
 
 Stream 2 is on `main` as 5254441. Terrax is the current stack there: 34.1 kg, brow, tunnel, and door grips on mild pads, Quicksilver pintle. Shop sequence is `design/stream-2/terrax/BUILD.md`.
 
@@ -19,6 +21,7 @@ Morning and Moondancer are on `main`. Morning is the blackwood body, 19.12 kg re
 ---
 
 ## 2. Completed in This Session
+- [x] Bench spindle day-one sheet and figure on `cursor/bench-lathe-start-a4cf` @ f62ebe6. Audit passed. Ovens untouched.
 - [x] Shop stack and heat model in `cad/freecad/stream_physics.py`.
 - [x] Stormcloud solid, interference gate, four views.
 - [x] Tyraxes solid. Door xmax −337.8 mm, skin xmin −334.8 mm. Ferrule press fits only.
@@ -34,7 +37,8 @@ Morning and Moondancer are on `main`. Morning is the blackwood body, 19.12 kg re
 Terrax is the current stack. The brow grip, the tunnel grip, and the door grip each stand on a 1.5 mm mild pad. The posts clear the skin by 1.5 mm. Quicksilver's pintle stays: the lower arm welds to the pit, and the brow lifts off the pin. Door face 53.7°C, door grip 23°C. Pit 11.0 kg. Hearth 9.1 kg. Brow 5.8 kg. Tunnel 8.3 kg. Ready 34.1 kg. Mouth 424 × 185. Hood skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Wood stays 3.4 mm off hot steel. Flux stays 13.8 kW/m². The door grip pulls the door. It is not a lift. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, Grey Ghost, and Seasmoke. Do not reuse those. The book dragons are now used on one stream or the other. Do not take a show name. Recheck stream 1 before any new name. The sheet module is 20 mm for the pads, the wind-back, and the rivet pitch. The mouth and the deck stay off it. Aluminium is flat blanks. The cowl is two plates with a gap at the joint. The bail lifts the hearth. The tailgate is the stand. Shop sequence is `design/stream-2/terrax/BUILD.md`. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
-1. Caraxes is the oven to build on this branch. A further dragon needs a new measured fault, and a stable one gets its own `BUILD.md`.
+1. Tomorrow at the makerspace: follow `design/shop/bench-lathe/BUILD.md`. If the treadmill is not in the room, cut the rails and turn the shaft anyway. Do not wire the mains from the sheet.
+2. Caraxes is still the oven to build on the stream-1 line. A further dragon needs a new measured fault, and a stable one gets its own `BUILD.md`. This branch does not change the oven.
 2. Re-read `inspiration.md` in `/cursor/stores/store-97fe1fa0-fd19-44b4-ac7d-36d872774744/` every few iterations. It updates about every 3 hours. Wright is first. Weighed 2026-10-18, and the direction stays:
    - 20 mm module stays. It divides a 1200 mm sheet and the 480 mm plate, and it is scribed on the sill only.
    - No board-and-batten on the skin. The skin is 55°C, the carry is already 38.7 kg, and the long barrel is the horizontal line. Wood stays on the grips, ferrules, peel rest, and door pull.
@@ -58,5 +62,5 @@ Terrax is the current stack. The brow grip, the tunnel grip, and the door grip e
 
 ## 5. Active Locks & Touched Files
 - **Active Locks:** None.
-- **Key paths:** `cad/freecad/stream_physics.py`, `design/stream-1/`, `design/stream-2/`, `tools/opus/`, `cad/freecad/`, `design/variants/`, `tools/freecad_mcp/`, `bom/bom.csv`. Web meshes sit beside the STEP files: `morning.glb`, `moondancer.glb`, and the matching STL.
+- **Key paths:** `design/shop/bench-lathe/`, `bom/bom.csv`, `cad/freecad/stream_physics.py`, `design/stream-1/`, `design/stream-2/`, `tools/opus/`, `cad/freecad/`, `design/variants/`, `tools/freecad_mcp/`. Web meshes sit beside the STEP files: `morning.glb`, `moondancer.glb`, and the matching STL. The bench spindle does not add a mesh.
 - **Mass to believe:** FreeCAD solid plus the 1.85 kg burner allowance. Morning 19.12 kg. Moondancer 15.57 kg. Caraxes ready mass is 38.7 kg. Terrax ready mass is 34.1 kg.
