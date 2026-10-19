@@ -5,6 +5,9 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ---
 
 ## IN_PROGRESS
+- [ ] **[TASK-007]** `SHOP`: Bench spindle, a lathe that sands and drills *(Priority: HIGH, Assigned: cursor)*
+  - Branch `cursor/bench-lathe-start-a4cf`. Shop sheet `design/shop/bench-lathe/BUILD.md`. Figure `design/shop/bench-lathe/bench-spindle.html`.
+  - Day one is two 600 mm rails, two UCP204 blocks, and a Ø20 shaft. The ProForm motor is optional that morning. Modulathe v2 is later. Not an oven. Do not rename it.
 - [ ] **[TASK-006]** `STREAM-1`: Long-vault prototypes on `design/stream-1-original` *(Priority: HIGH, Assigned: cursor)*
   - Best oven is Caraxes, 38.7 kg. Shop sheet is `design/stream-1/caraxes/BUILD.md`. Inspiration re-read 2026-10-18 (five Wright lessons): module and flat skin stay; veneer, flush crane niche, side flues, and levelling screws stay out. Re-read the store file every few iterations. Do not merge to main.
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
