@@ -58,7 +58,7 @@ The brow is the tall front. Liner is 0.6 mm mild. Skin is 0.6 mm aluminium. Boar
 1. Same liner, board, air, and aluminium as the brow, on the low body. Soffit is 1.2 mm mild at 150 mm above the deck.
 2. Broiler plate on 8 mm stainless rods, over Y 180 to 350, at Z 100. Park it aft for the pizza. The rack hangs 50 mm under the plate.
 3. Hood grip: the same pad stack as the brow, on the low roof. This is the lift for the tunnel.
-4. Wind-back: 1.2 mm mild, stored under the rear overhang. It stands on the rim when the hood is off.
+4. Wind-back: 1.2 mm mild, stored under the rear overhang. It stands on the rim when the hood is off. That is the wind guard.
 5. Skirt: 1.2 mm aluminium, 2 mm clear of the pit flange, so the hood drops on and lifts off.
 
 ## 6. Close the fits
@@ -68,6 +68,17 @@ The brow is the tall front. Liner is 0.6 mm mild. Skin is 0.6 mm aluminium. Boar
 3. Put the door on the pintle last. Confirm it swings past the arms. The hearth bail and the port panel still share the door's height, so do not force a full turn.
 4. The door grip stands on its pad. It pulls the door. Do not hang the tunnel or the brow from it.
 
-## 7. Safety
+## 7. Pack the pit
+
+The pit is the case. Inner box 464 × 660 × 170. The burner stays in the rear gutter. Everything else in this list sits forward of it.
+
+1. Six stainless grate rods, 399 mm, in a cotton bag. On the fire they hook the upper rails for coal, 32 mm above the lower rails. Drop the same rods onto the lower rails for wood. Coal is the drawn pose.
+2. Wind-back, flat, 360 × 100 × 1.2.
+3. Broiler plate, flat, 447 × 170 × 1.2.
+4. Door last, lifted off the pin, face down, grip up. The grip stands 108 mm off the skin, inside the 170 mm depth.
+
+Wipe the mild plates dry before they go in. The bag is for the rods. The door goes back on the pintle to cook. The wind-back goes back on the rim.
+
+## 8. Safety
 
 Hot work stays in the metal shop or the university booth. Deburr every 0.6 mm edge before it is skinned. Microporous and jarrah both need extraction. The burner, valve, regulator, and hose are bought parts. Do not fabricate them.

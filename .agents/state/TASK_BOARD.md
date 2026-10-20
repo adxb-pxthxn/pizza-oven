@@ -7,7 +7,7 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 ## IN_PROGRESS
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
   - Branch `design/stream-2-modular`. Draft PR. Do not merge.
-  - Terrax is current: 34.1 kg, brow, tunnel, and door grips on mild pads, Quicksilver pintle. Pit 11.0 kg still heaviest. The door grip pulls the door. Sheet module is 20 mm for pads, wind-back, and rivet pitch. Mouth and deck stay off it. Shop sequence is `design/stream-2/terrax/BUILD.md`. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, Grey Ghost, and Seasmoke.
+  - Terrax is current: 34.1 kg, brow, tunnel, and door grips on mild pads, Quicksilver pintle. Pit 11.0 kg still heaviest. The door grip pulls the door. Sheet module is 20 mm for pads, wind-back, and rivet pitch. Mouth and deck stay off it. The pit packs the loose parts. Coal uses the upper grate hooks. Shop sequence is `design/stream-2/terrax/BUILD.md`. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, Grey Ghost, and Seasmoke.
 
 ---
 
