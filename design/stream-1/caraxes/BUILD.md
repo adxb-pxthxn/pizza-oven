@@ -19,7 +19,7 @@ General tolerance ISO 2768-mK. The fits below are tighter than that and are the 
 
 ## Bought, not made
 
-Certified gas burner, flame-failure device, regulator, and hose. Allow 1.85 kg. The rear box only covers them. AS/NZS 3678-250 normalised plate, 480 × 500 × 6 mm, if the merchant will cut it. 25 mm AES ceramic blanket, three layers on the crown and three under the whole floor. 304 sheet 0.8 mm and 1.2 mm. Aluminium 5052-H32, 1.0 mm. Jarrah and a gidgee offcut. PTFE washers. Four rubber feet, Ø32 × 10 mm.
+Certified gas burner, flame-failure device, regulator, and hose. Allow 1.85 kg. The rear box only covers them. AS/NZS 3678-250 normalised plate, 480 × 500 × 6 mm, if the merchant will cut it. A cotton bag sized to that plate. 25 mm AES ceramic blanket, three layers on the crown and three under the whole floor. 304 sheet 0.8 mm and 1.2 mm. Aluminium 5052-H32, 1.0 mm. Jarrah and a gidgee offcut. PTFE washers. Four rubber feet, Ø32 × 10 mm. High-temperature silicone, rated for the spring-line joint, softer than the aluminium.
 
 ## 1. Pizza steel
 
@@ -72,6 +72,7 @@ Same laser job. Two half-rings, outer radius 334.8 mm, inner radius 252.8 mm.
 1. The inner radius clears the liner (radius 250.8 mm) by 2 mm. Keep that gap all round. The ring covers the fibre end and sits 8 mm off the fibre face, across the air gap.
 2. Clamp each ring to its barrel end. Transfer the outer-rim holes (40 mm along the arc, at 0.96 of the outer radius). Drill Ø4.2 in the skin edge and rivet.
 3. Rivet the ring to the skin only. A rivet into the liner would bridge the hot shell to the cladding.
+4. Dress the vertical joint where each half-ring meets the barrel flush with the skin. The horizontal joint is the spring-line fold. Leave that corner as the shadow line. Lay a bead of high-temperature silicone in the fold, on the outside of the air gap, softer than the 1 mm sheet. It stops rain tracking through the rivet holes. It does not touch the liner.
 
 ## 6. Base
 
@@ -134,7 +135,7 @@ Machine: bandsaw and a spindle or the lathe. The hollow is a small cove cutter o
 
 ## 12. Sill, peel rest, probe, feet
 
-1. Launch sill, 400 × 80 × 1.2 mm 304. Its top is 1 mm under the deck (Z = 85.4 mm). It sits in front of the mouth and does not touch the plate (the cold plate starts at Y = 40 mm; the sill ends at Y = −87 mm). Scribe three lines at 20 mm pitch, 0.3 mm deep, across the sill only.
+1. Launch sill, 400 × 80 × 1.2 mm 304. Its mouth edge is 1 mm under the deck (Z = 85.4 mm). Set the front edge another 1 mm lower, so rain on the landing runs away from the plate. It does not touch the plate (the cold plate starts at Y = 40 mm; the sill ends at Y = −87 mm). Scribe three lines at 20 mm pitch, 0.3 mm deep, across the sill only. The spring-line tabs point down and are the drip edge. Water off the crown leaves on that edge, outside the tub.
 2. Peel rest, jarrah, 430 × 14 × 18 mm, in front of the sill, centred on the base wall. It stays a ledge. It is not a handle and it is not a door prop.
 3. Probe gland: 4 mm K-type, in a stainless gland Ø12 × 8 mm, beside the arch in the mouth frame (about 14 mm outside the mouth, 70 mm above the deck). The gland is 0.4 mm clear of the liner face and about 5 mm clear of the fibre. Drill the frame. Do not drill the blanket.
 4. Four rubber feet, Ø32 × 10 mm, 50 mm in from the corners.
@@ -149,3 +150,18 @@ Machine: bandsaw and a spindle or the lathe. The hollow is a small cove cutter o
 - Underside line reads from below. Sill carries the 20 mm lines. Cooking steel is bare.
 - No galvanised part, no paint, no cordierite, no timber on the skin.
 - First fire with the plate forward and the door shut, then open. Pizza gas 360°C holds the floor near 305°C. Bread gas 230°C, door shut, holds near 216°C. Open cool-down from the pizza floor to 60°C is about 42 minutes.
+- Hose test, cold: water on the crown runs off the spring-line tabs. The fibre and the inside of the base stay dry.
+
+## 14. Packing
+
+The chamber is the case. Loose parts go back in one order, drawn here so the ute load is the same every time.
+
+1. Shut the gas off at the regulator and disconnect the hose there. Coil the hose in the rear of the chamber, behind the plate.
+2. Slide the sky plate out.
+3. Lift the pizza steel. Wipe it. Put it in the cotton bag, alone. The bag is for that mild plate. The stainless grate, rails, and tray stay bare.
+4. Set the bagged plate back on the six buttons, same face up.
+5. Lay the sky plate on the bag, centred.
+6. Lift the door off the pin and set it across the mouth. That is the lid. The pin stays in the post.
+7. The probe stays in the gland.
+
+The ready mass, 38.7 kg, does not include the bag. The door is the lid for the trip. It does not grow legs, and the peel rest stays a ledge.

@@ -1,14 +1,14 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T22:47:14Z
+**Timestamp:** 2026-10-20T10:45:00Z
 **Current Branch / Commit:** design/stream-1-original, with origin/main @ 5254441
 **Overall Status:** IN_PROGRESS
 
 ---
 
 ## 1. Executive Summary (10-Second Briefing)
-Best oven on this branch is Caraxes: Grey Ghost's door and skin, with a finger hollow in the grip. 38.7 kg, pizza floor 305°C, cool-down 42 min, 0.67× the Tread. Shop sheet is `design/stream-1/caraxes/BUILD.md`. Inspiration was re-read at 2026-10-18T22:37Z (five Wright lessons, then Klättermusen). Caraxes stands.
+Best oven on this branch is Caraxes: Grey Ghost's door and skin, with a finger hollow in the grip. 38.7 kg, pizza floor 305°C, cool-down 42 min, 0.67× the Tread. Shop sheet is `design/stream-1/caraxes/BUILD.md`. Inspiration pass 11 (Tokyo kamado benches, 2026-10-20) is in the shop sheet: the chamber is the case. Caraxes stays gas.
 
 Stream 2 is on `main` as 5254441. Terrax is the current stack there: 34.1 kg, brow, tunnel, and door grips on mild pads, Quicksilver pintle. Shop sequence is `design/stream-2/terrax/BUILD.md`.
 
@@ -35,7 +35,12 @@ Terrax is the current stack. The brow grip, the tunnel grip, and the door grip e
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Caraxes is the oven to build on this branch. A further dragon needs a new measured fault, and a stable one gets its own `BUILD.md`.
-2. Re-read `inspiration.md` in `/cursor/stores/store-97fe1fa0-fd19-44b4-ac7d-36d872774744/` every few iterations. It updates about every 3 hours. Wright is first. Weighed 2026-10-18, and the direction stays:
+2. Re-read `inspiration.md` in `/cursor/stores/store-97fe1fa0-fd19-44b4-ac7d-36d872774744/` every few iterations. It updates about every 3 hours. Wright is first. Pass 11 (2026-10-20, Tokyo) is adopted only where it fits a gas oven:
+   - The chamber is the transport case. Order is hose, bagged mild plate, sky plate, door as the lid. The cotton bag is ST-220.
+   - Spring-line joint gets a soft silicone bead. Vertical fascia joints are dressed flush. The sill falls 1 mm toward the front. The spring-line tabs are the drip edge.
+   - Coal hook heights are for a wood fire bed. This oven is gas. The sky plate's two poses stay the heat settings.
+   - The door does not grow legs. The peel rest stays a ledge. A tapered captive seat would close the 3 mm sill gap. The pin still lifts out.
+   - Weighed 2026-10-18, and this still stands:
    - 20 mm module stays. It divides a 1200 mm sheet and the 480 mm plate, and it is scribed on the sill only.
    - No board-and-batten on the skin. The skin is 55°C, the carry is already 38.7 kg, and the long barrel is the horizontal line. Wood stays on the grips, ferrules, peel rest, and door pull.
    - The broil tray stays parked outside the port skin. A flush recess would pocket a hot tray in the cladding. The sky plate is the mode change.
