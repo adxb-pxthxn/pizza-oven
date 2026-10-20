@@ -854,7 +854,8 @@ def parts(s: Stack) -> list[dict]:
         ))
         rod_z = grate_z
         if s.grill:
-            # Cooking height. The hearth still clears it. The low rails are the deep fire.
+            # Coal on the upper hooks, which is the drawn fire. The same rods
+            # drop 32 mm onto the lower rails for wood. They lift off either pair.
             rod_z = grate_z + 32.0
             items.append(_box(
                 "grate-rail-high-port", "pit", "ss", "hot",

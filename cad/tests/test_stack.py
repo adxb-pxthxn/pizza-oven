@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import math
 import unittest
 
@@ -712,6 +713,44 @@ class TerraxTests(unittest.TestCase):
         self.assertGreaterEqual(result["wood_hot_gap_mm"], 2.0)
         self.assertLess(result["skin_C"], 55.01)
         self.assertLess(result["body_length_mm"], 880.0)
+
+    def test_coal_hooks_high_and_the_pit_packs(self) -> None:
+        design = Stack(
+            dragon="Terrax",
+            deck_t=4.0, ins_t=22.0, floor_ins=12.0, belly_ins=12.0,
+            liner_t=0.6, skin_t=0.6, pit_t=1.0, front_h=294.0,
+            soffit_h=150.0, air_gap=16.0, standoff=54.0,
+            launch_y=150.0, stepped=True, sloped=True, split=True,
+            seated=True, grill=True, broiler=True, bail=True,
+            damper_shut=True, gasket=True, slide=True, rod_rail=True,
+            wind=True, panel=True, door_air=True, door_hinge=True,
+            door_tie=True, door_swing=True, hood_pad=True, brow_pad=True,
+            door_pad=True,
+        )
+        built = parts(design)
+        items = {part["id"]: part for part in built}
+        low = items["grate-rail-port"]["corner"][2]
+        high = items["grate-rail-high-port"]["corner"][2]
+        self.assertAlmostEqual(high - low, 32.0, places=2)
+        rod = items["grate-rod-0"]
+        self.assertAlmostEqual(rod["origin"][2] - rod["r_out"], high, places=2)
+        self.assertLess(rod["length"], 460.0)
+        wood = []
+        for part in built:
+            moved = copy.deepcopy(part)
+            if part["id"].startswith("grate-rod-"):
+                moved["origin"][2] -= 32.0
+            wood.append(moved)
+        self.assertEqual(aabb_collisions(wood), [])
+        plate = items["soffit-broiler"]["size"]
+        wind = items["wind-back"]["size"]
+        self.assertLess(max(plate[0], plate[1]), 464.0)
+        self.assertLess(max(wind[0], wind[2]), 464.0)
+        inner = items["door-inner"]
+        grip = items["grip-door"]
+        radii = [pair[1] for pair in grip["profile"]]
+        door_depth = (inner["corner"][1] + inner["size"][1]) - (grip["origin"][1] - max(radii))
+        self.assertLess(door_depth, 120.0)
 
 
 if __name__ == "__main__":

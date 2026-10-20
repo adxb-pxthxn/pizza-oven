@@ -8,8 +8,8 @@ Multi-agent state tracking for Antigravity, Cursor, Claude Code, and Codex.
 - [ ] **[TASK-006]** `STREAM-1`: Long-vault prototypes on `design/stream-1-original` *(Priority: HIGH, Assigned: cursor)*
   - Best oven is Caraxes, 38.7 kg. Shop sheet is `design/stream-1/caraxes/BUILD.md`. Inspiration re-read 2026-10-18 (five Wright lessons): module and flat skin stay; veneer, flush crane niche, side flues, and levelling screws stay out. Re-read the store file every few iterations. Do not merge to main.
 - [ ] **[TASK-006]** `DESIGN`: Stream 2 modular stack, Vermax onward *(Priority: HIGH, Assigned: cursor)*
-  - Branch `design/stream-2-modular`. Now on `main` as 5254441.
-  - Terrax is current: 34.1 kg, brow, tunnel, and door grips on mild pads, Quicksilver pintle. Pit 11.0 kg still heaviest. The door grip pulls the door. Sheet module is 20 mm for pads, wind-back, and rivet pitch. Mouth and deck stay off it. Shop sequence is `design/stream-2/terrax/BUILD.md`. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, Grey Ghost, and Seasmoke.
+  - On `main` as 5254441. This pack is `cursor/terrax-pit-pack-fcee`.
+  - Terrax is current: 34.1 kg, brow, tunnel, and door grips on mild pads, Quicksilver pintle. Pit 11.0 kg still heaviest. The door grip pulls the door. Sheet module is 20 mm for pads, wind-back, and rivet pitch. Mouth and deck stay off it. The pit packs the loose parts. Coal uses the upper grate hooks. Shop sequence is `design/stream-2/terrax/BUILD.md`. Stream 1 has used Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, Grey Ghost, Seasmoke, and Caraxes.
 
 ---
 
