@@ -1,8 +1,8 @@
 # Agent Handover Protocol & Session Status
 
 **Active Agent:** cursor
-**Timestamp:** 2026-10-18T22:47:14Z
-**Current Branch / Commit:** design/stream-1-original, with origin/main @ 5254441
+**Timestamp:** 2026-10-20T10:52:00Z
+**Current Branch / Commit:** cursor/terrax-pit-pack-fcee, off main @ f4aa6f6
 **Overall Status:** IN_PROGRESS
 
 ---
@@ -10,7 +10,7 @@
 ## 1. Executive Summary (10-Second Briefing)
 Best oven on this branch is Caraxes: Grey Ghost's door and skin, with a finger hollow in the grip. 38.7 kg, pizza floor 305°C, cool-down 42 min, 0.67× the Tread. Shop sheet is `design/stream-1/caraxes/BUILD.md`. Inspiration was re-read at 2026-10-18T22:37Z (five Wright lessons, then Klättermusen). Caraxes stands.
 
-Stream 2 is on `main` as 5254441. Terrax is the current stack there: 34.1 kg, brow, tunnel, and door grips on mild pads, Quicksilver pintle. Shop sequence is `design/stream-2/terrax/BUILD.md`.
+Stream 2 is on `main` as 5254441. Terrax is the current stack there: 34.1 kg, brow, tunnel, and door grips on mild pads, Quicksilver pintle. This branch packs the loose parts in the pit and leaves the grate rods on the upper hooks for coal. Shop sequence is `design/stream-2/terrax/BUILD.md`.
 
 Morning and Moondancer are on `main`. Morning is the blackwood body, 19.12 kg ready. Moondancer is the aluminium shell, 15.57 kg ready. Both keep the Angas dome, mouth, and burner crescent. FreeCAD solids seat without unintended interference. The press fits are the Morning ferrules and the cinch dowels. CalculiX still matches the skin temperatures.
 
@@ -31,7 +31,7 @@ Morning and Moondancer are on `main`. Morning is the blackwood body, 19.12 kg re
 - [x] `python3 tools/opus/test_opus.py` passes with no network.
 
 ## 2b. Stream 2 (from main)
-Terrax is the current stack. The brow grip, the tunnel grip, and the door grip each stand on a 1.5 mm mild pad. The posts clear the skin by 1.5 mm. Quicksilver's pintle stays: the lower arm welds to the pit, and the brow lifts off the pin. Door face 53.7°C, door grip 23°C. Pit 11.0 kg. Hearth 9.1 kg. Brow 5.8 kg. Tunnel 8.3 kg. Ready 34.1 kg. Mouth 424 × 185. Hood skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Wood stays 3.4 mm off hot steel. Flux stays 13.8 kW/m². The door grip pulls the door. It is not a lift. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, Grey Ghost, and Seasmoke. Do not reuse those. The book dragons are now used on one stream or the other. Do not take a show name. Recheck stream 1 before any new name. The sheet module is 20 mm for the pads, the wind-back, and the rivet pitch. The mouth and the deck stay off it. Aluminium is flat blanks. The cowl is two plates with a gap at the joint. The bail lifts the hearth. The tailgate is the stand. Shop sequence is `design/stream-2/terrax/BUILD.md`. See `design/stream-2/README.md`.
+Terrax is the current stack. The brow grip, the tunnel grip, and the door grip each stand on a 1.5 mm mild pad. The posts clear the skin by 1.5 mm. Quicksilver's pintle stays: the lower arm welds to the pit, and the brow lifts off the pin. Door face 53.7°C, door grip 23°C. Pit 11.0 kg. Hearth 9.1 kg. Brow 5.8 kg. Tunnel 8.3 kg. Ready 34.1 kg. Mouth 424 × 185. Hood skin 55.0°C, CalculiX agrees. Heat-up 11 min. Bread window 61 min. Pack cool-down 27 min with the door open. Wood stays 3.4 mm off hot steel. Flux stays 13.8 kW/m². The door grip pulls the door. It is not a lift. Stream 1 uses Stormcloud, Tyraxes, Vermax, Arrax, Tessarion, Sunfyre, Grey Ghost, Seasmoke, and Caraxes. Do not reuse those. The book dragons are now used on one stream or the other. Do not take a show name. Recheck stream 1 before any new name. The sheet module is 20 mm for the pads, the wind-back, and the rivet pitch. The mouth and the deck stay off it. Aluminium is flat blanks. The cowl is two plates with a gap at the joint. The bail lifts the hearth. The tailgate is the stand. The pit packs the rod bag, wind-back, broiler plate, and door. Coal uses the upper grate hooks. Shop sequence is `design/stream-2/terrax/BUILD.md`. See `design/stream-2/README.md`.
 
 ## 3. Immediate Next Steps (For Incoming Agent)
 1. Caraxes is the oven to build on this branch. A further dragon needs a new measured fault, and a stable one gets its own `BUILD.md`.
